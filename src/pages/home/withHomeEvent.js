@@ -21,11 +21,21 @@ function widthHomeEvent(Home){
                                 return(
                                     <td key={index} className={`
                                         ${index % 7 === 0 || index % 6 === 0 ? 'bg-gray-100' :''}
-                                        ${moment().format('YYYYMMDD') === days.format('YYYYMMDD') && 'bg-red-200'}
+                                        
+                                        hover:bg-red-100
                                         `}
                                     >
-                                        <Link to={`/days/${days.format('YYYYMMDD')}`} className={`${days.format('MM') !== today.format('MM') && 'opacity-30'} flex flex-col items-end`}>
-                                            {days.format('D')}일
+                                        <Link 
+                                            to={`/days/${days.format('YYYY-MM-DD')}`} 
+                                            className={`${days.format('MM') !== today.format('MM') && 'opacity-30'} flex flex-col items-end min-h-50 md:min-h-120`}
+                                        >
+                                            <span className={`mb-2 ${moment().format('YYYYMMDD') === days.format('YYYYMMDD') && 'bg-red-400 text-white rounded-2xl px-2'}`}>
+                                                {days.format('D')}일
+                                            </span>
+                                            {/* <div className="flex justify-center w-full mb-1 bg-green-200 rounded-md">달력만들기</div>
+                                            <div className="flex justify-center w-full mb-1 bg-blue-200 rounded-md">달력만들기</div>
+                                            <div className="flex justify-center w-full mb-1 bg-yellow-200 rounded-md">달력만들기</div>
+                                            <div className="flex justify-center w-full mb-1 bg-gray-200 rounded-md">달력만들기</div> */}
                                         </Link>
                                     </td>
                                 );
