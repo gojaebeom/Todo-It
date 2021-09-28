@@ -5,7 +5,7 @@ import profileSampleImg from "../../assets/images/bgmCover01.png";
 function DefaultLayout({ children, profileMenu, layoutRef, profileRef }){
     return(
     <div className="flex flex-col items-center w-full min-h-screen text-black font-noto-light" ref={layoutRef}>
-        <header className="flex items-center justify-center w-full bg-red-400 h-14">
+        <header className="flex items-center justify-center w-full bg-red-400 border-b h-14">
             <div className="flex items-center justify-between w-full px-5 max-w-1400">
                 <Link to="/">
                     <i className="text-2xl text-white fas fa-home"></i>

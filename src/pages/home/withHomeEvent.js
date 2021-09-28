@@ -30,7 +30,7 @@ function widthHomeEvent(Home){
                                             className={`${days.format('MM') !== today.format('MM') && 'opacity-30'} flex flex-col items-end min-h-50 md:min-h-120`}
                                         >
                                             <span className={`mb-2 ${moment().format('YYYYMMDD') === days.format('YYYYMMDD') && 'bg-red-400 text-white rounded-2xl px-2'}`}>
-                                                {days.format('D')}일
+                                                {days.format('D')}
                                             </span>
                                             {/* <div className="flex justify-center w-full mb-1 bg-green-200 rounded-md">달력만들기</div>
                                             <div className="flex justify-center w-full mb-1 bg-blue-200 rounded-md">달력만들기</div>

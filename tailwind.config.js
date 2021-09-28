@@ -4,6 +4,8 @@ module.exports = {
     theme: {
         extend: {
             width:{
+                "400":"400px",
+                "500":"500px",
                 "1000":"1000px"
             },
             maxWidth:{
@@ -13,6 +15,9 @@ module.exports = {
                 "1200":"1200px",
                 "1300":"1300px",
                 "1400":"1400px",
+            },
+            height:{
+                "500":"500px"
             },
             minHeight:{
                 "120":"120px",
