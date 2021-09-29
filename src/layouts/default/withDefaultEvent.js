@@ -12,7 +12,6 @@ function withDefaultEvent(DefaultLayout){
         useEffect(() => {
             const clickEventHandler = (e) => {
                 let el = e.target;
-
                 while (el) {
                     el = el.parentNode;
 
@@ -36,7 +35,6 @@ function withDefaultEvent(DefaultLayout){
                 // eslint-disable-next-line react-hooks/exhaustive-deps
                 window.removeEventListener("click", clickEventHandler);
             }
-
         // eslint-disable-next-line react-hooks/exhaustive-deps
         }, [profileMenu]);
 
