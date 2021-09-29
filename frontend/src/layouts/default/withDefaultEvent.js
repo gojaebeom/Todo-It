@@ -5,6 +5,7 @@ function withDefaultEvent(DefaultLayout){
     return ({ children }) => {
 
         const profileMenu = useSelector(s=>s.profileMenu);
+        const userInfo = useSelector(s=>s.userInfo);
         const dispatch = useDispatch();
         const layoutRef = useRef();
         const profileRef = useRef();
@@ -37,6 +38,7 @@ function withDefaultEvent(DefaultLayout){
         }, [profileMenu]);
 
         const clickLogoutEvent = () => {
+            window.localStorage.removeItem("act");
             dispatch({type:"IS_LOGOUT"});
         }
 
@@ -47,6 +49,7 @@ function withDefaultEvent(DefaultLayout){
             layoutRef={layoutRef}
             profileRef={profileRef}
             clickLogoutEvent={clickLogoutEvent}
+            userInfo={userInfo}
         />
         );
     }

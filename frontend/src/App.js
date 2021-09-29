@@ -1,5 +1,5 @@
 import { useSelector } from "react-redux";
-import { Route, Switch, Redirect } from "react-router-dom";
+import { Route, Switch, Redirect, withRouter } from "react-router-dom";
 import withAuthEvent from "./global/withAuthEvent";
 import Home from "./pages/home/Home";
 import Login from "./pages/login/Login";
@@ -8,6 +8,16 @@ import TodoList from "./pages/todoList/TodoList";
 
 function App(){
     const userInfo = useSelector(s => s.userInfo);
+    const beforeUrl = window.localStorage.getItem("beforeUrl");
+    console.log(userInfo);
+
+    let url = "/";
+    if(beforeUrl === "/login" || beforeUrl === "/auth/kakao") {
+
+    }else {
+        url = beforeUrl;
+    }
+
     return(
     <Switch>
         <Route exact path="/">
@@ -17,7 +27,7 @@ function App(){
             { userInfo.isLogin ? <TodoList/> : <Redirect to="/login"/> }
         </Route>
         <Route path="/login">
-            { !userInfo.isLogin ? <Login/> : <Redirect to="/"/> }
+            { !userInfo.isLogin ? <Login/> : <Redirect to={url}/> }
         </Route>
         <Route path="/auth/kakao">
             <Redirector/>
@@ -25,4 +35,4 @@ function App(){
     </Switch>
     )
 }
-export default withAuthEvent(App);
+export default withRouter(withAuthEvent(App));

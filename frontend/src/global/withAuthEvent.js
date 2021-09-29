@@ -4,11 +4,12 @@ import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 
 function withAuthEvent(App){
-    return () => {
+    return ({history}) => {
         const dispatch = useDispatch();
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
         useEffect(async () => {
+            console.log("누가 먼저 실행");
             const act = window.localStorage.getItem("act");
             if(act === null){
                 dispatch({ type:"IS_LOGOUT"});
@@ -30,7 +31,15 @@ function withAuthEvent(App){
         // eslint-disable-next-line react-hooks/exhaustive-deps
         }, []);
 
-        return <App />
+        useEffect(() => {
+            console.log("이벤트 등록");
+            window.onbeforeunload = () => {
+                window.localStorage.setItem("beforeUrl", history.location.pathname);
+            }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+        }, []);
+
+        return <App/>
     }
 }
 export default withAuthEvent;
