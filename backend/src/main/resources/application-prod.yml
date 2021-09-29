@@ -1,0 +1,10 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:postgresql://uahage2.c7qbk7qns6ot.ap-northeast-2.rds.amazonaws.com:5432/uahage_prod
+    username: postgres
+    password: hohocom!
+  jpa:
+    show-sql: false
+    hibernate:
+      ddl-auto: none

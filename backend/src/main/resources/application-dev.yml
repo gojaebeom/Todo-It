@@ -1,0 +1,18 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+#    url: jdbc:log4jdbc:postgresql://uahage2.c7qbk7qns6ot.ap-northeast-2.rds.amazonaws.com:5432/uahage_dev_v2
+#    driver-class-name: org.postgresql.Driver
+    url: jdbc:mysql://localhost:3306/todoit_dev
+    username: root
+    password: woqja5164!
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: none
+#log4jdbc:
+#  spylogdelegator:
+#    name: net.sf.log4jdbc.log.slf4j.Slf4jSpyLogDelegator
+  dump:
+    sql:
+      maxlinelength: 0
