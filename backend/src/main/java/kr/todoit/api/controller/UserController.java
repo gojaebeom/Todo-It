@@ -40,7 +40,6 @@ public class UserController {
 
     @GetMapping("/{id}")
     public ResponseEntity<?> show(@PathVariable Long id) {
-
         Map<String, Object> response = new HashMap<>();
         response.put("message","로그인이 정상적으로 처리되었습니다.");
         response.put("statusCode", 200);
