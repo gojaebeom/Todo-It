@@ -7,9 +7,7 @@ import Redirector from "./pages/login/Redirector";
 import TodoList from "./pages/todoList/TodoList";
 
 function App(){
-
     const userInfo = useSelector(s => s.userInfo);
-
     return(
     <Switch>
         <Route exact path="/">

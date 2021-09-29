@@ -14,7 +14,6 @@ function withDefaultEvent(DefaultLayout){
                 let el = e.target;
                 while (el) {
                     el = el.parentNode;
-
                     if(el === profileRef.current){
                         if(profileMenu){
                             dispatch({type: "PROFILE_MENU_TOGGLE", payload: false});
@@ -30,7 +29,6 @@ function withDefaultEvent(DefaultLayout){
                 }
             }
             window.addEventListener("click", clickEventHandler);
-            
             return () => {
                 // eslint-disable-next-line react-hooks/exhaustive-deps
                 window.removeEventListener("click", clickEventHandler);
@@ -38,12 +36,17 @@ function withDefaultEvent(DefaultLayout){
         // eslint-disable-next-line react-hooks/exhaustive-deps
         }, [profileMenu]);
 
+        const clickLogoutEvent = () => {
+            dispatch({type:"IS_LOGOUT"});
+        }
+
         return (
         <DefaultLayout
             children={children}
             profileMenu={profileMenu}
             layoutRef={layoutRef}
             profileRef={profileRef}
+            clickLogoutEvent={clickLogoutEvent}
         />
         );
     }

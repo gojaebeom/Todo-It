@@ -4,14 +4,14 @@ const initialState = {
     nickname:"",
     profileImg:"",
 }
-function userInfo(state= initialState, action){
+function userInfo(state=initialState, action){
     switch(action.type){
         case "IS_LOGIN":
             return {...action.payload, isLogin: true};
-        case "IS_LOGGED_OUT" :
-            return {...state, isLogin: false};
+        case "IS_LOGOUT" :
+            return {...initialState, isLogin: false};
         default:
-            return initialState;
+            return state;
     }
 }
 export default userInfo;

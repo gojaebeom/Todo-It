@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import withDefaultEvent from "./withDefaultEvent";
 import profileSampleImg from "../../assets/images/bgmCover01.png";
 
-function DefaultLayout({ children, profileMenu, layoutRef, profileRef }){
+function DefaultLayout({ children, profileMenu, layoutRef, profileRef, clickLogoutEvent }){
     return(
     <div className="flex flex-col items-center w-full min-h-screen text-black font-noto-light" ref={layoutRef}>
         <header className="flex items-center justify-center w-full bg-red-400 border-b h-14">
@@ -26,11 +26,13 @@ function DefaultLayout({ children, profileMenu, layoutRef, profileRef }){
                                         <span className="ml-2">설정</span>
                                     </Link>
                                 </li>
-                                <li className="p-2">
-                                    <Link to="/login" className="flex items-center justify-start">
+                                <li className="p-2 cursor-pointer">
+                                    <div className="flex items-center justify-start"
+                                        onClick={clickLogoutEvent}
+                                    >
                                         <i className="text-lx fas fa-sign-out-alt"></i>
                                         <span className="ml-2">로그아웃</span>
-                                    </Link>
+                                    </div>
                                 </li>
                             </ul>
                         }
