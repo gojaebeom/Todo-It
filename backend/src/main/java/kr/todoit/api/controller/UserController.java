@@ -6,6 +6,8 @@ import kr.todoit.api.service.OAuth2Service;
 import kr.todoit.api.service.UserService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -35,7 +37,15 @@ public class UserController {
         response.put("message","로그인이 정상적으로 처리되었습니다.");
         response.put("statusCode", 200);
         response.put("data", act);
-        return ResponseEntity.ok(response);
+
+        ResponseCookie responseCookie = ResponseCookie.from("act", act)
+                .httpOnly(true)
+//                .secure(true)
+                .path("/")
+                .maxAge(60)
+//                .domain("*")
+                .build();
+        return ResponseEntity.ok().header(HttpHeaders.SET_COOKIE, responseCookie.toString()).body(response);
     }
 
     @GetMapping("/{id}")

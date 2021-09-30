@@ -27,6 +27,9 @@ public class User {
     @Column(name = "nickname", length = 20, nullable = false, unique = true)
     private String nickname;
 
+    @Column(name = "profile_img", length = 150)
+    private String profileImg;
+
     @CreationTimestamp
     private LocalDateTime createdAt;
 

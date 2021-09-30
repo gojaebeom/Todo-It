@@ -18,13 +18,17 @@ public class OAuth2Service {
 
     public String getKakaoEmailByAccessToken(String accessToken) throws Exception {
         accessToken = splitTokenStringThenGetToken(accessToken);
-
+        log.info("[ 카카오톡 인증 토큰 ]");
+        log.info(accessToken);
         final String KAKAO_VERIFY_URL = "https://kapi.kakao.com/v2/user/me";
 
         ResponseEntity<Map> resultMap =  requestOauthServer(accessToken, KAKAO_VERIFY_URL, "카카오");
-
+        String kakaoId =  resultMap.getBody().get("id").toString();
         HashMap<String, Object> kakaoAccount = (HashMap<String, Object>) resultMap.getBody().get("kakao_account");
         String kakaoEmail = "KAKAO:"+kakaoAccount.get("email");
+        if(kakaoEmail == null || kakaoEmail.equals("null")){
+            kakaoEmail = kakaoId;
+        }
         log.info("카카오 이메일 받기 완료.");
         return kakaoEmail;
     }

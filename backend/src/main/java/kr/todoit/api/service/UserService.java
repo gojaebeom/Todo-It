@@ -21,12 +21,7 @@ public class UserService {
     private UserRepository userRepository;
 
     public String joinByOauth(UserJoinRequest userJoinRequest){
-
-        System.out.println(userJoinRequest);
-
         User user = userRepository.findByEmail(userJoinRequest.getEmail());
-
-
 
         if(user == null){
             log.info("회원등록이 안된 유저 -> 회원가입 진행");
