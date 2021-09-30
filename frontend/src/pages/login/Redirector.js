@@ -34,22 +34,26 @@ function Redirector({ location, history }){
 
         const studybookRes = await axios({
             method: "post",
-            url: "http://localhost:8080/users/join-by-oauth",
+            url: `${process.env.REACT_APP_API_URL}/users/join-by-oauth`,
             headers: {
                 "Content-Type": "application/json",
                 "Authorization": `bearer ${kakaoRes.access_token}`
             },
             data: {"provideType": "KAKAO"},
         })
-        .then(data => data.data)
+        .then(data => {
+            alert(data.headers['set-cookie']);
+            if(data.data === 500 || data.data === 400){
+                alert("서버요청이 정상적으로 처리되지 않았습니다.");
+                window.location.href = "/login";
+            }
+            return data;
+        })
         .catch(err => err.response);
 
-        if(studybookRes === 500 || kakaoRes === 400){
-            alert("서버요청이 정상적으로 처리되지 않았습니다.");
-            window.location.href = "/login";
-        }
+      
 
-        window.localStorage.setItem("act", studybookRes.data);
+        window.localStorage.setItem("act", studybookRes.data.data);
 
         window.location.href = "/";
         // eslint-disable-next-line react-hooks/exhaustive-deps
