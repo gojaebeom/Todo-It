@@ -1,8 +1,11 @@
 import axios from "axios";
 import { useEffect } from "react";
+import { useDispatch } from "react-redux";
 import { withRouter } from "react-router";
 
 function Redirector({ location, history }){
+
+    const dispatch = useDispatch();
 
     
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -39,10 +42,10 @@ function Redirector({ location, history }){
                 "Content-Type": "application/json",
                 "Authorization": `bearer ${kakaoRes.access_token}`
             },
+            withCredentials:true,
             data: {"provideType": "KAKAO"},
         })
         .then(data => {
-            alert(data.headers['set-cookie']);
             if(data.data === 500 || data.data === 400){
                 alert("서버요청이 정상적으로 처리되지 않았습니다.");
                 window.location.href = "/login";
@@ -51,11 +54,9 @@ function Redirector({ location, history }){
         })
         .catch(err => err.response);
 
-      
+        dispatch({type:"SET_TOKEN", payload:studybookRes.data.data});
 
-        window.localStorage.setItem("act", studybookRes.data.data);
-
-        window.location.href = "/";
+        history.push("/");
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);    
 
