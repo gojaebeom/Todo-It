@@ -4,11 +4,7 @@ import widthHomeEvent from "./withHomeEvent";
 function Home({setToday, today, calendarArray}){
     return(
     <DefaultLayout>
-        <div className="flex items-center justify-between w-full px-3 py-10">
-            <div className="px-3 py-1 text-2xl font-noto-bold">
-                개인 일정 ✍
-            </div>
-
+        <div className="flex items-center justify-between w-full mb-5">
             <div className="flex justify-start">
                 <button 
                     className="px-3"

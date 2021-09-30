@@ -15,8 +15,8 @@ function TodoList({
 }){
     return(
     <DefaultLayout>
-        <div className="relative flex flex-col items-center w-full max-w-800">
-            <div className="flex items-center justify-between w-full p-5 mt-10 mb-5 md:p-0">
+        <div className="relative flex flex-col items-center w-full">
+            <div className="flex items-center justify-between w-full md:p-0">
                 <div className="flex items-center text-2xl font-noto-bold group">
                     <button className="p-4 py-1 mr-2 rounded-xl group-hover:bg-red-300"
                         onClick={toBack}

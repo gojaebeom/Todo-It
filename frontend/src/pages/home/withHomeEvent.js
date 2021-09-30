@@ -27,7 +27,7 @@ function widthHomeEvent(Home){
                                     >
                                         <Link 
                                             to={`/days/${days.format('YYYY-MM-DD')}`} 
-                                            className={`${days.format('MM') !== today.format('MM') && 'opacity-30'} flex flex-col items-end min-h-50 md:min-h-120`}
+                                            className={`${days.format('MM') !== today.format('MM') && 'opacity-30'} flex flex-col items-end min-h-50 md:min-h-100`}
                                         >
                                             <span className={`mb-2 ${moment().format('YYYYMMDD') === days.format('YYYYMMDD') && 'bg-red-400 text-white rounded-2xl px-2'}`}>
                                                 {days.format('D')}
