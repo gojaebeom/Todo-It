@@ -31,19 +31,18 @@ public class UserController {
         String email = oAuth2Service.getKakaoEmailByAccessToken(accessTokenString);
         joinRequest.setEmail(email);
 
-        String act = userService.joinByOauth(joinRequest);
+        HashMap<String ,String> tokens = userService.joinByOauth(joinRequest);
 
         Map<String, Object> response = new HashMap<>();
         response.put("message","로그인이 정상적으로 처리되었습니다.");
         response.put("statusCode", 200);
-        response.put("data", act);
+        response.put("data", tokens.get("act"));
 
-        ResponseCookie responseCookie = ResponseCookie.from("act", act)
+        ResponseCookie responseCookie = ResponseCookie.from("rft", tokens.get("rft"))
                 .httpOnly(true)
-//                .secure(true)
                 .path("/")
-                .maxAge(60)
-//                .domain("*")
+                .maxAge(10000)
+                .sameSite("Strict")
                 .build();
         return ResponseEntity.ok().header(HttpHeaders.SET_COOKIE, responseCookie.toString()).body(response);
     }

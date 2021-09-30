@@ -9,6 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.HashMap;
 import java.util.UUID;
 
 @Service
@@ -20,7 +21,7 @@ public class UserService {
     private TokenService tokenService;
     private UserRepository userRepository;
 
-    public String joinByOauth(UserJoinRequest userJoinRequest){
+    public HashMap<String, String> joinByOauth(UserJoinRequest userJoinRequest){
         User user = userRepository.findByEmail(userJoinRequest.getEmail());
 
         if(user == null){
@@ -41,6 +42,12 @@ public class UserService {
         }
 
         log.info("자동로그인 진행 -> 토큰 발급");
-        return tokenService.getAct(user.getId());
+        String act = tokenService.getAct(user.getId());
+        String rft = tokenService.getRft(user.getId());
+        HashMap<String, String> tokens = new HashMap<>();
+        tokens.put("act",act);
+        tokens.put("rft",rft);
+
+        return tokens;
     }
 }

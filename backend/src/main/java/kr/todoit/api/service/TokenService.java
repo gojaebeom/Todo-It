@@ -4,6 +4,7 @@ import io.jsonwebtoken.Header;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import javax.naming.AuthenticationException;
@@ -14,17 +15,19 @@ import java.util.Date;
 @Service
 public class TokenService {
 
+    @Value("${custom.secret}")
+    private String secret;
+
     static Date now = new Date();
 
     public String getAct(Long userId) {
-
         String accessToken = Jwts.builder()
                 .setHeaderParam(Header.TYPE, Header.JWT_TYPE)
                 .setIssuer("access")
                 .setIssuedAt(now)
                 .setExpiration(new Date(now.getTime() + Duration.ofDays(1).toMillis()))
                 .claim("id", userId)
-                .signWith(SignatureAlgorithm.HS256, "secret")
+                .signWith(SignatureAlgorithm.HS256, secret)
                 .compact();
 
         return accessToken;
@@ -37,7 +40,7 @@ public class TokenService {
                 .setIssuedAt(now)
                 .setExpiration(new Date(now.getTime() + Duration.ofDays(365).toMillis()))
                 .claim("id", userId)
-                .signWith(SignatureAlgorithm.HS256, "secret")
+                .signWith(SignatureAlgorithm.HS256, secret)
                 .compact();
 
         return refreshToken;

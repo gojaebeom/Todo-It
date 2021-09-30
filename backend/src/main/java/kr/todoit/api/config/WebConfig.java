@@ -14,6 +14,7 @@ public class WebConfig implements WebMvcConfigurer {
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
                 .allowedOrigins("http://localhost:3000")
+                .allowCredentials(true)
                 .exposedHeaders("Authorization");
     }
 
@@ -21,6 +22,7 @@ public class WebConfig implements WebMvcConfigurer {
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(new TokenVerifyInterceptor())
                 .addPathPatterns("/**")
-                .excludePathPatterns("/users/join-by-oauth");
+                .excludePathPatterns("/users/join-by-oauth")
+                .excludePathPatterns("/auth/silent-refresh");
     }
 }
