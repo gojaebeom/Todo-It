@@ -1,6 +1,7 @@
 package kr.todoit.api.service;
 
 import kr.todoit.api.domain.User;
+import kr.todoit.api.dto.TokenResponse;
 import kr.todoit.api.dto.UserJoinRequest;
 import kr.todoit.api.dto.UserJoinResponse;
 import kr.todoit.api.repository.UserRepository;
@@ -9,6 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.naming.AuthenticationException;
 import java.util.HashMap;
 import java.util.UUID;
 
@@ -21,7 +23,7 @@ public class UserService {
     private TokenService tokenService;
     private UserRepository userRepository;
 
-    public HashMap<String, String> joinByOauth(UserJoinRequest userJoinRequest){
+    public TokenResponse joinByOauth(UserJoinRequest userJoinRequest) throws AuthenticationException {
         User user = userRepository.findByEmail(userJoinRequest.getEmail());
 
         if(user == null){
@@ -42,12 +44,12 @@ public class UserService {
         }
 
         log.info("자동로그인 진행 -> 토큰 발급");
-        String act = tokenService.getAct(user.getId());
-        String rft = tokenService.getRft(user.getId());
-        HashMap<String, String> tokens = new HashMap<>();
-        tokens.put("act",act);
-        tokens.put("rft",rft);
+        HashMap<String, Object> actInfo = tokenService.getAct(user.getId());
+        HashMap<String, Object> rftInfo = tokenService.getRft(user.getId());
 
-        return tokens;
+        return TokenResponse.builder()
+                .actInfo(actInfo)
+                .rftInfo(rftInfo)
+                .build();
     }
 }

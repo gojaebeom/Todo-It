@@ -6,6 +6,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
+import javax.naming.AuthenticationException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -34,6 +35,16 @@ public class ExceptionController {
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity exceptionHandler(Exception e) {
+        log.error(e.getMessage());
+        Map<String, Object> response = new HashMap<>();
+        String message = e.getMessage() != null ? e.getMessage() : "요청을 처리하지 못하였습니다.";
+        response.put("message", message);
+        response.put("statusCode", 500);
+        return ResponseEntity.internalServerError().body(response);
+    }
+
+    @ExceptionHandler(AuthenticationException.class)
+    public ResponseEntity AuthenticationException(AuthenticationException e) {
         log.error(e.getMessage());
         Map<String, Object> response = new HashMap<>();
         String message = e.getMessage() != null ? e.getMessage() : "요청을 처리하지 못하였습니다.";

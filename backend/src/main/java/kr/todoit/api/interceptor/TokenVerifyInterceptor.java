@@ -1,23 +1,26 @@
 package kr.todoit.api.interceptor;
 
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.ExpiredJwtException;
-import io.jsonwebtoken.Jwts;
+import kr.todoit.api.service.TokenService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.HandlerInterceptor;
 
 import javax.naming.AuthenticationException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.net.BindException;
+import java.util.HashMap;
 
 @Slf4j
 public class TokenVerifyInterceptor implements HandlerInterceptor {
+
+    @Autowired
+    private TokenService tokenService;
+
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         log.info("[ 토큰 유효성 검사 인터셉터 ]");
         log.info("Request Method : ");
-        log.info(request.getMethod().toString());
+        log.info(request.getMethod());
         if(request.getMethod().equals("OPTIONS")){
             log.info("if request options method is options, return true");
             return true;
@@ -32,22 +35,11 @@ public class TokenVerifyInterceptor implements HandlerInterceptor {
         try{
             token = tokenString.split("bearer ")[1];
         }catch (Exception e){
-            throw new IllegalArgumentException("토큰이 올바르지 않습니다.");
+            throw new AuthenticationException("토큰이 올바르지 않습니다.");
         }
 
-        try{
-            Claims data = Jwts.parser()
-                    .setSigningKey("secret")
-                    .parseClaimsJws(token)
-                    .getBody();
-            log.info("id", data.get("id"));
-            request.setAttribute("id", data.get("id"));
-        }catch(ExpiredJwtException e){
-            throw new BindException("EXPIRED_TOKEN");
-        }catch(Exception e) {
-            throw new BindException("PERMISSION_NOT_DEFINE");
-        }
-
+        HashMap<String, Object> tokenInfo = tokenService.verifyToken(token);
+        request.setAttribute("id", tokenInfo.get("id"));
         return true;
     }
 }
