@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 import withDefaultEvent from "./withDefaultEvent";
 import profileSampleImg from "../../assets/images/bgmCover01.png";
 
@@ -18,10 +18,10 @@ function DefaultLayout({
         <div className="flex items-center justify-start w-full h-full">
             <aside className="flex w-2/12 h-full border-r min-w-350">
                 <div className="flex flex-col items-center justify-start h-full py-3 min-w-80">
-                    <div className="flex items-center justify-center mb-2 overflow-hidden rounded-full cursor-pointer w-14 h-14">
+                    <div className="flex items-center justify-center w-12 h-12 mb-2 overflow-hidden rounded-full cursor-pointer">
                         <img src={profileSampleImg} alt="img" className="w-full h-full rounded-full"/>
                     </div>
-                    <div className="flex items-center justify-center mb-2 overflow-hidden rounded-full cursor-pointer bg-gray-50 w-14 h-14"
+                    <div className="flex items-center justify-center w-12 h-12 mb-2 overflow-hidden rounded-full cursor-pointer bg-gray-50"
                         onClick={clickCalendarModalToggleEvent}
                     >
                         <i className="text-xl text-gray-300 fas fa-plus"></i>
@@ -116,4 +116,4 @@ function DefaultLayout({
     </div>
     )
 }
-export default withDefaultEvent(DefaultLayout);
+export default withRouter(withDefaultEvent(DefaultLayout));

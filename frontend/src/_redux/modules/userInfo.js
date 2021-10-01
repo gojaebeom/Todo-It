@@ -1,13 +1,14 @@
 const initialState = {
-    token: "",
-    email:"",
-    nickname:"",
-    profileImg:"",
+    email: "",
+    nickname: "",
+    profileImg: "",
 }
 function userInfo(state=initialState, action){
     switch(action.type){
-        case "SET_TOKEN":
-            return {...state, token: action.payload};
+        // case "LOGIN":
+        //     return {...state, token: action.payload};
+        // case "LOGOUT":
+        //     return {...initialState};
         default:
             return state;
     }

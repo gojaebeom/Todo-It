@@ -1,7 +1,17 @@
 import SignLayout from "../../layouts/sign/SignLayout";
 import coverImg from "../../assets/images/cover_.png";
+import { useEffect } from "react";
+import { useSelector } from "react-redux";
+import { withRouter } from "react-router";
 
-function Login(){
+function Login({ history }){
+    const tokenInfo = useSelector(s=>s.tokenInfo);
+    useEffect(() => {
+        if(tokenInfo.token !== ""){
+            history.push("/");
+        }
+    });
+
     return(
     <SignLayout>
         <div className="flex flex-col justify-between p-5 bg-white border rounded-md w-400">
@@ -24,4 +34,4 @@ function Login(){
     </SignLayout>
     )
 }
-export default Login;
+export default withRouter(Login);

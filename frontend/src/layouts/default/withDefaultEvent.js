@@ -1,17 +1,27 @@
+import axios from "axios";
+import moment from "moment";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from "react-router";
 
 function withDefaultEvent(DefaultLayout){
     return ({ children }) => {
 
+        const tokenInfo = useSelector(s => s.tokenInfo);
         const userInfo = useSelector(s => s.userInfo);
         const dispatch = useDispatch();
+        const history = useHistory();
+
+        console.log("발급일");
+        console.log(tokenInfo.iat);
+        console.log("현재 시간");
+        const issuedAt = tokenInfo.iat;
+        const nowAt = moment().unix();
+        console.log("발급일로 부터 지난 시간");
+        console.log(nowAt - issuedAt);
+        console.log(1800);
 
         const [isCalendarModalOpen, setIsCalendarModalOpen] = useState(false);
-
-        // const [calendar, setCalendar] = useState({
-        //     test:true,
-        // });
 
         const [storeCalendar, setStoreCalendar] = useState({
             name: "",
@@ -19,13 +29,28 @@ function withDefaultEvent(DefaultLayout){
             thumbnailFile: null,
         });
 
-        const clickLogoutEvent = () => {
+        const clickLogoutEvent = async () => {
             // eslint-disable-next-line no-restricted-globals
             const result = confirm("로그아웃 하시겠습니까?");
             if(!result) return;
             
-            window.localStorage.removeItem("act");
-            dispatch({type:"IS_LOGOUT"});
+            
+            await axios({
+                method: "get",
+                url: `${process.env.REACT_APP_API_URL}/users/logout`,
+                headers: {
+                    "Authorization": `bearer ${tokenInfo.token}`,
+                },
+                withCredentials:true,
+            })
+            .then(data => {
+                console.log(data);
+            })
+            .catch(err => {
+                console.error(err);
+            });
+            dispatch({type:"LOGOUT"});
+            history.push("/login");
         }
 
         const clickCalendarModalToggleEvent = ( e ) => {

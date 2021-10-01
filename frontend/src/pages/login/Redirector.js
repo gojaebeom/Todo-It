@@ -26,16 +26,15 @@ function Redirector({ location, history }){
             data: params,
         })
         .then(data => data.data)
-        .catch(err => err.response.status);
+        .catch(err => {
+            if(err.response.status === 500 || err.response.status === 400){
+                alert("카카오 서버요청이 정상적으로 처리되지 않았습니다.");
+                history.push("/login");
+                throw new Error("요청 에러");
+            }
+        });
 
-        console.log(kakaoRes);
-
-        if(kakaoRes === 500 || kakaoRes === 400){
-            alert("카카오 서버요청이 정상적으로 처리되지 않았습니다.");
-            window.location.href = "/login";
-        }
-
-        const studybookRes = await axios({
+        await axios({
             method: "post",
             url: `${process.env.REACT_APP_API_URL}/users/join-by-oauth`,
             headers: {
@@ -46,17 +45,16 @@ function Redirector({ location, history }){
             data: {"provideType": "KAKAO"},
         })
         .then(data => {
-            if(data.data === 500 || data.data === 400){
-                alert("서버요청이 정상적으로 처리되지 않았습니다.");
-                window.location.href = "/login";
-            }
-            return data;
+            dispatch({type:"LOGIN", payload: {...data.data.actInfo} });
+            history.push("/");
         })
-        .catch(err => err.response);
-
-        dispatch({type:"SET_TOKEN", payload:studybookRes.data.data});
-
-        history.push("/");
+        .catch(err => {
+            console.err(err.response);
+            if(err.response === 500 || err.response === 400){
+                alert("서버요청이 정상적으로 처리되지 않았습니다.");
+                history.push("/login");
+            }
+        });
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);    
 

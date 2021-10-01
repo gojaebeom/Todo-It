@@ -20,8 +20,7 @@ function widthHomeEvent(Home){
                                 let days = today.clone().startOf('year').week(week).startOf('week').add(index, 'day');
                                 return(
                                     <td key={index} className={`
-                                        ${index % 7 === 0 || index % 6 === 0 ? 'bg-gray-100' :''}
-                                        
+                                        ${ index % 7 === 0 || index % 6 === 0 ? 'bg-gray-100':'' }
                                         hover:bg-red-100
                                         `}
                                     >
@@ -34,8 +33,7 @@ function widthHomeEvent(Home){
                                             </span>
                                             {/* <div className="flex justify-center w-full mb-1 bg-green-200 rounded-md">달력만들기</div>
                                             <div className="flex justify-center w-full mb-1 bg-blue-200 rounded-md">달력만들기</div>
-                                            <div className="flex justify-center w-full mb-1 bg-yellow-200 rounded-md">달력만들기</div>
-                                            <div className="flex justify-center w-full mb-1 bg-gray-200 rounded-md">달력만들기</div> */}
+                                            <div className="flex justify-center w-full mb-1 bg-yellow-200 rounded-md">달력만들기</div> */}
                                         </Link>
                                     </td>
                                 );
@@ -48,11 +46,11 @@ function widthHomeEvent(Home){
         }
 
         return (
-            <Home
-                today={today}
-                setToday={setToday}
-                calendarArray={calendarArray}
-            />
+        <Home
+            today={today}
+            setToday={setToday}
+            calendarArray={calendarArray}
+        />
         )
     }
 }
