@@ -3,6 +3,7 @@ package kr.todoit.api.controller;
 import kr.todoit.api.dto.TokenResponse;
 import kr.todoit.api.dto.UserJoinRequest;
 import kr.todoit.api.dto.UserJoinResponse;
+import kr.todoit.api.dto.UserShowResponse;
 import kr.todoit.api.service.OAuth2Service;
 import kr.todoit.api.service.UserService;
 import lombok.AllArgsConstructor;
@@ -65,9 +66,11 @@ public class UserController {
 
     @GetMapping("/{id}")
     public ResponseEntity<?> show(@PathVariable Long id) {
+        UserShowResponse userShowResponse = userService.show(id);
         Map<String, Object> response = new HashMap<>();
-        response.put("message","로그인이 정상적으로 처리되었습니다.");
+        response.put("message","회원 데이터를 정상적으로 가져왔습니다.");
         response.put("statusCode", 200);
+        response.put("user", userShowResponse);
         return ResponseEntity.ok(response);
     }
 }

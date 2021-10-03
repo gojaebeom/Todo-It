@@ -4,6 +4,7 @@ import kr.todoit.api.domain.User;
 import kr.todoit.api.dto.TokenResponse;
 import kr.todoit.api.dto.UserJoinRequest;
 import kr.todoit.api.dto.UserJoinResponse;
+import kr.todoit.api.dto.UserShowResponse;
 import kr.todoit.api.repository.UserRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -51,5 +52,10 @@ public class UserService {
                 .actInfo(actInfo)
                 .rftInfo(rftInfo)
                 .build();
+    }
+
+    public UserShowResponse show(Long id) {
+        User user = userRepository.findUserById(id);
+        return UserShowResponse.of(user);
     }
 }
