@@ -3,7 +3,7 @@ import emptyImg from "../../assets/images/null.png";
 import withTodoEvent from "./withTodoEvent";
 import { withRouter } from "react-router";
 
-function TodoList({ 
+function TodoList({
     items, 
     day, 
     toBack, 
@@ -47,7 +47,6 @@ function TodoList({
                     <i className="mr-3 fas fa-plus"></i>
                     <span className="text-xl">일정 추가</span>
                 </div> :
-
                 <div className="flex flex-col items-center justify-center w-full">
                     <div className="z-10 flex flex-col items-center justify-center w-full p-3 bg-white border rounded-sm">
                         <input 

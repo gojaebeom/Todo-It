@@ -3,27 +3,17 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-
 import {BrowserRouter} from 'react-router-dom';
-
-import {createStore} from 'redux';
-import {Provider} from 'react-redux';
-import mainReducer from './_redux/store';
-
-
-const store = createStore(
-    mainReducer,
-    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
-);
+import { RecoilRoot } from 'recoil';
 
 
 ReactDOM.render(
     <React.StrictMode>
-        <BrowserRouter>
-            <Provider store={store}>
+        <RecoilRoot>
+            <BrowserRouter>
                 <App/>
-            </Provider>
-        </BrowserRouter>
+            </BrowserRouter>
+        </RecoilRoot>
     </React.StrictMode>,
     document.getElementById('root')
 );

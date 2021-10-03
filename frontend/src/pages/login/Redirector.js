@@ -1,13 +1,14 @@
 import axios from "axios";
 import { useEffect } from "react";
-import { useDispatch } from "react-redux";
 import { withRouter } from "react-router";
+import { useSetRecoilState } from "recoil";
+import { tokenState } from "../../atoms/tokenState";
 
 function Redirector({ location, history }){
-
-    const dispatch = useDispatch();
-
     
+
+    const setToken = useSetRecoilState(tokenState);
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
     useEffect(async () => {
         const code = location.search.split("code=")[1];
@@ -28,6 +29,7 @@ function Redirector({ location, history }){
         .then(data => data.data)
         .catch(err => {
             if(err.response.status === 500 || err.response.status === 400){
+                console.log("");
                 alert("카카오 서버요청이 정상적으로 처리되지 않았습니다.");
                 history.push("/login");
                 throw new Error("요청 에러");
@@ -45,7 +47,8 @@ function Redirector({ location, history }){
             data: {"provideType": "KAKAO"},
         })
         .then(data => {
-            dispatch({type:"LOGIN", payload: {...data.data.actInfo} });
+            console.log("토큰 주입");
+            setToken({...data.data.actInfo});
             history.push("/");
         })
         .catch(err => {

@@ -1,45 +1,65 @@
 import axios from "axios";
 import moment from "moment";
-import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
 import { useHistory } from "react-router";
+import { useRecoilState } from "recoil";
+import { calendarStoreState } from "../../atoms/calendarStoreState";
+import { tokenInitState, tokenState } from "../../atoms/tokenState";
+import { creationCalendarModalState } from "../../atoms/ui/creationCalendarModalState";
+import { updateUserModalState } from "../../atoms/ui/updateUserModalState";
+import { userState } from "../../atoms/userState";
 
 function withDefaultEvent(DefaultLayout){
     return ({ children }) => {
-
-        const tokenInfo = useSelector(s => s.tokenInfo);
-        const userInfo = useSelector(s => s.userInfo);
-        const dispatch = useDispatch();
+        const [user, setUser]   = useRecoilState(userState);
+        const [token, setToken] = useRecoilState(tokenState);
+        const [store, setStore] = useRecoilState(calendarStoreState);
+        const [creationCalendarModalOpen, setCreationCalendarModalOpen] = useRecoilState(creationCalendarModalState);
+        const [userModalOpen, setUserModalOpen] = useRecoilState(updateUserModalState);
         const history = useHistory();
 
-        console.log("발급일");
-        console.log(tokenInfo.iat);
-        console.log("현재 시간");
-        const issuedAt = tokenInfo.iat;
+        const issuedAt = token.iat;
         const nowAt = moment().unix();
-        console.log("발급일로 부터 지난 시간");
-        console.log(nowAt - issuedAt);
-        console.log(1800);
+        console.log("---------------TOKENTIME----------------");
+        console.log(`%c토큰 만료시간: ${1800}`,"color:orange");
+        console.log(`%c발급일로 부터 지난 시간: ${nowAt - issuedAt}`,"color:blue");
+        console.log("----------------------------------------");
 
-        const [isCalendarModalOpen, setIsCalendarModalOpen] = useState(false);
 
-        const [storeCalendar, setStoreCalendar] = useState({
-            name: "",
-            thumbnail: "",
-            thumbnailFile: null,
-        });
-
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+        useEffect(async () => {
+            if(token.id){
+                await axios({
+                    method: "get",
+                    url: `${process.env.REACT_APP_API_URL}/users/${token.id}`,
+                    headers: {
+                        "Authorization": `bearer ${token.token}`,
+                    },
+                    withCredentials:true,
+                })
+                .then(data => {
+                    console.log(data.data);
+                    setUser({...data});
+                })
+                .catch(err => {
+                    console.error(err);
+                });
+            }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+        }, [token.id]);
+        
+        
+        
         const clickLogoutEvent = async () => {
             // eslint-disable-next-line no-restricted-globals
             const result = confirm("로그아웃 하시겠습니까?");
             if(!result) return;
-            
-            
+
             await axios({
                 method: "get",
                 url: `${process.env.REACT_APP_API_URL}/users/logout`,
                 headers: {
-                    "Authorization": `bearer ${tokenInfo.token}`,
+                    "Authorization": `bearer ${token.token}`,
                 },
                 withCredentials:true,
             })
@@ -49,19 +69,15 @@ function withDefaultEvent(DefaultLayout){
             .catch(err => {
                 console.error(err);
             });
-            dispatch({type:"LOGOUT"});
+            setToken(tokenInitState);
             history.push("/login");
         }
 
-        const clickCalendarModalToggleEvent = ( e ) => {
-            setStoreCalendar({
-                ...storeCalendar,
-                name: "",
-                thumbnail: "",
-                thumbnailFile: null,
-            });
-            setIsCalendarModalOpen(!isCalendarModalOpen);
-        }
+        const clickCreationCalendarModalOpenEvent = () => setCreationCalendarModalOpen(true);
+        
+
+        const clickUpdateUserModalOpenEvent = () => setUserModalOpen(true);
+        
 
         const changeImageEvent = ( e ) => {
             if(e.target.files.length === 0){
@@ -80,31 +96,34 @@ function withDefaultEvent(DefaultLayout){
             const reader = new FileReader()
             // 이미지가 로드가 된 경우
             reader.onload = e => {
-                setStoreCalendar({...storeCalendar, thumbnail: e.target.result, thumbnailFile: file });
+                setStore({...store, thumbnail: e.target.result, thumbnailFile: file });
             }
             // reader가 이미지 읽도록 하기
             reader.readAsDataURL(e.target.files[0]);
         }
 
         const changeInputEvent = ( e ) => {
-            setStoreCalendar({...storeCalendar, name: e.target.value});
+            setStore({...store, name: e.target.value});
         }
 
         const submitCalendarEvent = () => {
-            console.log(storeCalendar);
+            console.log(store);
         }
 
         return (
         <DefaultLayout
             children={children}
-            userInfo={userInfo}
+            userInfo={user}
             clickLogoutEvent={clickLogoutEvent}
-            isCalendarModalOpen={isCalendarModalOpen}
-            clickCalendarModalToggleEvent={clickCalendarModalToggleEvent}
+            creationCalendarModalOpen={creationCalendarModalOpen}
+            clickCreationCalendarModalOpenEvent={clickCreationCalendarModalOpenEvent}
             changeImageEvent={changeImageEvent}
-            storeCalendar={storeCalendar}
+            storeCalendar={store}
             changeInputEvent={changeInputEvent}
             submitCalendarEvent={submitCalendarEvent}
+
+            clickUpdateUserModalOpenEvent={clickUpdateUserModalOpenEvent}
+            userModalOpen={userModalOpen}
         />
         );
     }

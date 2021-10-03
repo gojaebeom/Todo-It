@@ -1,13 +1,14 @@
 import SignLayout from "../../layouts/sign/SignLayout";
 import coverImg from "../../assets/images/cover_.png";
 import { useEffect } from "react";
-import { useSelector } from "react-redux";
 import { withRouter } from "react-router";
+import { useRecoilValue } from "recoil";
+import { tokenState } from "../../atoms/tokenState";
 
 function Login({ history }){
-    const tokenInfo = useSelector(s=>s.tokenInfo);
+    const token = useRecoilValue(tokenState);
     useEffect(() => {
-        if(tokenInfo.token !== ""){
+        if(token.token !== ""){
             history.push("/");
         }
     });
