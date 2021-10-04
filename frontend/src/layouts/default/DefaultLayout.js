@@ -4,15 +4,17 @@ import profileSampleImg from "../../assets/images/bgmCover01.png";
 import CalendarCreateModal from "../../components/calendarCreateModal/CalendarCreateModal";
 import UserUpdateModal from "../../components/userUpdateModal/UserUpdateModal";
 import LoadingPage from "../../components/loadingPage/LoadingPage";
-import sleep from "../../shared/sleep";
+import waitingImg from "../../assets/images/wait.svg";
 
 function DefaultLayout({ 
     children, 
     user,
     calendars, 
+    calendarDetail,
     clickLogoutEvent, 
     clickCreationCalendarModalOpenEvent,
-    clickUpdateUserModalOpenEvent
+    clickUpdateUserModalOpenEvent,
+    clickCalendarSelectEvent
 }){
     return(
     <div className="fixed top-0 left-0 flex items-center w-full h-full text-black bg-red-300 font-noto-light">
@@ -22,11 +24,15 @@ function DefaultLayout({
                     {
                         calendars.map((item)=>{
                             return(
-                            <div className="flex items-center justify-center w-12 h-12 mb-2 overflow-hidden border-red-200 rounded-full cursor-pointer" key={item.id} title={item.name}>
+                            <div className="relative flex items-center justify-center w-12 h-12 mb-2 border-red-200 rounded-full cursor-pointer calendarSelector" key={item.id} title={item.name}
+                                onClick={(e)=>{
+                                    clickCalendarSelectEvent(e, item);
+                                }}
+                            >
                                 {
                                     item.thumbnailPreview ?
                                     <img src={`${process.env.REACT_APP_API_URL}/images${item.thumbnailPreview}`} alt="img" className="w-full h-full rounded-full"/> :
-                                    <div className="flex items-center justify-center w-full h-full text-2xl bg-white rounded-full font-noto-medium">{item.name[0]}</div>
+                                    <div className="flex items-center justify-center w-full h-full bg-white rounded-full text-md font-noto-medium">{item.name[0]}{item.name[1]}</div>
                                 }
                             </div>
                             )
@@ -38,16 +44,36 @@ function DefaultLayout({
                     >
                         <i className="text-xl text-gray-300 fas fa-plus"></i>
                     </div>
+                    <div className="flex items-center justify-center w-12 h-12 mb-2 overflow-hidden rounded-full cursor-pointer bg-gray-50"
+                        title="공개 캘린더"
+                        onClick={() => alert("준비중인 기능입니다!")}
+                    >
+                        <i className="text-2xl text-red-400 fab fa-bandcamp"></i>
+                    </div>
+                    <div className="w-2/3 my-1 border-t border-white"></div>
+                    <div className="relative flex items-center justify-center w-12 h-12 mt-2 rounded-full cursor-pointer bg-gray-50"
+                        title="초대 알림"
+                        onClick={() => alert("준비중인 기능입니다!")}
+                    >
+                        <i className="text-2xl text-indigo-300 fab fas fa-bell"></i>
+                        <div className="absolute bottom-0 right-0 w-3 h-3 bg-indigo-500 rounded-full animate-bounce"></div>
+                    </div>
                 </div>
                 <div className="relative flex flex-col items-center justify-start w-full h-full rounded-tl-xl bg-gray-50">
                     <div className="flex items-center w-full h-12 pl-3 text-xl border-b font-noto-bold">
-                        # 개인 일정 ✍
+                        # {calendarDetail.name}
                     </div>
                     <div className="flex flex-col items-start justify-start w-full p-3">
-                        <h1 className="text-md font-noto-regular">캘린더</h1>
-                        <div className="flex flex-col items-start justify-start w-full pl-3">
-                            <Link to="/" className="flex items-center justify-start w-full p-1 pl-2 rounded-md text-md hover:bg-gray-100">캘린더 홈</Link>
-                            <Link to="/days/2021-09-21" className="flex items-center justify-start w-full p-1 pl-2 rounded-md text-md hover:bg-gray-100">당일 일정</Link>
+                        <h1 className="text-md font-noto-regular">파티원 ( 8 )</h1>
+                        <div className="flex flex-col items-start justify-start w-full pt-3 pl-3">
+                            <div className="flex items-center justify-start w-full p-1 pl-2 rounded-md cursor-pointer text-md hover:bg-gray-100">
+                                <img src={profileSampleImg} alt="img" className="w-8 h-8 mr-2 rounded-full"/>
+                                고재범
+                            </div>
+                            <div className="flex items-center justify-start w-full p-1 pl-2 rounded-md cursor-pointer text-md hover:bg-gray-100">
+                                <img src={profileSampleImg} alt="img" className="w-8 h-8 mr-2 rounded-full"/>
+                                고재범
+                            </div>
                         </div>
                     </div>
                     <div className="absolute bottom-0 left-0 flex items-center justify-between w-full h-12 border-t">
@@ -72,9 +98,13 @@ function DefaultLayout({
                 </div>
             </section>
 
-            <aside className="flex flex-col items-start justify-start w-2/12 h-full bg-white border-l border-r min-w-350">
-                <div className="flex items-center w-full h-12 pl-3 text-xl border-b font-noto-bold">
-                    @생산성 🍬
+            <aside className="flex-col items-start justify-start hidden w-2/12 h-full bg-white border-l border-r 2xl:flex min-w-350 ">
+                <div className="flex items-center w-full pl-3 text-xl border-b h-13 font-noto-bold">
+                    생산성 🍬
+                </div>
+                <div className="flex flex-col items-center justify-center h-full">
+                    <img src={waitingImg} alt="img" className="w-10/12"/>
+                    <p>준비중이에요..!</p>
                 </div>
             </aside>
         </div>

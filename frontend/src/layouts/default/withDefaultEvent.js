@@ -1,6 +1,7 @@
 import moment from "moment";
 import { useHistory } from "react-router";
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
+import { calendarDetailState } from "../../atoms/calendarDetailState";
 import { calendarsState } from "../../atoms/calendarsState";
 import { tokenInitState, tokenState } from "../../atoms/tokenState";
 import { creationCalendarModalState } from "../../atoms/ui/creationCalendarModalState";
@@ -18,6 +19,7 @@ function withDefaultEvent(DefaultLayout){
 
         const setCreationCalendarModalOpen = useSetRecoilState(creationCalendarModalState);
         const setUserModalOpen = useSetRecoilState(updateUserModalState);
+        const [calendarDetail, setCalendarDetail] = useRecoilState(calendarDetailState);
 
         const issuedAt = token.iat;
         const nowAt = moment().unix();
@@ -47,14 +49,35 @@ function withDefaultEvent(DefaultLayout){
 
         const clickUpdateUserModalOpenEvent = () => setUserModalOpen(true);
 
+        const clickCalendarSelectEvent = (e, item) => {
+            console.log(item);
+            const calendarSelectors = document.querySelectorAll(".calendarSelector");
+            const target = e.currentTarget;
+
+            for(let calendarSelector of calendarSelectors){
+                if(calendarSelector === target){
+                    const div = document.createElement("div");
+                    div.className="absolute bottom-0 right-0 w-3 h-3 bg-red-400 rounded-full pick to-blue-300";
+                    calendarSelector.appendChild(div);
+                    setCalendarDetail({...item});
+                }else{
+                    if(calendarSelector.querySelector(".pick")){
+                        calendarSelector.removeChild(calendarSelector.querySelector(".pick"));
+                    }
+                }
+            }
+        }
+
         return (
         <DefaultLayout
             children={children}
             user={user}
             calendars={calendars}
+            calendarDetail={calendarDetail}
             clickLogoutEvent={clickLogoutEvent}
             clickCreationCalendarModalOpenEvent={clickCreationCalendarModalOpenEvent}
             clickUpdateUserModalOpenEvent={clickUpdateUserModalOpenEvent}
+            clickCalendarSelectEvent={clickCalendarSelectEvent}
         />
         );
     }

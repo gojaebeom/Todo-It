@@ -4,6 +4,7 @@ import { withRouter } from "react-router";
 import { useSetRecoilState } from "recoil";
 import { calendarsState } from "../../atoms/calendarsState";
 import { tokenState } from "../../atoms/tokenState";
+import { loadingPageState } from "../../atoms/ui/loadingPage";
 import { userState } from "../../atoms/userState";
 import ApiScaffold from "../../shared/api";
 
@@ -11,6 +12,7 @@ function Redirector({ location, history }){
     const setToken = useSetRecoilState(tokenState);
     const setUser = useSetRecoilState(userState);
     const setCalendars = useSetRecoilState(calendarsState);
+    const setLoadingPage = useSetRecoilState(loadingPageState);
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
     useEffect(async () => {
@@ -63,7 +65,7 @@ function Redirector({ location, history }){
         });
         setUser({...userRes.data.user});
         setCalendars([...userRes.data.calendars]);
-
+        setLoadingPage({step1:false, step2:true});
         history.push("/");
 
     // eslint-disable-next-line react-hooks/exhaustive-deps

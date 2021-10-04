@@ -49,7 +49,7 @@ function withUserUpdateEvent( UserUpdateModal ) {
             if(result === "회원탈퇴"){
                 await ApiScaffold({
                     method: "delete",
-                    url: `/users/${user.userId}`,
+                    url: `/users/${user.id}`,
                     token: token.token
                 }, ( err ) => {
                     console.log(err);

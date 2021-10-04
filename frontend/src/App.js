@@ -33,14 +33,6 @@ function App(){
         console.log(calendars);
     },[calendars, token, user]);
 
-    // useEffect(() => {
-    //     window.addEventListener("load", () => {
-    //         sleep(3000);
-    //         setLoadingPage(false);
-    //     });
-    // // eslint-disable-next-line react-hooks/exhaustive-deps
-    // }, []);
-
     // eslint-disable-next-line react-hooks/exhaustive-deps
     useEffect(async () => {
         const pathname = history.location.pathname;

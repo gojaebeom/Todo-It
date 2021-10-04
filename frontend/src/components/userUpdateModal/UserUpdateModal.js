@@ -55,8 +55,8 @@ function UserUpdateModal({
                 </button>
                 <button className="flex items-center justify-center px-5 py-2 mt-5 text-white bg-red-400 rounded-sm font-noto-medium"
                 >
-                    <div className="w-3 h-3 mx-2 border-t-2 border-r-2 rounded-full animate-spin"></div>
-                    {/* 수정 */}
+                    {/* <div className="w-3 h-3 mx-2 border-t-2 border-r-2 rounded-full animate-spin"></div> */}
+                    수정
                 </button>
             </div>
         </div>
