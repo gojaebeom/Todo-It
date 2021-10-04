@@ -2,12 +2,15 @@ import axios from "axios";
 import { useEffect } from "react";
 import { withRouter } from "react-router";
 import { useSetRecoilState } from "recoil";
+import { calendarsState } from "../../atoms/calendarsState";
 import { tokenState } from "../../atoms/tokenState";
+import { userState } from "../../atoms/userState";
+import ApiScaffold from "../../shared/api";
 
 function Redirector({ location, history }){
-    
-
     const setToken = useSetRecoilState(tokenState);
+    const setUser = useSetRecoilState(userState);
+    const setCalendars = useSetRecoilState(calendarsState);
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
     useEffect(async () => {
@@ -36,29 +39,34 @@ function Redirector({ location, history }){
             }
         });
 
-        await axios({
-            method: "post",
-            url: `${process.env.REACT_APP_API_URL}/users/join-by-oauth`,
-            headers: {
-                "Content-Type": "application/json",
-                "Authorization": `bearer ${kakaoRes.access_token}`
-            },
-            withCredentials:true,
-            data: {"provideType": "KAKAO"},
-        })
-        .then(data => {
-            console.log("토큰 주입");
-            setToken({...data.data.actInfo});
-            history.push("/");
-        })
-        .catch(err => {
-            console.err(err.response);
-            if(err.response === 500 || err.response === 400){
-                alert("서버요청이 정상적으로 처리되지 않았습니다.");
-                history.push("/login");
-            }
+        const tokenRes = await ApiScaffold({
+                            method: "post",
+                            url: `/users/join-by-oauth`,
+                            token: kakaoRes.access_token,
+                            data: {"provideType": "KAKAO"}
+                        }, ( err ) => {
+                            console.err(err.response);
+                            if(err.response === 500 || err.response === 400){
+                                alert("서버요청이 정상적으로 처리되지 않았습니다.");
+                                history.push("/login");
+                            }
+                        });
+    
+        setToken({...tokenRes.actInfo});
+       
+        const userRes = await ApiScaffold({
+            method: "get",
+            url: `/users/${tokenRes.actInfo.id}`,
+            token: tokenRes.actInfo.token
+        }, ( err ) => {
+            console.error(err);
         });
-        // eslint-disable-next-line react-hooks/exhaustive-deps
+        setUser({...userRes.data.user});
+        setCalendars([...userRes.data.calendars]);
+
+        history.push("/");
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);    
 
     return(

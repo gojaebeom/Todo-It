@@ -3,14 +3,15 @@ import withDefaultEvent from "./withDefaultEvent";
 import profileSampleImg from "../../assets/images/bgmCover01.png";
 import CalendarCreateModal from "../../components/calendarCreateModal/CalendarCreateModal";
 import UserUpdateModal from "../../components/userUpdateModal/UserUpdateModal";
+import LoadingPage from "../../components/loadingPage/LoadingPage";
+import sleep from "../../shared/sleep";
 
 function DefaultLayout({ 
     children, 
+    user,
+    calendars, 
     clickLogoutEvent, 
-    userInfo, 
-    creationCalendarModalOpen, 
     clickCreationCalendarModalOpenEvent,
-    userModalOpen,
     clickUpdateUserModalOpenEvent
 }){
     return(
@@ -18,9 +19,20 @@ function DefaultLayout({
         <div className="flex items-center justify-start w-full h-full">
             <aside className="flex w-2/12 h-full border-r min-w-350">
                 <div className="flex flex-col items-center justify-start h-full py-3 min-w-80">
-                    <div className="flex items-center justify-center w-12 h-12 mb-2 overflow-hidden rounded-full cursor-pointer">
-                        <img src={profileSampleImg} alt="img" className="w-full h-full rounded-full"/>
-                    </div>
+                    {
+                        calendars.map((item)=>{
+                            return(
+                            <div className="flex items-center justify-center w-12 h-12 mb-2 overflow-hidden border-red-200 rounded-full cursor-pointer" key={item.id} title={item.name}>
+                                {
+                                    item.thumbnailPreview ?
+                                    <img src={`${process.env.REACT_APP_API_URL}/images${item.thumbnailPreview}`} alt="img" className="w-full h-full rounded-full"/> :
+                                    <div className="flex items-center justify-center w-full h-full text-2xl bg-white rounded-full font-noto-medium">{item.name[0]}</div>
+                                }
+                            </div>
+                            )
+                        })
+                    }
+                    
                     <div className="flex items-center justify-center w-12 h-12 mb-2 overflow-hidden rounded-full cursor-pointer bg-gray-50"
                         onClick={clickCreationCalendarModalOpenEvent}
                     >
@@ -42,7 +54,7 @@ function DefaultLayout({
                         <div className="flex items-center justify-start">
                             <img src={profileSampleImg} alt="img" className="w-8 h-8 mx-2 rounded-full"/>
                             <div className="flex flex-col">
-                                <p className="text-xs">{userInfo.nickname}</p>
+                                <p className="text-xs">@{user.userCode}</p>
                             </div>
                         </div>
                         <div className="flex items-center justify-end">
@@ -66,8 +78,9 @@ function DefaultLayout({
                 </div>
             </aside>
         </div>
-        { creationCalendarModalOpen && <CalendarCreateModal/> }
-        { userModalOpen && <UserUpdateModal/> }
+        <CalendarCreateModal/>
+        <UserUpdateModal/> 
+        <LoadingPage/>
     </div>
     )
 }

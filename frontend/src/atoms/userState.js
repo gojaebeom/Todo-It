@@ -1,8 +1,9 @@
 import { atom } from "recoil";
 
 export const userInitState = {
-    userId: "",
-    name: "",
+    id: "",
+    email:"",
+    userCode: "",
     nickname: "",
     profileImg: "",
     profilePreviewImg: "",
