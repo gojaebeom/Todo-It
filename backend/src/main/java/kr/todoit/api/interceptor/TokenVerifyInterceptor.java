@@ -3,6 +3,7 @@ package kr.todoit.api.interceptor;
 import kr.todoit.api.service.TokenService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.AntPathMatcher;
 import org.springframework.web.servlet.HandlerInterceptor;
 
 import javax.naming.AuthenticationException;
@@ -21,6 +22,16 @@ public class TokenVerifyInterceptor implements HandlerInterceptor {
         log.info("[ 토큰 유효성 검사 인터셉터 ]");
         log.info("Request Method : ");
         log.info(request.getMethod());
+
+        AntPathMatcher matcher = new AntPathMatcher();
+        String pattern = "/static/images/**";
+
+        String requestURI = request.getRequestURI();
+        System.out.println(requestURI);
+        if (matcher.match(pattern, requestURI)) {
+            return true;
+        }
+
         if(request.getMethod().equals("OPTIONS")){
             log.info("if request options method is options, return true");
             return true;

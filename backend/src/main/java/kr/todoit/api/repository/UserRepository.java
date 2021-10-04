@@ -10,4 +10,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
     Short countByNickname(String randomNickname);
 
     User findUserById(Long userId);
+
+    Short countByUserCode(String randomCode);
 }

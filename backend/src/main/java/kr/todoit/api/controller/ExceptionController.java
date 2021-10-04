@@ -35,6 +35,8 @@ public class ExceptionController {
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity exceptionHandler(Exception e) {
+        System.out.println(e.getMessage());
+        System.out.println(e);
         log.error(e.getMessage());
         Map<String, Object> response = new HashMap<>();
         String message = e.getMessage() != null ? e.getMessage() : "요청을 처리하지 못하였습니다.";

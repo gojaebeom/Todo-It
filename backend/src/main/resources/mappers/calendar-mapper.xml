@@ -1,35 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="kr.todoit.api.mapper.UserMapper">
-    <resultMap id="user" type="java.util.HashMap">
-        <id column="id" property="id"/>
-        <result column="user_code" property="userCode"/>
-        <result column="nickname" property="nickname"/>
-        <result column="email" property="email"/>
-        <result column="created_at" property="createdAt"/>
-    </resultMap>
+<mapper namespace="kr.todoit.api.mapper.CalendarMapper">
     <resultMap id="calendars" type="java.util.HashMap">
-        <id column="c_id" property="id"/>
+        <id column="id" property="id"/>
         <result column="c_name" property="name"/>
         <result column="is_private" property="isPrivate"/>
+        <result column="thumbnail" property="thumbnail"/>
         <result column="thumbnail_preview" property="thumbnailPreview"/>
     </resultMap>
-
-    <resultMap id="detail" type="kr.todoit.api.dto.UserDetailResponse">
-        <association property="user" resultMap="user"/>
-        <collection property="calendars" resultMap="calendars"/>
-    </resultMap>
-    <select id="findOneById" parameterType="java.lang.Long" resultMap="detail">
+    <select id="findAllByUserId" parameterType="java.lang.Long" resultMap="calendars">
         select
-            -- 회원 정보
-            u.id, u.user_code, u.nickname, u.email, u.updated_at as created_at,
-            -- 캘린더 정보
-            c.id as c_id, c.name as c_name,
+            c.id, c.name as c_name,
             if(c.is_private = null, c.is_private, 0) as is_private,
-            if(c.thumbnail_preview = null, c.thumbnail_preview, '') as thumbnail_preview
-        from users u
-                 left join calendars c on u.id = c.user_id
-        where u.id = #{id}
+            if(c.thumbnail is not null, c.thumbnail, '') as thumbnail,
+            if(c.thumbnail_preview is not null, c.thumbnail_preview, '') as thumbnail_preview
+        from calendars c
+        where c.user_id = #{id};
     </select>
 </mapper>

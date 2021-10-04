@@ -12,7 +12,7 @@ import javax.validation.constraints.NotNull;
 @ToString
 public class UserJoinRequest {
     private String email;
-    private String nickname;
+    private String userCode;
 
     @NotNull(message = "provide type 은 필수값입니다.")
     private String provideType;
@@ -20,7 +20,8 @@ public class UserJoinRequest {
     public User toUser() {
         return User.builder()
                 .email(email)
-                .nickname(nickname)
+                .userCode(userCode)
+                .nickname("투두잇")
                 .build();
     }
 

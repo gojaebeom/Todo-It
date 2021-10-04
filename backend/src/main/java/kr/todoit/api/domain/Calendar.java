@@ -2,11 +2,11 @@ package kr.todoit.api.domain;
 
 import lombok.Builder;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.ColumnDefault;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
+import org.hibernate.annotations.*;
 
 import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import java.time.LocalDateTime;
 
 @Table(name="calendars")
@@ -17,22 +17,22 @@ public class Calendar {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    private User user;
+
     @Column(name = "name", length = 20, nullable = false)
     private String name;
 
-    @Column(name = "is_private")
-    @ColumnDefault("false")
-    private Boolean isPrivate;
+    @Column(name = "is_private", columnDefinition = "tinyint default 1")
+    private Byte isPrivate;
 
-    @Column(name = "thumbnail", length = 150)
+    @Column(name = "thumbnail", length = 200)
     private String thumbnail;
 
-    @Column(name = "thumbnail_preview", length = 150)
+    @Column(name = "thumbnail_preview", length = 200)
     private String thumbnailPreview;
-
-    @Column(name = "subscriber")
-    @ColumnDefault("0")
-    private Short subscriber;
 
     @CreationTimestamp
     private LocalDateTime createdAt;
@@ -41,12 +41,12 @@ public class Calendar {
     private LocalDateTime updatedAt;
 
     @Builder
-    public Calendar(Long id, String name, Boolean isPrivate, String thumbnail, String thumbnailPreview, Short subscriber) {
+    public Calendar(Long id, User user, String name, Byte isPrivate, String thumbnail, String thumbnailPreview) {
         this.id = id;
+        this.user = user;
         this.name = name;
         this.isPrivate = isPrivate;
         this.thumbnail = thumbnail;
         this.thumbnailPreview = thumbnailPreview;
-        this.subscriber = subscriber;
     }
 }

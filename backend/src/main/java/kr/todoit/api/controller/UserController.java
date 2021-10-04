@@ -1,9 +1,6 @@
 package kr.todoit.api.controller;
 
-import kr.todoit.api.dto.TokenResponse;
-import kr.todoit.api.dto.UserJoinRequest;
-import kr.todoit.api.dto.UserJoinResponse;
-import kr.todoit.api.dto.UserShowResponse;
+import kr.todoit.api.dto.*;
 import kr.todoit.api.service.OAuth2Service;
 import kr.todoit.api.service.UserService;
 import lombok.AllArgsConstructor;
@@ -66,11 +63,22 @@ public class UserController {
 
     @GetMapping("/{id}")
     public ResponseEntity<?> show(@PathVariable Long id) {
-        UserShowResponse userShowResponse = userService.show(id);
+        UserDetailResponse userDetailResponse = userService.show(id);
         Map<String, Object> response = new HashMap<>();
         response.put("message","회원 데이터를 정상적으로 가져왔습니다.");
         response.put("statusCode", 200);
-        response.put("user", userShowResponse);
+        response.put("data", userDetailResponse);
         return ResponseEntity.ok(response);
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> delete(@PathVariable Long id) {
+        userService.delete(id);
+        Map<String, Object> response = new HashMap<>();
+        response.put("message","회원 데이터를 정상적으로 삭제했습니다.");
+        response.put("statusCode", 200);
+        return ResponseEntity.ok(response);
+    }
+
+
 }

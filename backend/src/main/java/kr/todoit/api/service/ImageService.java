@@ -30,9 +30,7 @@ public class ImageService {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
         Date date = new Date();
         String today = sdf.format(date);
-        uploadPath = uploadPath.concat("/"+today);
-        System.out.println(uploadPath);
-        File uploadFile = new File(uploadPath);
+        File uploadFile = new File(uploadPath+"/"+today);
         // 저장할 위치의 디렉토리가 존지하지 않을 경우
         if(!uploadFile.exists()){
             // mkdir() 함수와 다른 점은 상위 디렉토리가 존재하지 않을 때 그것까지 생성
@@ -41,9 +39,10 @@ public class ImageService {
 
         String randomFileName = UUID.randomUUID().toString();
         final String EXT = "png";
-
-        final String ORIGIN_PATH = uploadPath.concat("/"+randomFileName+"."+EXT);
-        final String PREVIEW_PATH = uploadPath.concat("/"+randomFileName+"-p"+"."+EXT);
+        final String ORIGIN_FILE = "/"+today+"/"+randomFileName+"."+EXT;
+        final String PREVIEW_FILE = "/"+today+"/"+randomFileName+"-p"+"."+EXT;
+        final String ORIGIN_PATH = uploadPath.concat(ORIGIN_FILE);
+        final String PREVIEW_PATH = uploadPath.concat(PREVIEW_FILE);
         uploadFile = new File(ORIGIN_PATH);
         file.transferTo(uploadFile);
 
@@ -59,8 +58,8 @@ public class ImageService {
         ImageIO.write(thumbnail, EXT, thumbnailFile);
 
         HashMap<String, String> imageName = new HashMap<>();
-        imageName.put("origin", ORIGIN_PATH);
-        imageName.put("preview", PREVIEW_PATH);
+        imageName.put("origin", ORIGIN_FILE);
+        imageName.put("preview", PREVIEW_FILE);
 
         return imageName;
     }

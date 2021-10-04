@@ -1,10 +1,8 @@
 package kr.todoit.api.service;
 
 import kr.todoit.api.domain.User;
-import kr.todoit.api.dto.TokenResponse;
-import kr.todoit.api.dto.UserJoinRequest;
-import kr.todoit.api.dto.UserJoinResponse;
-import kr.todoit.api.dto.UserShowResponse;
+import kr.todoit.api.dto.*;
+import kr.todoit.api.mapper.UserMapper;
 import kr.todoit.api.repository.UserRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -12,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.naming.AuthenticationException;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.UUID;
 
@@ -23,25 +22,34 @@ public class UserService {
 
     private TokenService tokenService;
     private UserRepository userRepository;
+    private UserMapper userMapper;
+    private CalendarService calendarService;
 
-    public TokenResponse joinByOauth(UserJoinRequest userJoinRequest) throws AuthenticationException {
+    public TokenResponse joinByOauth(UserJoinRequest userJoinRequest) throws AuthenticationException, IOException {
         User user = userRepository.findByEmail(userJoinRequest.getEmail());
 
         if(user == null){
             log.info("회원등록이 안된 유저 -> 회원가입 진행");
 
-            String randomNickname;
+            String randomCode;
             while (true){
                 log.info("랜덤 닉네임 추출 -> 중복시 반복");
                 String randomUUID = UUID.randomUUID().toString();
-                randomNickname = randomUUID.split("-")[4];
-                Short nicknameCount = userRepository.countByNickname(randomNickname);
-                if(nicknameCount == 0) break;
+                randomCode = randomUUID.split("-")[4];
+                Short userCodeCount = userRepository.countByUserCode(randomCode);
+                if(userCodeCount == 0) break;
             }
 
-            userJoinRequest.setNickname(randomNickname);
+            userJoinRequest.setUserCode(randomCode);
             user = userJoinRequest.toUser();
             userRepository.save(user);
+
+            CalendarStoreRequest calendarStoreRequest = CalendarStoreRequest.builder()
+                    .userId(user.getId())
+                    .name("개인일정")
+                    .build();
+
+            calendarService.store(calendarStoreRequest);
         }
 
         log.info("자동로그인 진행 -> 토큰 발급");
@@ -54,8 +62,13 @@ public class UserService {
                 .build();
     }
 
-    public UserShowResponse show(Long id) {
+    public UserDetailResponse show(Long id) {
+        return userMapper.findOneById(id);
+    }
+
+    public void delete(Long id) {
+        log.info("회원삭제");
         User user = userRepository.findUserById(id);
-        return UserShowResponse.of(user);
+        userRepository.delete(user);
     }
 }

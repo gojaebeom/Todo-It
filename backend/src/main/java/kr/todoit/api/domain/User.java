@@ -21,11 +21,11 @@ public class User {
     @Column(name = "email", length = 50, nullable = false, unique = true)
     private String email;
 
-    @Column(name ="name", length = 20)
-    private String name;
-
-    @Column(name = "nickname", length = 20, nullable = false, unique = true)
+    @Column(name ="nickname", length = 20)
     private String nickname;
+
+    @Column(name = "user_code", length = 20, nullable = false, unique = true)
+    private String userCode;
 
     @Column(name = "profile_img", length = 150)
     private String profileImg;
@@ -40,11 +40,11 @@ public class User {
     private LocalDateTime updatedAt;
 
     @Builder
-    public User(Long id, String email, String name, String nickname, String profileImg, String profilePreviewImg) {
+    public User(Long id, String email, String nickname, String userCode, String profileImg, String profilePreviewImg) {
         this.id = id;
         this.email = email;
-        this.name = name;
         this.nickname = nickname;
+        this.userCode = userCode;
         this.profileImg = profileImg;
         this.profilePreviewImg = profilePreviewImg;
     }

@@ -8,8 +8,9 @@ import java.time.LocalDateTime;
 @Getter
 public class UserShowResponse {
     private Long userId;
-    private String name;
+    private String email;
     private String nickname;
+    private String userCode;
     private String profileImg;
     private String profilePreviewImg;
     private LocalDateTime createdAt;
@@ -17,19 +18,21 @@ public class UserShowResponse {
     public static UserShowResponse of(User user) {
         return UserShowResponse.builder()
                 .userId(user.getId())
-                .name(user.getName())
+                .email(user.getEmail())
+                .userCode(user.getUserCode())
                 .nickname(user.getNickname())
                 .profileImg(user.getProfileImg())
                 .profilePreviewImg(user.getProfilePreviewImg())
-                .createdAt(user.getCreatedAt())
+                .createdAt(user.getUpdatedAt())
                 .build();
     }
 
     @Builder
-    public UserShowResponse(Long userId, String name, String nickname, String profileImg, String profilePreviewImg, LocalDateTime createdAt) {
+    public UserShowResponse(Long userId, String email, String nickname, String userCode, String profileImg, String profilePreviewImg, LocalDateTime createdAt) {
         this.userId = userId;
-        this.name = name;
+        this.email = email;
         this.nickname = nickname;
+        this.userCode = userCode;
         this.profileImg = profileImg;
         this.profilePreviewImg = profilePreviewImg;
         this.createdAt = createdAt;
