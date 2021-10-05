@@ -3,6 +3,7 @@ package kr.todoit.api.service;
 import kr.todoit.api.domain.Calendar;
 import kr.todoit.api.domain.CalendarGroup;
 import kr.todoit.api.domain.User;
+import kr.todoit.api.dto.CalendarDetailResponse;
 import kr.todoit.api.dto.CalendarListResponse;
 import kr.todoit.api.dto.CalendarStoreRequest;
 import kr.todoit.api.mapper.CalendarMapper;
@@ -49,5 +50,9 @@ public class CalendarService {
         calendarGroupRepository.save(calendarGroup);
 
         return calendarMapper.findAllByUserId(storeRequest.getUserId());
+    }
+
+    public CalendarDetailResponse show(Long id) {
+        return calendarMapper.findOneById(id);
     }
 }

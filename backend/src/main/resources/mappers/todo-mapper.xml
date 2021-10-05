@@ -1,48 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="kr.todoit.api.mapper.CalendarMapper">
-    <resultMap id="calendars" type="java.util.HashMap">
-        <id column="id" property="id"/>
-        <result column="c_name" property="name"/>
-        <result column="is_private" property="isPrivate"/>
-        <result column="thumbnail" property="thumbnail"/>
-        <result column="thumbnail_preview" property="thumbnailPreview"/>
+<mapper namespace="kr.todoit.api.mapper.TodoMapper">
+    <resultMap id="todo" type="java.util.HashMap">
+        <id column="todo_id" property="id"/>
+        <result column="title" property="title" />
+        <result column="description" property="description" />
+        <result column="is_finished" property="isFinished" />
     </resultMap>
-    <select id="findAllByUserId" parameterType="java.lang.Long" resultMap="calendars">
-        select
-            c.id, c.name as c_name,
-            if(c.is_private = null, c.is_private, 0) as is_private,
-            if(c.thumbnail is not null, c.thumbnail, '') as thumbnail,
-            if(c.thumbnail_preview is not null, c.thumbnail_preview, '') as thumbnail_preview
-        from calendars c
-        where c.user_id = #{id};
-    </select>
-
-    <resultMap id="calendarMembers" type="java.util.HashMap">
+    <resultMap id="dayTodos" type="kr.todoit.api.dto.TodosByDayResponse">
         <id column="user_id" property="id"/>
-        <result column="nickname" property="nickname"/>
-        <result column="user_code" property="userCode"/>
         <result column="profile_img" property="profileImg"/>
         <result column="profile_preview_img" property="profilePreviewImg"/>
+        <result column="nickname" property="nickname"/>
+        <collection property="todos" resultMap="todo"/>
     </resultMap>
-    <resultMap id="calendarDetail" type="kr.todoit.api.dto.CalendarDetailResponse">
-        <id column="id" property="id"/>
-        <result column="name" property="name"/>
-        <result column="is_private" property="isPrivate"/>
-        <result column="thumbnail" property="thumbnail"/>
-        <result column="thumbnail_preview" property="thumbnailPreview"/>
-        <collection property="members" resultMap="calendarMembers"/>
-    </resultMap>
-    <select id="findOneById" parameterType="java.lang.Long" resultMap="calendarDetail">
+    <select id="findDayTodosByCalendarIdWithMatchedDate" parameterType="kr.todoit.api.dto.TodoIndexRequest" resultMap="dayTodos">
         select
-            -- 캘린더 정보
-            c.id, c.name, c.is_private, c.thumbnail, c.thumbnail_preview,
-            -- 캘린더 맴버 정보
-            u.id as user_id, u.nickname, u.user_code, u.profile_img, u.profile_preview_img
-        from calendar_groups cg
-                 left join calendars c on cg.calendar_id = c.id
-                 left join users u on u.id = cg.user_id
-        where cg.calendar_id = #{id};
+            -- 회원 정보
+            u.id as user_id, u.profile_img, u.profile_preview_img, u.nickname,
+            -- 투두 정보
+            t.id as todo_id, t.title, t.description, t.is_finished
+        from todos t
+                 left join users u on t.user_id = u.id
+        where t.calendar_id = #{calendarId} and t.matched_date = #{matchedDate}
+        order by u.id = #{userId} desc, u.nickname asc;
     </select>
 </mapper>

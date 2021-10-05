@@ -24,6 +24,7 @@ public class UserService {
     private UserRepository userRepository;
     private UserMapper userMapper;
     private CalendarService calendarService;
+    private ImageService imageService;
 
     public TokenResponse joinByOauth(UserJoinRequest userJoinRequest) throws AuthenticationException, IOException {
         User user = userRepository.findByEmail(userJoinRequest.getEmail());
@@ -47,8 +48,8 @@ public class UserService {
             CalendarStoreRequest calendarStoreRequest = CalendarStoreRequest.builder()
                     .userId(user.getId())
                     .name("개인일정")
+                    .isPrivate((byte) 1)
                     .build();
-
             calendarService.store(calendarStoreRequest);
         }
 
@@ -62,13 +63,37 @@ public class UserService {
                 .build();
     }
 
-    public UserDetailResponse show(Long id) {
-        return userMapper.findOneById(id);
+    public UserDetailWithCalendarsResponse show(Long id) {
+        return userMapper.findOneWithCalendarsById(id);
     }
 
     public void delete(Long id) {
         log.info("회원삭제");
         User user = userRepository.findUserById(id);
         userRepository.delete(user);
+    }
+
+    public UserDetailResponse edit(UserEditRequest userEditRequest) throws IOException {
+        User user = userRepository.findUserById(userEditRequest.getId());
+        if(userEditRequest.getProfileImg() != null){
+            log.info("유저 프로필 파일 존재 -> 프로필, 프로필 프리뷰 이미지 생성,");
+            HashMap<String, String> imageNameMap = imageService.upload(userEditRequest.getProfileImg());
+            user.setProfileImg(imageNameMap.get("origin"));
+            user.setProfilePreviewImg(imageNameMap.get("preview"));
+        }
+        if(userEditRequest.getNickname() != null){
+            user.setNickname(userEditRequest.getNickname());
+        }
+
+        return UserDetailResponse.builder()
+                .id(user.getId())
+                .nickname(user.getNickname())
+                .email(user.getEmail())
+                .profileImg(user.getProfileImg())
+                .profilePreviewImg(user.getProfilePreviewImg())
+                .userCode(user.getUserCode())
+                .createdAt(user.getCreatedAt())
+                .build();
+        // return userMapper.findOneById(userEditRequest.getId());
     }
 }

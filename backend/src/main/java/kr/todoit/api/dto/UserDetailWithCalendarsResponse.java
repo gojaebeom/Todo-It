@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 
 @Getter
-public class UserDetailResponse {
+public class UserDetailWithCalendarsResponse {
     private Long id;
     private HashMap<String, Object> user;
     private List<HashMap<String, Object>> calendars;

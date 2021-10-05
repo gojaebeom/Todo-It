@@ -5,15 +5,19 @@ import kr.todoit.api.service.OAuth2Service;
 import kr.todoit.api.service.UserService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.coyote.Response;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.naming.AuthenticationException;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/users")
@@ -30,6 +34,24 @@ public class UserController {
         String email = oAuth2Service.getKakaoEmailByAccessToken(accessTokenString);
         joinRequest.setEmail(email);
 
+        TokenResponse tokenResponse = userService.joinByOauth(joinRequest);
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("message","로그인이 정상적으로 처리되었습니다.");
+        response.put("statusCode", 200);
+        response.put("actInfo", tokenResponse.getActInfo());
+        final Long time = 3600 * 24 * 14L;
+        ResponseCookie responseCookie = ResponseCookie.from("rft", tokenResponse.getRftInfo().get("token").toString())
+                .httpOnly(true)
+                .path("/")
+                .maxAge(time)
+                .sameSite("Strict")
+                .build();
+        return ResponseEntity.ok().header(HttpHeaders.SET_COOKIE, responseCookie.toString()).body(response);
+    }
+    @PostMapping("/join-free")
+    public ResponseEntity<?> joinFree(@RequestBody UserJoinRequest joinRequest) throws AuthenticationException, IOException {
+        System.out.println(joinRequest);
         TokenResponse tokenResponse = userService.joinByOauth(joinRequest);
 
         Map<String, Object> response = new HashMap<>();
@@ -63,9 +85,20 @@ public class UserController {
 
     @GetMapping("/{id}")
     public ResponseEntity<?> show(@PathVariable Long id) {
-        UserDetailResponse userDetailResponse = userService.show(id);
+        UserDetailWithCalendarsResponse userDetailResponse = userService.show(id);
         Map<String, Object> response = new HashMap<>();
         response.put("message","회원 데이터를 정상적으로 가져왔습니다.");
+        response.put("statusCode", 200);
+        response.put("data", userDetailResponse);
+        return ResponseEntity.ok(response);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<?> edit(@Valid UserEditRequest userEditRequest) throws IOException {
+        System.out.println(userEditRequest);
+        UserDetailResponse userDetailResponse = userService.edit(userEditRequest);
+        Map<String, Object> response = new HashMap<>();
+        response.put("message","회원 데이터를 정상적으로 수정하였습니다.");
         response.put("statusCode", 200);
         response.put("data", userDetailResponse);
         return ResponseEntity.ok(response);

@@ -45,6 +45,7 @@ public class WebConfig implements WebMvcConfigurer {
         registry.addInterceptor(tokenVerifyInterceptor())
                 .addPathPatterns("/**")
                 .excludePathPatterns("/images/**")
+                .excludePathPatterns("/users/join-free")
                 .excludePathPatterns ("/**/*.png", "/**/*.jpg", "/**/*.jpeg", "/**/*.gif", "/**/*.svg")
                 .excludePathPatterns("/users/join-by-oauth")
                 .excludePathPatterns("/auth/silent-refresh");

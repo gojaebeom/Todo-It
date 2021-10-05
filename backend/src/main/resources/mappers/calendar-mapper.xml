@@ -18,4 +18,31 @@
         from calendars c
         where c.user_id = #{id};
     </select>
+
+    <resultMap id="calendarMembers" type="java.util.HashMap">
+        <id column="user_id" property="id"/>
+        <result column="nickname" property="nickname"/>
+        <result column="user_code" property="userCode"/>
+        <result column="profile_img" property="profileImg"/>
+        <result column="profile_preview_img" property="profilePreviewImg"/>
+    </resultMap>
+    <resultMap id="calendarDetail" type="kr.todoit.api.dto.CalendarDetailResponse">
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="is_private" property="isPrivate"/>
+        <result column="thumbnail" property="thumbnail"/>
+        <result column="thumbnail_preview" property="thumbnailPreview"/>
+        <collection property="members" resultMap="calendarMembers"/>
+    </resultMap>
+    <select id="findOneById" parameterType="java.lang.Long" resultMap="calendarDetail">
+        select
+            -- 캘린더 정보
+            c.id, c.name, c.is_private, c.thumbnail, c.thumbnail_preview,
+            -- 캘린더 맴버 정보
+            u.id as user_id, u.nickname, u.user_code, u.profile_img, u.profile_preview_img
+        from calendar_groups cg
+                 left join calendars c on cg.calendar_id = c.id
+                 left join users u on u.id = cg.user_id
+        where cg.calendar_id = #{id};
+    </select>
 </mapper>
