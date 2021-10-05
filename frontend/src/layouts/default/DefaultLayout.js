@@ -1,6 +1,5 @@
-import { Link, withRouter } from "react-router-dom";
+import { withRouter } from "react-router-dom";
 import withDefaultEvent from "./withDefaultEvent";
-import profileSampleImg from "../../assets/images/bgmCover01.png";
 import CalendarCreateModal from "../../components/calendarCreateModal/CalendarCreateModal";
 import UserUpdateModal from "../../components/userUpdateModal/UserUpdateModal";
 import LoadingPage from "../../components/loadingPage/LoadingPage";
@@ -17,10 +16,18 @@ function DefaultLayout({
     clickCalendarSelectEvent
 }){
     return(
-    <div className="fixed top-0 left-0 flex items-center w-full h-full text-black bg-red-300 font-noto-light">
+    <div className="fixed top-0 left-0 flex items-center w-full h-full text-black bg-red-300 font-noto-regular">
         <div className="flex items-center justify-start w-full h-full">
             <aside className="flex w-2/12 h-full border-r min-w-350">
                 <div className="flex flex-col items-center justify-start h-full py-3 min-w-80">
+                    <div className="relative flex items-center justify-center w-12 h-12 mt-2 rounded-full cursor-pointer bg-gray-50"
+                        title="초대 알림"
+                        onClick={() => alert("준비중인 기능입니다!")}
+                    >
+                        <i className="text-2xl text-indigo-300 fab fas fa-bell"></i>
+                        <div className="absolute bottom-0 right-0 w-3 h-3 bg-indigo-500 rounded-full animate-bounce"></div>
+                    </div>
+                    <div className="w-2/3 my-3 border-t border-white"></div>
                     {
                         calendars.map((item)=>{
                             return(
@@ -50,35 +57,41 @@ function DefaultLayout({
                     >
                         <i className="text-2xl text-red-400 fab fa-bandcamp"></i>
                     </div>
-                    <div className="w-2/3 my-1 border-t border-white"></div>
-                    <div className="relative flex items-center justify-center w-12 h-12 mt-2 rounded-full cursor-pointer bg-gray-50"
-                        title="초대 알림"
-                        onClick={() => alert("준비중인 기능입니다!")}
-                    >
-                        <i className="text-2xl text-indigo-300 fab fas fa-bell"></i>
-                        <div className="absolute bottom-0 right-0 w-3 h-3 bg-indigo-500 rounded-full animate-bounce"></div>
-                    </div>
                 </div>
                 <div className="relative flex flex-col items-center justify-start w-full h-full rounded-tl-xl bg-gray-50">
                     <div className="flex items-center w-full h-12 pl-3 text-xl border-b font-noto-bold">
                         # {calendarDetail.name}
                     </div>
                     <div className="flex flex-col items-start justify-start w-full p-3">
-                        <h1 className="text-md font-noto-regular">파티원 ( 8 )</h1>
+                        <h1 className="text-md font-noto-regular">참여 인원 ({calendarDetail.members.length})</h1>
                         <div className="flex flex-col items-start justify-start w-full pt-3 pl-3">
-                            <div className="flex items-center justify-start w-full p-1 pl-2 rounded-md cursor-pointer text-md hover:bg-gray-100">
-                                <img src={profileSampleImg} alt="img" className="w-8 h-8 mr-2 rounded-full"/>
-                                고재범
-                            </div>
-                            <div className="flex items-center justify-start w-full p-1 pl-2 rounded-md cursor-pointer text-md hover:bg-gray-100">
-                                <img src={profileSampleImg} alt="img" className="w-8 h-8 mr-2 rounded-full"/>
-                                고재범
-                            </div>
+                            {
+                                calendarDetail.members.map((item, index) => {
+                                    return(
+                                    <div key={item.id} className="flex items-center justify-start w-full p-1 pl-2 rounded-md cursor-pointer text-md hover:bg-gray-100">
+                                        {
+                                            item.profilePreviewImg ?
+                                            <img src={`${process.env.REACT_APP_API_URL}/images${item.profilePreviewImg}`} alt="img" className="w-8 h-8 mx-2 rounded-full"/> :
+                                            <div className="flex items-center justify-center w-8 h-8 mx-2 border border-gray-500 rounded-full">
+                                                <i className="far fa-user"></i>
+                                            </div>
+                                        }
+                                        {item.nickname}
+                                    </div>
+                                    )
+                                })
+                            }
                         </div>
                     </div>
                     <div className="absolute bottom-0 left-0 flex items-center justify-between w-full h-12 border-t">
                         <div className="flex items-center justify-start">
-                            <img src={profileSampleImg} alt="img" className="w-8 h-8 mx-2 rounded-full"/>
+                            {
+                                user.profilePreviewImg ? 
+                                <img src={`${process.env.REACT_APP_API_URL}/images${user.profilePreviewImg}`} alt="img" className="w-8 h-8 mx-2 rounded-full"/> :
+                                <div className="flex items-center justify-center w-8 h-8 mx-2 border border-gray-500 rounded-full">
+                                    <i className="far fa-user"></i>
+                                </div>
+                            }
                             <div className="flex flex-col">
                                 <p className="text-xs">@{user.userCode}</p>
                             </div>

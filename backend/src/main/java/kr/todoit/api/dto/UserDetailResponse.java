@@ -1,13 +1,17 @@
 package kr.todoit.api.dto;
 
+import kr.todoit.api.domain.User;
+import lombok.Builder;
 import lombok.Getter;
-
-import java.util.HashMap;
-import java.util.List;
+import java.time.LocalDateTime;
 
 @Getter
-public class UserDetailResponse {
+public class UserEditResponse {
     private Long id;
-    private HashMap<String, Object> user;
-    private List<HashMap<String, Object>> calendars;
+    private String email;
+    private String nickname;
+    private String userCode;
+    private String profileImg;
+    private String profilePreviewImg;
+    private LocalDateTime createdAt;
 }

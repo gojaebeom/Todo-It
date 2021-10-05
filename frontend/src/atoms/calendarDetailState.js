@@ -6,6 +6,9 @@ export const calendarDetailInitState = {
     thumbnail: "",
     thumbnailPreview: "",
     isPrivate: 0,
+    members:[
+        
+    ]
 };
 
 export const calendarDetailState = atom({

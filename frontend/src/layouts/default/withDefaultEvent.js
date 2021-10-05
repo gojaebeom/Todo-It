@@ -1,11 +1,12 @@
 import moment from "moment";
 import { useHistory } from "react-router";
-import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import { calendarDetailState } from "../../atoms/calendarDetailState";
 import { calendarsState } from "../../atoms/calendarsState";
 import { tokenInitState, tokenState } from "../../atoms/tokenState";
 import { creationCalendarModalState } from "../../atoms/ui/creationCalendarModalState";
 import { updateUserModalState } from "../../atoms/ui/updateUserModalState";
+import { userEditState } from "../../atoms/userEditState";
 import { userState } from "../../atoms/userState";
 import ApiScaffold from "../../shared/api";
 
@@ -16,9 +17,10 @@ function withDefaultEvent(DefaultLayout){
         const user = useRecoilValue(userState);
         const calendars = useRecoilValue(calendarsState);
         const [token, setToken] = useRecoilState(tokenState);
+        const [userEdit, setUserEdit] = useRecoilState(userEditState);
 
-        const setCreationCalendarModalOpen = useSetRecoilState(creationCalendarModalState);
-        const setUserModalOpen = useSetRecoilState(updateUserModalState);
+        const [createionCalendarModalOpen, setCreationCalendarModalOpen] = useRecoilState(creationCalendarModalState);
+        const [userModalOpen, setUserModalOpen] = useRecoilState(updateUserModalState);
         const [calendarDetail, setCalendarDetail] = useRecoilState(calendarDetailState);
 
         const issuedAt = token.iat;
@@ -45,21 +47,56 @@ function withDefaultEvent(DefaultLayout){
             history.push("/login");
         }
 
-        const clickCreationCalendarModalOpenEvent = () => setCreationCalendarModalOpen({open:true});
+        const clickCreationCalendarModalOpenEvent = () => setCreationCalendarModalOpen({...createionCalendarModalOpen, open:true});
 
-        const clickUpdateUserModalOpenEvent = () => setUserModalOpen(true);
+        const clickUpdateUserModalOpenEvent = () => {
+            setUserEdit({
+                ...userEdit,
+                id: user.id,
+                email: user.email,
+                nickname: user.nickname,
+                userCode: user.userCode,
+                createdAt: user.createdAt,
+                profilePreviewImg: user.profilePreviewImg
+            });
+            setUserModalOpen({...userModalOpen, open:true});
+        }
 
-        const clickCalendarSelectEvent = (e, item) => {
+        const clickCalendarSelectEvent = async (e, item) => {
             console.log(item);
             const calendarSelectors = document.querySelectorAll(".calendarSelector");
             const target = e.currentTarget;
+
+            const res = await ApiScaffold({
+                method: "get",
+                url: `/calendars/${item.id}`,
+                token: token.token
+            }, ( err ) => {
+                console.error(err);
+            });
 
             for(let calendarSelector of calendarSelectors){
                 if(calendarSelector === target){
                     const div = document.createElement("div");
                     div.className="absolute bottom-0 right-0 w-3 h-3 bg-red-400 rounded-full pick to-blue-300";
                     calendarSelector.appendChild(div);
-                    setCalendarDetail({...item});
+                    console.log(res.data);
+    
+                    let array = [];
+                    for(let i = 0; i < res.data.members.length; i++){
+                        array.push(res.data.members[i]);
+                        if( res.data.members[i].id === user.id){
+                            let temp;
+                            temp = array[0];
+                            array[i] = temp;
+                            array[0] = res.data.members[i];
+                        }
+                    }
+                    console.log(array);
+
+                    res.data.members = array;
+
+                    setCalendarDetail({...res.data});
                 }else{
                     if(calendarSelector.querySelector(".pick")){
                         calendarSelector.removeChild(calendarSelector.querySelector(".pick"));

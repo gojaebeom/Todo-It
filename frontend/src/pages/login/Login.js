@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import { withRouter } from "react-router";
 import { useRecoilValue } from "recoil";
 import { tokenState } from "../../atoms/tokenState";
+import ApiScaffold from "../../shared/api";
 
 function Login({ history }){
     const token = useRecoilValue(tokenState);
@@ -22,6 +23,22 @@ function Login({ history }){
             </div>
             <img src={coverImg} alt="img" />
             <div className="flex flex-col items-center justify-center">
+                <button className="mb-2" onClick={
+                    async () => {
+                        const userRes = await ApiScaffold({
+                            method: "post",
+                            url: `/users/join-free`,
+                            data: {"provideType": "KAKAO", "email":"KAKAO:test@test"}
+                        }, ( err ) => {
+                            console.err(err.response);
+                            if(err.response === 500 || err.response === 400){
+                                alert("서버요청이 정상적으로 처리되지 않았습니다.");
+                                history.push("/login");
+                            }
+                        });
+                        history.push("/");
+                    }
+                }>무지성 로그인하기</button>
                 <div className="mb-2">선택지가 없는 카카오톡 로그인하기</div>
                 <a 
                     href={`https://kauth.kakao.com/oauth/authorize?client_id=${process.env.REACT_APP_KAKAO_CLIENT_ID}&redirect_uri=${process.env.REACT_APP_KAKAO_REDIRECT_URL}&response_type=code`}

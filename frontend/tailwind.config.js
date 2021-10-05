@@ -37,7 +37,8 @@ module.exports = {
                 "50":"50px"
             },
             textColor:{
-                "black":"#424242"
+                "real-black":"black",
+                "black":"#585858"
             },
             fontFamily: {
                 'noto-regular': ['noto-regular'],

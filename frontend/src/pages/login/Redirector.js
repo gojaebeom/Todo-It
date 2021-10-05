@@ -55,7 +55,6 @@ function Redirector({ location, history }){
                         });
     
         setToken({...tokenRes.actInfo});
-       
         const userRes = await ApiScaffold({
             method: "get",
             url: `/users/${tokenRes.actInfo.id}`,
