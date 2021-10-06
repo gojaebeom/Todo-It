@@ -41,7 +41,7 @@ public class AuthController {
         Map<String, Object> response = new HashMap<>();
         response.put("message","인증");
         response.put("statusCode", 200);
-        response.put("actInfo", tokenResponse.getActInfo());
+        response.put("act", tokenResponse.getActInfo());
         final Long time = 3600 * 24 * 14L;
         ResponseCookie responseCookie = ResponseCookie.from("rft", tokenResponse.getRftInfo().get("token").toString())
                 .httpOnly(true)

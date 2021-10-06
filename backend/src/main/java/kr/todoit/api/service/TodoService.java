@@ -3,9 +3,7 @@ package kr.todoit.api.service;
 import kr.todoit.api.domain.Calendar;
 import kr.todoit.api.domain.Todo;
 import kr.todoit.api.domain.User;
-import kr.todoit.api.dto.TodoIndexRequest;
-import kr.todoit.api.dto.TodoStoreRequest;
-import kr.todoit.api.dto.TodosByDayResponse;
+import kr.todoit.api.dto.*;
 import kr.todoit.api.mapper.TodoMapper;
 import kr.todoit.api.repository.CalendarRepository;
 import kr.todoit.api.repository.TodoRepository;
@@ -28,8 +26,12 @@ public class TodoService {
     private TodoMapper todoMapper;
 
 
-    public List<TodosByDayResponse> index(TodoIndexRequest todoIndexRequest) {
+    public List<TodosByDayResponse> findDays(TodoIndexRequest todoIndexRequest) {
         return todoMapper.findDayTodosByCalendarIdWithMatchedDate(todoIndexRequest);
+    }
+
+    public List<TodosByMonthResponse> findMonth(TodoIndexRequest todoIndexRequest) {
+        return todoMapper.findMonthByCalendarId(todoIndexRequest);
     }
 
     public void store(TodoStoreRequest todoStoreRequest){
@@ -41,6 +43,24 @@ public class TodoService {
             todoRepository.save(todo);
         }else{
             throw new IllegalArgumentException("저장하려는 일정정보의 회원, 또는 캘린더가 존재하지 않습니다.");
+        }
+    }
+
+    public void delete(Long id) {
+        todoRepository.deleteById(id);
+        log.info("투두 삭제");
+    }
+
+    public void edit(TodoEditRequest todoEditRequest) {
+        Todo todo = todoRepository.findTodoById(todoEditRequest.getId());
+        if(todoEditRequest.getTitle() != null && !todoEditRequest.getTitle().equals("")){
+            todo.setTitle(todoEditRequest.getTitle());
+        }
+        if(todoEditRequest.getDescription() != null){
+            todo.setDescription(todoEditRequest.getDescription());
+        }
+        if(todoEditRequest.getIsFinished() != null){
+            todo.setIsFinished(todoEditRequest.getIsFinished());
         }
     }
 }

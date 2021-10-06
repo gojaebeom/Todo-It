@@ -26,4 +26,16 @@
         where t.calendar_id = #{calendarId} and t.matched_date = #{matchedDate}
         order by u.id = #{userId} desc, u.nickname asc;
     </select>
+
+    <resultMap id="monthTodo" type="kr.todoit.api.dto.TodosByMonthResponse">
+        <id column="id" property="id"/>
+        <result column="title" property="title"/>
+        <result column="matched_date" property="matchedDate"/>
+    </resultMap>
+    <select id="findMonthByCalendarId" parameterType="kr.todoit.api.dto.TodoIndexRequest" resultMap="monthTodo">
+        select
+            t.id, t.title, t.matched_date
+        from todos t
+        where t.calendar_id = #{calendarId};
+    </select>
 </mapper>

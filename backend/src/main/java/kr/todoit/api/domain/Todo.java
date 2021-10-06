@@ -2,6 +2,7 @@ package kr.todoit.api.domain;
 
 import lombok.Builder;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -11,6 +12,7 @@ import java.time.LocalDateTime;
 @Table(name="todos")
 @Entity
 @NoArgsConstructor
+@Setter
 public class Todo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

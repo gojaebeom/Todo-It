@@ -1,16 +1,12 @@
 package kr.todoit.api.controller;
 
-import kr.todoit.api.dto.TodoIndexRequest;
-import kr.todoit.api.dto.TodoStoreRequest;
-import kr.todoit.api.dto.TodosByDayResponse;
+import kr.todoit.api.domain.Todo;
+import kr.todoit.api.dto.*;
 import kr.todoit.api.service.TodoService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.HashMap;
@@ -27,11 +23,18 @@ public class TodoController {
     @GetMapping("")
     public ResponseEntity<?> index(@Valid TodoIndexRequest todoIndexRequest){
         System.out.println(todoIndexRequest);
-        List<TodosByDayResponse> todosByDayResponse = todoService.index(todoIndexRequest);
         Map<String, Object> response = new HashMap<>();
         response.put("message","일정을 성공적으로 불러왔습니다.");
-        response.put("statusCode", 200);
-        response.put("data", todosByDayResponse);
+        if(todoIndexRequest.getMatchedDate() != null){
+            List<TodosByDayResponse> todosByDayResponse = todoService.findDays(todoIndexRequest);
+            response.put("statusCode", 200);
+            response.put("data", todosByDayResponse);
+        }else{
+            List<TodosByMonthResponse> todosByDayResponse = todoService.findMonth(todoIndexRequest);
+            response.put("statusCode", 200);
+            response.put("data", todosByDayResponse);
+        }
+
         return ResponseEntity.ok(response);
     }
 
@@ -41,6 +44,26 @@ public class TodoController {
 
         Map<String, Object> response = new HashMap<>();
         response.put("message","일정을 성공적으로 저장했습니다.");
+        response.put("statusCode", 200);
+        return ResponseEntity.ok(response);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<?> edit(@Valid TodoEditRequest todoEditRequest){
+        todoService.edit(todoEditRequest);
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("message","일정을 성공적으로 수정했습니다.");
+        response.put("statusCode", 200);
+        return ResponseEntity.ok(response);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> delete(@PathVariable  Long id){
+        todoService.delete(id);
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("message","일정을 성공적으로 삭제했습니다.");
         response.put("statusCode", 200);
         return ResponseEntity.ok(response);
     }
