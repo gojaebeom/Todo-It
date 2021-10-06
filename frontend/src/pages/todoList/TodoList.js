@@ -139,8 +139,8 @@ const TodoList =({
                                     <div key={item.id} className="flex items-center justify-between w-full p-2 rounded-md cursor-pointer hover:bg-gray-600 hover:text-white hover:shadow-md"
                                         style={{borderRadius:"3px"}}
                                     >
-                                        <div className="flex justify-start itmes-center ">
-                                            <label className="flex items-center mr-2 space-x-3">
+                                        <div className="flex justify-start itmes-center">
+                                            <label className="flex items-center mr-2 space-x-3 cursor-pointer">
                                                 <input 
                                                     type="checkbox" 
                                                     name="isFinished"
@@ -148,8 +148,8 @@ const TodoList =({
                                                     onChange={() => changeTodoEditIsFinished(item)}
                                                     className="w-5 h-5 border border-gray-100 outline-none cursor-pointer"
                                                 />
+                                                <p onClick={() => changeTodoEditIsFinished(item)}>{item.title}</p>
                                             </label>
-                                            <p>{item.title}</p>
                                         </div>
                                         {
                                             writer.id === user.id &&
