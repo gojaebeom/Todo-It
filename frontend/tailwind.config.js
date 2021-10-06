@@ -36,6 +36,9 @@ module.exports = {
                 "70":"70px",
                 "50":"50px"
             },
+            maxHeight:{
+                "100":"100px",
+            },
             textColor:{
                 "real-black":"black",
                 "black":"#585858"

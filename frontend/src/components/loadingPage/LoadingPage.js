@@ -2,11 +2,10 @@ import { useEffect } from "react";
 import { useRecoilState } from "recoil";
 import { loadingPageState } from "../../atoms/ui/loadingPage";
 
-function LoadingPage(){
+const LoadingPage = () => {
     const [loading, setLoading] = useRecoilState(loadingPageState);
     useEffect(() => {
         if(loading.step1 === false){
-            console.log("실행");
             setTimeout(() => {
                 setLoading({step1:false, step2:false});
             }, 500);

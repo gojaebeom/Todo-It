@@ -1,15 +1,16 @@
 import SignLayout from "../../layouts/sign/SignLayout";
 import coverImg from "../../assets/images/cover_.png";
 import { useEffect } from "react";
-import { withRouter } from "react-router";
+import { useHistory } from "react-router";
 import { useRecoilValue } from "recoil";
-import { tokenState } from "../../atoms/tokenState";
 import ApiScaffold from "../../shared/api";
+import { userState } from "../../atoms/userState";
 
-function Login({ history }){
-    const token = useRecoilValue(tokenState);
+const Login = () => {
+    const user = useRecoilValue(userState);
+    const history = useHistory();
     useEffect(() => {
-        if(token.token !== ""){
+        if(user.id !== ""){
             history.push("/");
         }
     });
@@ -25,13 +26,12 @@ function Login({ history }){
             <div className="flex flex-col items-center justify-center">
                 <button className="mb-2" onClick={
                     async () => {
-                        const userRes = await ApiScaffold({
+                        await ApiScaffold({
                             method: "post",
                             url: `/users/join-free`,
                             data: {"provideType": "KAKAO", "email":"KAKAO:test@test"}
                         }, ( err ) => {
-                            console.err(err.response);
-                            if(err.response === 500 || err.response === 400){
+                            if(err.data.response === 500 || err.data.response === 400){
                                 alert("서버요청이 정상적으로 처리되지 않았습니다.");
                                 history.push("/login");
                             }
@@ -52,4 +52,4 @@ function Login({ history }){
     </SignLayout>
     )
 }
-export default withRouter(Login);
+export default Login;

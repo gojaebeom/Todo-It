@@ -1,5 +1,4 @@
-import { useRecoilState, useRecoilValue } from "recoil";
-import { tokenState } from "../../atoms/tokenState";
+import { useRecoilState } from "recoil";
 import { updateUserModalState } from "../../atoms/ui/updateUserModalState";
 import { userEditState } from "../../atoms/userEditState";
 import { userState } from "../../atoms/userState";
@@ -7,11 +6,9 @@ import ApiScaffold from "../../shared/api";
 import readImgFile from "../../shared/readImgFile";
 import sleep from "../../shared/sleep";
 
-function withUserUpdateEvent( UserUpdateModal ) {
+const withUserUpdateEvent = ( UserUpdateModal ) => {
     return () => {
-        const token = useRecoilValue(tokenState);
         const [user, setUser] = useRecoilState(userState);
-        console.log(user);
         const [userEdit, setUserEdit] = useRecoilState(userEditState);
         const [updateUserModalOpen, setUpdateUserModalOpen] = useRecoilState(updateUserModalState);
 
@@ -37,10 +34,8 @@ function withUserUpdateEvent( UserUpdateModal ) {
             if(result === "회원탈퇴"){
                 await ApiScaffold({
                     method: "delete",
-                    url: `/users/${userEdit.id}`,
-                    token: token.token
+                    url: `/users/${userEdit.id}`
                 }, ( err ) => {
-                    console.log(err);
                     alert(err.data.message);
                 });
                 alert("그동안 Todoit을 이용해주셔서 감사합니다.");
@@ -57,17 +52,14 @@ function withUserUpdateEvent( UserUpdateModal ) {
             if(userEdit.profileImgFile) formData.append("profileImg", userEdit.profileImgFile);
             
             const res = await ApiScaffold({
-                            method: "put",
-                            url: `/users/${userEdit.id}`,
-                            token: token.token,
-                            data: formData
-                        }, ( err ) => {
-                            console.log(err.data);
-                            alert(err.data.message);
-                            setUpdateUserModalOpen({...updateUserModalOpen, submit:false});
-                            throw new Error(err.data);
-                        });
-            console.log(res);
+                method: "put",
+                url: `/users/${userEdit.id}`,
+                data: formData
+            }, ( err ) => {
+                setUpdateUserModalOpen({...updateUserModalOpen, submit:false});
+            });
+
+            console.debug(res);
             sleep(500);
             setUser({...res.data});
             setUpdateUserModalOpen({...updateUserModalOpen, open:false, submit:false});
@@ -75,6 +67,7 @@ function withUserUpdateEvent( UserUpdateModal ) {
 
         return(
         <UserUpdateModal
+            user={user}
             userEdit={userEdit}
             updateUserModalOpen={updateUserModalOpen}
             clickUpdateUserModalCloseEvent={clickUpdateUserModalCloseEvent}

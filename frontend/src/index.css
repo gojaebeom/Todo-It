@@ -57,3 +57,12 @@ td{
     background-image: linear-gradient(180deg, #ebebeb 0%, #ebebeb 99%);
     box-shadow: inset 2px 2px 5px 0 rgba(#fff, 0.5);
 }
+
+.custom-bottom-line-yellow::after{
+    content: '';
+    width: 100%;
+    height: 5px;
+    border:1px solid black;
+    background-color:yellow;
+    opacity: 80%;
+}

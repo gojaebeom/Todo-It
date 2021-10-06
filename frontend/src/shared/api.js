@@ -1,26 +1,17 @@
 import axios from "axios";
 
-async function ApiScaffold({ method, url, data, token }, callback){
-    const { res, err } = await axios({
+const ApiScaffold = async ({ method, url, data, token }, callback) => {
+    return await axios({
         method: method,
-        url: `${process.env.REACT_APP_API_URL}${url}`,
-        headers: {
-            "Authorization": `bearer ${token}`,
-        },
-        withCredentials:true,
+        url: url,
         data: data ? data : null
     })
     .then(data => {
-        return {res: data.data};
+        return data.data;
     })
     .catch(err => {
-        return {err: err.response};
+        callback(err.response);
+        throw new Error(err.response.data.message);
     });
-
-    if( err ) {
-        callback(err);
-    }else{
-        return res;
-    }
 }
 export default ApiScaffold;

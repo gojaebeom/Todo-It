@@ -1,7 +1,7 @@
 import DefaultLayout from "../../layouts/default/DefaultLayout";
 import widthHomeEvent from "./withHomeEvent";
 
-function Home({setToday, today, calendarArray}){
+const Home = ({setToday, today, calendarArray}) => {
     return(
     <DefaultLayout>
         <div className="flex items-center justify-between w-full mb-5">

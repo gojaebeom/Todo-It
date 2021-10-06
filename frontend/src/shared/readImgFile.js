@@ -1,4 +1,4 @@
-function readImgFile( event, callback ){
+const readImgFile = ( event, callback ) => {
     if(event.target.files.length === 0){
         event.target.value = "";
         return false;

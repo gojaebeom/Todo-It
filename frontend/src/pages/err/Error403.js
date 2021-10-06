@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import error404Img from "../../assets/images/404.svg";
 
-function Error403(){
+const Error403 = () => {
     return(
     <div className="fixed top-0 left-0 z-50 w-full h-screen overflow-hidden bg-indigo-900">
         <img src={error404Img} alt="cover" className="absolute object-cover w-full h-full"/>

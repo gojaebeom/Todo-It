@@ -1,13 +1,13 @@
-import withCalendarCreateEnvet from "./withCalendarCreateEvent";
+import withCalendarCreateEvent from "./withCalendarCreateEvent";
 
-function CalendarCreateModal({ 
+const CalendarCreateModal = ({ 
     storeCalendar,
     changeImageEvent,
     changeInputEvent,
     clickCreationCalendarModalCloseEvent,
     submitCalendarEvent,
     creationCalendarModalOpen
-}){
+}) => {
     return(
     creationCalendarModalOpen.open &&
     <div className={`fixed top-0 left-0 flex items-center justify-center w-full h-full bg-black bg-opacity-50`}>
@@ -77,4 +77,4 @@ function CalendarCreateModal({
     </div>
     )
 }
-export default  withCalendarCreateEnvet(CalendarCreateModal);
+export default withCalendarCreateEvent(CalendarCreateModal);

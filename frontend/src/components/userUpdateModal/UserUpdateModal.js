@@ -1,6 +1,6 @@
 import withUserUpdateEvent from "./withUserUpdateEvent";
 
-function UserUpdateModal({
+const UserUpdateModal = ({
     updateUserModalOpen,
     clickUpdateUserModalCloseEvent,
     changeImageEvent,
@@ -8,7 +8,7 @@ function UserUpdateModal({
     clickDeleteUserEvent,
     userEdit,
     submitEvent
-}){
+}) => {
     return(
     updateUserModalOpen.open &&
     <div className={`fixed top-0 left-0 flex items-center justify-center w-full h-full bg-black bg-opacity-50`}>

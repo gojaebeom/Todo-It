@@ -2,17 +2,17 @@ import axios from "axios";
 import { useEffect } from "react";
 import { withRouter } from "react-router";
 import { useSetRecoilState } from "recoil";
+import { calendarDetailState } from "../../atoms/calendarDetailState";
 import { calendarsState } from "../../atoms/calendarsState";
-import { tokenState } from "../../atoms/tokenState";
 import { loadingPageState } from "../../atoms/ui/loadingPage";
 import { userState } from "../../atoms/userState";
 import ApiScaffold from "../../shared/api";
 
-function Redirector({ location, history }){
-    const setToken = useSetRecoilState(tokenState);
+const Redirector = ({ location, history }) => {
     const setUser = useSetRecoilState(userState);
     const setCalendars = useSetRecoilState(calendarsState);
     const setLoadingPage = useSetRecoilState(loadingPageState);
+    const setCalendarDetail = useSetRecoilState(calendarDetailState);
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
     useEffect(async () => {
@@ -29,43 +29,59 @@ function Redirector({ location, history }){
             headers: {
                 "Content-type": "application/x-www-form-urlencoded;charset=utf-8"
             },
+            withCredentials:false,
             data: params,
         })
         .then(data => data.data)
         .catch(err => {
             if(err.response.status === 500 || err.response.status === 400){
-                console.log("");
+                console.debug("");
                 alert("카카오 서버요청이 정상적으로 처리되지 않았습니다.");
                 history.push("/login");
                 throw new Error("요청 에러");
             }
         });
 
-        const tokenRes = await ApiScaffold({
-                            method: "post",
-                            url: `/users/join-by-oauth`,
-                            token: kakaoRes.access_token,
-                            data: {"provideType": "KAKAO"}
-                        }, ( err ) => {
-                            console.err(err.response);
-                            if(err.response === 500 || err.response === 400){
-                                alert("서버요청이 정상적으로 처리되지 않았습니다.");
-                                history.push("/login");
-                            }
-                        });
-    
-        setToken({...tokenRes.actInfo});
+        console.debug(kakaoRes.access_token);
+
+        const tokenRes = await axios({
+            method: "post",
+            url: `/users/join-by-oauth`,
+            headers: {
+                "Authorization":`bearer ${kakaoRes.access_token}`
+            },
+            data: {"provideType": "KAKAO"},
+        })
+        .then(data => data.data)
+        .catch(err => {
+            console.error(err);
+            if(err.response === 500 || err.response === 400){
+                alert("서버요청이 정상적으로 처리되지 않았습니다.");
+                history.push("/login");
+            }
+        });
+
+        // API 요청하는 콜마다 헤더에 accessToken 담아 보내도록 설정
+		axios.defaults.headers.common['Authorization'] = `bearer ${tokenRes.act.token}`;
+
         const userRes = await ApiScaffold({
             method: "get",
-            url: `/users/${tokenRes.actInfo.id}`,
-            token: tokenRes.actInfo.token
+            url: `/users/${tokenRes.act.id}`
         }, ( err ) => {
             console.error(err);
         });
+
+        const defaultCalendarId = userRes.data.calendars[0].id;
+        const calendarDetail = await ApiScaffold({
+            method: "get",
+            url: `/calendars/${defaultCalendarId}`,
+        });
+        
         setUser({...userRes.data.user});
         setCalendars([...userRes.data.calendars]);
         setLoadingPage({step1:false, step2:true});
-        history.push("/");
+        setCalendarDetail({...calendarDetail.data});
+        history.push(`/`);
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);    

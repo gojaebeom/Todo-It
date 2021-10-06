@@ -1,11 +1,12 @@
-import { withRouter } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 import withDefaultEvent from "./withDefaultEvent";
 import CalendarCreateModal from "../../components/calendarCreateModal/CalendarCreateModal";
 import UserUpdateModal from "../../components/userUpdateModal/UserUpdateModal";
 import LoadingPage from "../../components/loadingPage/LoadingPage";
 import waitingImg from "../../assets/images/wait.svg";
+import { calendarDetailState } from "../../atoms/calendarDetailState";
 
-function DefaultLayout({ 
+const DefaultLayout = ({ 
     children, 
     user,
     calendars, 
@@ -14,7 +15,7 @@ function DefaultLayout({
     clickCreationCalendarModalOpenEvent,
     clickUpdateUserModalOpenEvent,
     clickCalendarSelectEvent
-}){
+}) => {
     return(
     <div className="fixed top-0 left-0 flex items-center w-full h-full text-black bg-red-300 font-noto-regular">
         <div className="flex items-center justify-start w-full h-full">
@@ -27,21 +28,25 @@ function DefaultLayout({
                         <i className="text-2xl text-indigo-300 fab fas fa-bell"></i>
                         <div className="absolute bottom-0 right-0 w-3 h-3 bg-indigo-500 rounded-full animate-bounce"></div>
                     </div>
-                    <div className="w-2/3 my-3 border-t border-white"></div>
+                    <div className="w-2/5 my-3 border-t border-white border-dashed"></div>
                     {
                         calendars.map((item)=>{
                             return(
-                            <div className="relative flex items-center justify-center w-12 h-12 mb-2 border-red-200 rounded-full cursor-pointer calendarSelector" key={item.id} title={item.name}
-                                onClick={(e)=>{
-                                    clickCalendarSelectEvent(e, item);
-                                }}
+                            <button
+                                onClick={() => clickCalendarSelectEvent(item)}
+                                className={`
+                                relative flex items-center justify-center w-12 h-12 mb-2 border-red-200 
+                                rounded-full cursor-pointer calendarSelector transition-all delay-75
+                                ${item.id === calendarDetail.id && "border-4 border-gray-300"}`}
+                                key={item.id} 
+                                title={item.name}
                             >
                                 {
                                     item.thumbnailPreview ?
                                     <img src={`${process.env.REACT_APP_API_URL}/images${item.thumbnailPreview}`} alt="img" className="w-full h-full rounded-full"/> :
                                     <div className="flex items-center justify-center w-full h-full bg-white rounded-full text-md font-noto-medium">{item.name[0]}{item.name[1]}</div>
                                 }
-                            </div>
+                            </button>
                             )
                         })
                     }
