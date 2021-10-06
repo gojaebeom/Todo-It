@@ -7,7 +7,8 @@ const UserUpdateModal = ({
     changeInputEvent,
     clickDeleteUserEvent,
     userEdit,
-    submitEvent
+    submitEvent,
+    user
 }) => {
     return(
     updateUserModalOpen.open &&
@@ -16,13 +17,19 @@ const UserUpdateModal = ({
             <p className="text-2xl font-noto-medium">회원 정보 수정</p>
             <p className="text-sm">{userEdit.email}</p>
             <label className="flex flex-col items-center justify-center w-20 h-20 my-5 border-2 border-gray-500 border-dashed rounded-full cursor-pointer" htmlFor="file">
-                {
-                    !userEdit.profilePreviewImg ?
+            {
+                    ( !userEdit.profilePreviewImg && user.profilePreviewImg ) ?
+                    <img src={`${process.env.REACT_APP_API_URL}/images${user.profilePreviewImg}`} alt="img" className="w-full h-full rounded-full"/>:
                     <>
-                        <i className="text-2xl fas fa-camera"></i>
-                        <span className="text-sm">UPLOAD</span>
-                    </> : 
-                    <img src={`${process.env.REACT_APP_API_URL}/images${userEdit.profilePreviewImg}`} alt="img" className="w-full h-full rounded-full"/>
+                    {
+                        ( userEdit.profilePreviewImg ) ?
+                        <img src={userEdit.profilePreviewImg} alt="img" className="w-full h-full rounded-full"/>:
+                        <>
+                            <i className="text-2xl fas fa-camera"></i>
+                            <span className="text-sm">UPLOAD</span>
+                        </> 
+                    }
+                    </>
                 }
                 <input id="file" type="file" className="w-0 h-0"
                     onChange={changeImageEvent}

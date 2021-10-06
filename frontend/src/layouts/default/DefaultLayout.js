@@ -1,10 +1,10 @@
-import { Link, withRouter } from "react-router-dom";
+import { withRouter } from "react-router-dom";
 import withDefaultEvent from "./withDefaultEvent";
 import CalendarCreateModal from "../../components/calendarCreateModal/CalendarCreateModal";
 import UserUpdateModal from "../../components/userUpdateModal/UserUpdateModal";
 import LoadingPage from "../../components/loadingPage/LoadingPage";
 import waitingImg from "../../assets/images/wait.svg";
-import { calendarDetailState } from "../../atoms/calendarDetailState";
+import CalendarEditModal from "../../components/calendarEditModal/CalendarEditModal";
 
 const DefaultLayout = ({ 
     children, 
@@ -14,7 +14,9 @@ const DefaultLayout = ({
     clickLogoutEvent, 
     clickCreationCalendarModalOpenEvent,
     clickUpdateUserModalOpenEvent,
-    clickCalendarSelectEvent
+    clickCalendarSelectEvent,
+
+    editCalendarModalOpen
 }) => {
     return(
     <div className="fixed top-0 left-0 flex items-center w-full h-full text-black bg-red-300 font-noto-regular">
@@ -64,8 +66,9 @@ const DefaultLayout = ({
                     </div>
                 </div>
                 <div className="relative flex flex-col items-center justify-start w-full h-full rounded-tl-xl bg-gray-50">
-                    <div className="flex items-center w-full h-12 pl-3 text-xl border-b font-noto-bold">
-                        # {calendarDetail.name}
+                    <div className="flex items-center justify-between w-full h-12 pl-3 text-xl border-b font-noto-bold">
+                        <div>{calendarDetail.name}</div>
+                        <button onClick={editCalendarModalOpen}><i className="mx-2 fas fa-cog"></i></button>
                     </div>
                     <div className="flex flex-col items-start justify-start w-full p-3">
                         <h1 className="text-md font-noto-regular">참여 인원 ({calendarDetail.members.length})</h1>
@@ -127,6 +130,7 @@ const DefaultLayout = ({
             </aside>
         </div>
         <CalendarCreateModal/>
+        <CalendarEditModal/>
         <UserUpdateModal/> 
         <LoadingPage/>
     </div>

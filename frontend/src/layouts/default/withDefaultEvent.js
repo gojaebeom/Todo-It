@@ -2,8 +2,10 @@ import { useEffect } from "react";
 import { useHistory } from "react-router";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { calendarDetailState } from "../../atoms/calendarDetailState";
+import { calendarEditState } from "../../atoms/calendarEditState";
 import { calendarsState } from "../../atoms/calendarsState";
 import { creationCalendarModalState } from "../../atoms/ui/creationCalendarModalState";
+import { editCalendarModalState } from "../../atoms/ui/editCalendarModalState";
 import { updateUserModalState } from "../../atoms/ui/updateUserModalState";
 import { userEditState } from "../../atoms/userEditState";
 import { userState } from "../../atoms/userState";
@@ -20,6 +22,8 @@ const withDefaultEvent = (DefaultLayout) => {
         const [createionCalendarModalOpen, setCreationCalendarModalOpen] = useRecoilState(creationCalendarModalState);
         const [userModalOpen, setUserModalOpen] = useRecoilState(updateUserModalState);
         const [calendarDetail, setCalendarDetail] = useRecoilState(calendarDetailState);
+        const [calendarEditModal, setCalendarEditModal] = useRecoilState(editCalendarModalState);
+        const [calendarEdit, setCalendarEdit] = useRecoilState(calendarEditState);
 
         useEffect(() => {
             console.debug("실행됨");
@@ -49,7 +53,6 @@ const withDefaultEvent = (DefaultLayout) => {
                 nickname: user.nickname,
                 userCode: user.userCode,
                 createdAt: user.createdAt,
-                profilePreviewImg: user.profilePreviewImg
             });
             setUserModalOpen({...userModalOpen, open:true});
         }
@@ -63,6 +66,16 @@ const withDefaultEvent = (DefaultLayout) => {
             history.push("/");
         }
 
+        const editCalendarModalOpen = () => {
+            setCalendarEdit({
+                ...calendarEditState, 
+                id:calendarDetail.id,
+                name:calendarDetail.name,
+                isPrivate: calendarDetail.is
+            });
+            setCalendarEditModal({...calendarEditModal, open:true});
+        }
+
         return (
         <DefaultLayout
             children={children}
@@ -73,6 +86,8 @@ const withDefaultEvent = (DefaultLayout) => {
             clickCreationCalendarModalOpenEvent={clickCreationCalendarModalOpenEvent}
             clickUpdateUserModalOpenEvent={clickUpdateUserModalOpenEvent}
             clickCalendarSelectEvent={clickCalendarSelectEvent}
+
+            editCalendarModalOpen={editCalendarModalOpen}
         />
         );
     }
