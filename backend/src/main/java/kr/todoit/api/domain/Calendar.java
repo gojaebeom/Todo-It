@@ -2,6 +2,7 @@ package kr.todoit.api.domain;
 
 import lombok.Builder;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.annotations.*;
 
 import javax.persistence.*;
@@ -12,6 +13,7 @@ import java.time.LocalDateTime;
 @Table(name="calendars")
 @Entity
 @NoArgsConstructor
+@Setter
 public class Calendar {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

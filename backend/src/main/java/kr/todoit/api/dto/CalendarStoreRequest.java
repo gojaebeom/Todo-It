@@ -17,16 +17,11 @@ import javax.validation.constraints.NotNull;
 public class CalendarStoreRequest {
     @NotNull(message = "최초 생성자 id는 필수값입니다.")
     private Long userId;
-
     @NotNull(message = "캘린더 이름은 필수값입니다.")
     private String name;
-
     private MultipartFile thumbnail;
-
     private String thumbnailPath;
-
     private String thumbnailPreviewPath;
-
     private Byte isPrivate;
 
     public Calendar toCalendar(User user){

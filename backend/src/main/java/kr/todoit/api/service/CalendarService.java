@@ -3,9 +3,7 @@ package kr.todoit.api.service;
 import kr.todoit.api.domain.Calendar;
 import kr.todoit.api.domain.CalendarGroup;
 import kr.todoit.api.domain.User;
-import kr.todoit.api.dto.CalendarDetailResponse;
-import kr.todoit.api.dto.CalendarListResponse;
-import kr.todoit.api.dto.CalendarStoreRequest;
+import kr.todoit.api.dto.*;
 import kr.todoit.api.mapper.CalendarMapper;
 import kr.todoit.api.repository.CalendarGroupRepository;
 import kr.todoit.api.repository.CalendarRepository;
@@ -31,6 +29,9 @@ public class CalendarService {
     private UserRepository userRepository;
     private ImageService imageService;
 
+    public List<CalendarListResponse> index(CalendarIndexRequest calendarIndexRequest) {
+        return calendarMapper.findAllByUserId(calendarIndexRequest.getUserId());
+    }
 
     public List<CalendarListResponse> store(CalendarStoreRequest storeRequest) throws IOException {
 
@@ -55,4 +56,26 @@ public class CalendarService {
     public CalendarDetailResponse show(Long id) {
         return calendarMapper.findOneById(id);
     }
+
+    public void edit(CalendarEditRequest editRequest) throws IOException {
+        Calendar calendar = calendarRepository.findCalendarById(editRequest.getId());
+        if(editRequest.getThumbnail() != null){
+            log.info("캘린더 썸네일 파일 존재 -> 썸네일, 썸네일 프리뷰 이미지 생성,");
+            HashMap<String, String> imageNameMap = imageService.upload(editRequest.getThumbnail());
+            calendar.setThumbnail(imageNameMap.get("origin"));
+            calendar.setThumbnailPreview(imageNameMap.get("preview"));
+        }
+        if(editRequest.getName() != null && !editRequest.getName().equals("")){
+            calendar.setName(editRequest.getName());
+        }
+        if(editRequest.getIsPrivate() != null){
+            calendar.setIsPrivate(editRequest.getIsPrivate());
+        }
+    }
+
+    public void delete(Long id) {
+        calendarRepository.deleteById(id);
+    }
+
+
 }
