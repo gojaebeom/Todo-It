@@ -1,5 +1,5 @@
 import DefaultLayout from "../../layouts/default/DefaultLayout";
-import widthHomeEvent from "./withHomeEvent";
+import homeEvent from "./homeEvent";
 
 const Home = ({setToday, today, calendarArray}) => {
     return(
@@ -41,4 +41,4 @@ const Home = ({setToday, today, calendarArray}) => {
     </DefaultLayout>
     )
 }
-export default widthHomeEvent(Home);
+export default homeEvent(Home);

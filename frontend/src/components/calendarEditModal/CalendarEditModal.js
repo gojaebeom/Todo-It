@@ -1,4 +1,4 @@
-import withCalendarEditEvent from "./withCalendarEditEvent";
+import calendarEditModalEvent from "./calendarEditModalEvent";
 
 const CalendarEditModal = ({
     calendarDetail,
@@ -94,4 +94,4 @@ const CalendarEditModal = ({
     </div>
     )
 }
-export default withCalendarEditEvent(CalendarEditModal);
+export default calendarEditModalEvent(CalendarEditModal);

@@ -7,7 +7,7 @@ import ApiScaffold from "../../shared/api";
 import readImgFile from "../../shared/readImgFile";
 import sleep from "../../shared/sleep";
 
-const withCalendarCreateEvent = ( Compoent ) => {
+const calendarCreateModalEvent = ( Compoent ) => {
     return () => {
         const user = useRecoilValue(userState);
         const [storeCalendar, setStoreCalendar] = useRecoilState(calendarStoreState);
@@ -72,4 +72,4 @@ const withCalendarCreateEvent = ( Compoent ) => {
         )
     }
 }
-export default withCalendarCreateEvent;
+export default calendarCreateModalEvent;

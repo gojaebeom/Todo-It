@@ -1,14 +1,15 @@
-import { withRouter } from "react-router-dom";
-import withDefaultEvent from "./withDefaultEvent";
+import defaultLayoutEvent from "./defaultLayoutEvent";
 import CalendarCreateModal from "../../components/calendarCreateModal/CalendarCreateModal";
 import UserUpdateModal from "../../components/userUpdateModal/UserUpdateModal";
 import LoadingPage from "../../components/loadingPage/LoadingPage";
 import waitingImg from "../../assets/images/wait.svg";
 import CalendarEditModal from "../../components/calendarEditModal/CalendarEditModal";
+import notificationImg from "../../assets/images/notification2.png";
 
 const DefaultLayout = ({ 
     children, 
     user,
+    
     calendars, 
     calendarDetail,
     clickLogoutEvent, 
@@ -16,7 +17,16 @@ const DefaultLayout = ({
     clickUpdateUserModalOpenEvent,
     clickCalendarSelectEvent,
 
-    editCalendarModalOpen
+    editCalendarModalOpen,
+
+    inviteInput,
+    changeInviteInput,
+    submitInviteInput,
+
+    toggleNotificationModal,
+    refreshNotificationModal,
+    notificationModal,
+    notifications
 }) => {
     return(
     <div className="fixed top-0 left-0 flex items-center w-full h-full text-black bg-red-300 font-noto-regular">
@@ -25,13 +35,14 @@ const DefaultLayout = ({
                 <div className="flex flex-col items-center justify-start h-full py-3 min-w-80">
                     <div className="relative flex items-center justify-center w-12 h-12 mt-2 rounded-full cursor-pointer bg-gray-50"
                         title="초대 알림"
-                        onClick={() => alert("준비중인 기능입니다!")}
+                        onClick={toggleNotificationModal}
                     >
                         <i className="text-2xl text-indigo-300 fab fas fa-bell"></i>
                         <div className="absolute bottom-0 right-0 w-3 h-3 bg-indigo-500 rounded-full animate-bounce"></div>
                     </div>
                     <div className="w-2/5 my-3 border-t border-white border-dashed"></div>
                     {
+                        calendars &&
                         calendars.map((item)=>{
                             return(
                             <button
@@ -66,11 +77,45 @@ const DefaultLayout = ({
                     </div>
                 </div>
                 <div className="relative flex flex-col items-center justify-start w-full h-full rounded-tl-xl bg-gray-50">
+                    {
+                        notificationModal &&
+                        <div className="absolute z-50 flex flex-col items-center justify-start p-4 bg-white border border-gray-200 rounded-md -left-2 top-4 min-w-250">
+                            <div className="flex justify-end w-full mb-4">
+                                
+                                <button className="text-xs cursor-pointer"
+                                    onClick={refreshNotificationModal}
+                                >
+                                    <i className="mr-1 fas fa-redo-alt"></i>
+                                    새로고침
+                                </button>
+                            </div>
+                            {
+                                notifications.length > 0 ?
+                                <div>
+                                    <img src={notificationImg} alt="img"/>
+                                    <p className="text-xl font-noto-medium">알림이 없어요!</p>
+                                </div> :
+                                <div className="w-full border rounded-md">
+                                    알림이 왔어요!
+                                </div>
+                            }
+
+                        </div>
+                    }
                     <div className="flex items-center justify-between w-full h-12 pl-3 text-xl border-b font-noto-bold">
                         <div>{calendarDetail.name}</div>
                         <button onClick={editCalendarModalOpen}><i className="mx-2 fas fa-cog"></i></button>
                     </div>
                     <div className="flex flex-col items-start justify-start w-full p-3">
+                        <div className="flex justify-between w-full mb-4 border border-gray-200 rounded-md">
+                            <input className="w-9/12 p-2 border-r outline-none rounded-l-md"
+                                value={inviteInput}
+                                onChange={changeInviteInput}
+                            />
+                            <button className="w-3/12 p-2 text-white bg-red-300 rounded-r-md"
+                                onClick={submitInviteInput}
+                            >초대</button>
+                        </div>
                         <h1 className="text-md font-noto-regular">참여 인원 ({calendarDetail.members.length})</h1>
                         <div className="flex flex-col items-start justify-start w-full pt-3 pl-3">
                             {
@@ -112,7 +157,7 @@ const DefaultLayout = ({
                 </div>
             </aside>
 
-            <section className="flex flex-col items-start justify-start w-full h-full bg-white ">
+            <section className="flex flex-col items-start justify-start w-full h-full bg-white">
                 <div className="flex items-center w-full pl-3 text-2xl border-b h-13 font-noto-bold"></div>
                 <div className="flex flex-col items-center justify-start w-full h-full p-5 overflow-y-auto custom-scroll">
                     { children }
@@ -136,4 +181,4 @@ const DefaultLayout = ({
     </div>
     )
 }
-export default withRouter(withDefaultEvent(DefaultLayout));
+export default defaultLayoutEvent(DefaultLayout);

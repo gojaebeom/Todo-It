@@ -8,7 +8,7 @@ import { todosByMonthState } from "../../atoms/todosByMonthState";
 import { userState } from "../../atoms/userState";
 import ApiScaffold from "../../shared/api";
 
-const widthHomeEvent = (Home) => {
+const homeEvent = (Home) => {
     return () => {
         const calendarDetail = useRecoilValue(calendarDetailState);
         const user = useRecoilValue(userState);
@@ -20,12 +20,11 @@ const widthHomeEvent = (Home) => {
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
         useEffect(async () => {
-            if(calendarDetail.id){
+            if(calendarDetail.id && user.id){
                 const loadRes = await ApiScaffold({
                     method: "get",
                     url: `/todos?calendarId=${calendarDetail.id}&userId=${user.id}`
                 });
-                console.debug(loadRes);
                 setTodosByMonth(loadRes.data);
             }
         }, [calendarDetail.id, setTodosByMonth, user.id]);
@@ -33,9 +32,7 @@ const widthHomeEvent = (Home) => {
         const calendarArray = () =>{
             let result = [];
             let week = firstWeek;
-            console.debug(week);
-            console.debug(lastWeek);
-            console.debug(today);
+            
             for(week; week <= lastWeek; week++){
                 result = result.concat(
                     <tr key={week}>
@@ -93,4 +90,4 @@ const widthHomeEvent = (Home) => {
         )
     }
 }
-export default widthHomeEvent;
+export default homeEvent;

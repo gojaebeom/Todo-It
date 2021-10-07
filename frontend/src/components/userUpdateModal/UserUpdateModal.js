@@ -1,4 +1,4 @@
-import withUserUpdateEvent from "./withUserUpdateEvent";
+import userUpdateModalEvent from "./userUpdateModalEvent";
 
 const UserUpdateModal = ({
     updateUserModalOpen,
@@ -75,4 +75,4 @@ const UserUpdateModal = ({
     </div>
     )
 }
-export default withUserUpdateEvent(UserUpdateModal);
+export default userUpdateModalEvent(UserUpdateModal);

@@ -1,6 +1,6 @@
 import DefaultLayout from "../../layouts/default/DefaultLayout";
 import emptyImg from "../../assets/images/null.png";
-import withTodoEvent from "./withTodoEvent";
+import todoEvent from "./todoListEvent";
 
 const TodoList =({
     user,
@@ -154,8 +154,8 @@ const TodoList =({
                                         {
                                             writer.id === user.id &&
                                             <div className="flex justify-start itmes-center">
-                                                <i className="mr-4 far fa-caret-square-up"></i>
-                                                <i className="mr-4 far fa-caret-square-down"></i>
+                                                {/* <i className="mr-4 far fa-caret-square-up"></i>
+                                                <i className="mr-4 far fa-caret-square-down"></i> */}
                                                 <i className="mr-4 far fa-edit" onClick={() => editFormOpenEvent(item)}></i>
                                                 <i className="mr-4 far fa-trash-alt" onClick={() => deleteTodoEvent(item.id)}></i>
                                             </div>
@@ -188,4 +188,4 @@ const TodoList =({
     </DefaultLayout>  
     )
 }
-export default withTodoEvent(TodoList);
+export default todoEvent(TodoList);

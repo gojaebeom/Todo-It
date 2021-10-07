@@ -1,16 +1,19 @@
-import { useRecoilState } from "recoil";
+import { useRecoilState, useSetRecoilState } from "recoil";
+import { calendarDetailState } from "../../atoms/calendarDetailState";
+import { calendarsState } from "../../atoms/calendarsState";
 import { updateUserModalState } from "../../atoms/ui/updateUserModalState";
 import { userEditState } from "../../atoms/userEditState";
 import { userState } from "../../atoms/userState";
 import ApiScaffold from "../../shared/api";
 import readImgFile from "../../shared/readImgFile";
-import sleep from "../../shared/sleep";
 
-const withUserUpdateEvent = ( UserUpdateModal ) => {
+const userUpdateModalEvent = ( UserUpdateModal ) => {
     return () => {
         const [user, setUser] = useRecoilState(userState);
         const [userEdit, setUserEdit] = useRecoilState(userEditState);
         const [updateUserModalOpen, setUpdateUserModalOpen] = useRecoilState(updateUserModalState);
+        const setCalendars = useSetRecoilState(calendarsState);
+        const setCalendarDetail = useSetRecoilState(calendarDetailState);
 
         const clickUpdateUserModalCloseEvent = ( e ) => {
             setUpdateUserModalOpen({...updateUserModalOpen, open:false});
@@ -51,7 +54,7 @@ const withUserUpdateEvent = ( UserUpdateModal ) => {
             if(userEdit.nickname) formData.append("nickname", userEdit.nickname);
             if(userEdit.profileImgFile) formData.append("profileImg", userEdit.profileImgFile);
             
-            const res = await ApiScaffold({
+            await ApiScaffold({
                 method: "put",
                 url: `/users/${userEdit.id}`,
                 data: formData
@@ -59,9 +62,15 @@ const withUserUpdateEvent = ( UserUpdateModal ) => {
                 setUpdateUserModalOpen({...updateUserModalOpen, submit:false});
             });
 
-            console.debug(res);
-            sleep(500);
-            setUser({...res.data});
+            const userRes = await ApiScaffold({
+                method: "get",
+                url: `/users/${userEdit.id}`
+            });
+            setUser({...userRes.data.user});
+            if(userRes.data.calendars.length !== 0){
+                setCalendars([...userRes.data.calendars]);
+                setCalendarDetail({...userRes.data.calendars[0]});
+            }
             setUpdateUserModalOpen({...updateUserModalOpen, open:false, submit:false});
         }
 
@@ -79,4 +88,4 @@ const withUserUpdateEvent = ( UserUpdateModal ) => {
         )
     }
 }
-export default withUserUpdateEvent;
+export default userUpdateModalEvent;

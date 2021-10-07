@@ -7,7 +7,7 @@ import { userState } from "../../atoms/userState";
 import ApiScaffold from "../../shared/api";
 import readImgFile from "../../shared/readImgFile";
 
-const withCalendarEditEvent = ( Compoent ) => {
+const calendarEditModalEvent = ( Compoent ) => {
     return () => {
         const user = useRecoilValue(userState);
         const [calendarDetail, setCalendarDetail] = useRecoilState(calendarDetailState);
@@ -54,19 +54,20 @@ const withCalendarEditEvent = ( Compoent ) => {
             }, ( err ) => {
                 setCalendarEditModal({...calendarEditModal, submit:false});
             });
+
             const calendarsRes = await ApiScaffold({
                 method: "get",
                 url: `/calendars?userId=${user.id}`
             });
             console.debug(calendarsRes);
-            const defaultCalendarId = calendarsRes.data[0].id;
-            const calendarDetailRes = await ApiScaffold({
-                method: "get",
-                url: `/calendars/${defaultCalendarId}`,
-            });
-
             setCalendars([...calendarsRes.data]);
-            setCalendarDetail({...calendarDetailRes.data});
+            for(let calendar of calendarsRes.data){
+                if(calendar.id === calendarDetail.id){
+                    setCalendarDetail({...calendar});
+                }
+            }
+            
+            
             setCalendarEditModal({...calendarEditModal, open:false, submit:false});
         }
 
@@ -82,14 +83,18 @@ const withCalendarEditEvent = ( Compoent ) => {
                     method: "get",
                     url: `/calendars?userId=${user.id}`
                 });
-                console.debug(calendarsRes);
-                const defaultCalendarId = calendarsRes.data[0].id;
-                const calendarDetailRes = await ApiScaffold({
-                    method: "get",
-                    url: `/calendars/${defaultCalendarId}`,
-                });
                 setCalendars([...calendarsRes.data]);
-                setCalendarDetail({...calendarDetailRes.data});
+
+                if(calendarsRes.data[0].length !== 0){
+                    const defaultCalendarId = calendarsRes.data[0].id;
+                    const calendarDetailRes = await ApiScaffold({
+                        method: "get",
+                        url: `/calendars/${defaultCalendarId}`,
+                    });
+                    setCalendarDetail({...calendarDetailRes.data});
+                }
+
+                resetCalendarEdit();
                 setCalendarEditModal({...calendarEditModal, open:false, submit:false});
             }
         }
@@ -108,4 +113,4 @@ const withCalendarEditEvent = ( Compoent ) => {
         )
     }
 }
-export default withCalendarEditEvent;
+export default calendarEditModalEvent;

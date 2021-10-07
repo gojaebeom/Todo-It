@@ -7,7 +7,6 @@ export const userState = atom({
         email:"",
         userCode: "",
         nickname: "",
-        profileImg: "",
         profilePreviewImg: "",
         createdAt: "",
     }, // default value (aka initial value)

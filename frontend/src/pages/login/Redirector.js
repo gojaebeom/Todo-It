@@ -67,22 +67,15 @@ const Redirector = ({ location, history }) => {
         const userRes = await ApiScaffold({
             method: "get",
             url: `/users/${tokenRes.act.id}`
-        }, ( err ) => {
-            console.error(err);
         });
-
-        const defaultCalendarId = userRes.data.calendars[0].id;
-        const calendarDetail = await ApiScaffold({
-            method: "get",
-            url: `/calendars/${defaultCalendarId}`,
-        });
-        
         setUser({...userRes.data.user});
-        setCalendars([...userRes.data.calendars]);
+        if(userRes.data.calendars.length !== 0){
+            setCalendars([...userRes.data.calendars]);
+            setCalendarDetail({...userRes.data.calendars[0]});
+        }
         setLoadingPage({step1:false, step2:true});
-        setCalendarDetail({...calendarDetail.data});
+        
         history.push(`/`);
-
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);    
 

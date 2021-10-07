@@ -1,4 +1,4 @@
-import withCalendarCreateEvent from "./withCalendarCreateEvent";
+import calendarCreateEvent from "./calendarCreateModalEvent";
 
 const CalendarCreateModal = ({ 
     storeCalendar,
@@ -77,4 +77,4 @@ const CalendarCreateModal = ({
     </div>
     )
 }
-export default withCalendarCreateEvent(CalendarCreateModal);
+export default calendarCreateEvent(CalendarCreateModal);

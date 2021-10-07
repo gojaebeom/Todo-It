@@ -10,7 +10,7 @@ import { editTodoFormState } from "../../atoms/ui/editTodoFormState";
 import { userState } from "../../atoms/userState";
 import ApiScaffold from "../../shared/api";
 
-const withTodoEvent = (TodoList) => {
+const todoListEvent = (TodoList) => {
     return () => {
         const calendar = useRecoilValue(calendarDetailState);
         const user = useRecoilValue(userState);
@@ -44,14 +44,11 @@ const withTodoEvent = (TodoList) => {
         }
         const {day, filterDay} = makeDayStrings();
 
-        console.debug(filterDay);
-
         const loadTodos = async () => {
             const loadRes = await ApiScaffold({
                 method: "get",
                 url: `/todos?calendarId=${calendar.id}&matchedDate=${day}&userId=${user.id}`
             });
-            console.debug(loadRes);
 
             if(loadRes){
                 setTodos([...loadRes.data]);
@@ -61,7 +58,6 @@ const withTodoEvent = (TodoList) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
         useEffect(async () => {
             if(calendar.id){
-                console.debug("Todo by day api");
                 await loadTodos();
             }
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -125,7 +121,6 @@ const withTodoEvent = (TodoList) => {
         }
 
         const changeTodoEditIsFinished = async ( item ) => {
-            console.debug(item);
             const formData = new FormData();
             formData.append("id", item.id);
             formData.append("isFinished", !item.isFinished ? 1 : 0 );
@@ -193,4 +188,4 @@ const withTodoEvent = (TodoList) => {
         )
     }
 }
-export default withTodoEvent;
+export default todoListEvent;
