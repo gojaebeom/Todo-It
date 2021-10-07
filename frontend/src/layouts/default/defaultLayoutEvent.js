@@ -96,13 +96,23 @@ const defaultLayoutEvent = (DefaultLayout) => {
             setInviteInput(e.target.value);
         }
         const submitInviteInput = async ( ) => {
+            if(!inviteInput){
+                alert("유저코드를 입력하지 않았어요!");
+                setInviteInput("");
+                return false;
+            }
+            if(inviteInput === user.userCode){
+                alert("본인을 초대할 수 없어요!");
+                setInviteInput("");
+                return false;
+            }
 
             const formData = new FormData();
             formData.append("fromUserId", user.id);
             formData.append("toUserCode", inviteInput);
-            formData.append("type", "CALENDAR_INVITE");
-            formData.append("actionUrl", `/calendars/${calendarDetail.id}/invite/users/${inviteInput}`);
-            formData.append("content", `'${calendarDetail.name}' 그룹에서 당신을 초대합니다!`);
+            formData.append("type", "JOIN_CALENDAR");
+            formData.append("actionUrl", `/users/${inviteInput}/join/calendars/${calendarDetail.id}`);
+            formData.append("content", `${user.nickname}님이 당신을 ${calendarDetail.name} 그룹에 초대했어요!`);
 
             await ApiScaffold({
                 method: "post",
@@ -113,10 +123,8 @@ const defaultLayoutEvent = (DefaultLayout) => {
             setInviteInput("");
         }
 
-        const toggleNotificationModal =  () => {
-            
-            setNotificationModal(!notificationModal);
-        }
+        const toggleNotificationModal =  () => setNotificationModal(!notificationModal);
+        
 
         const refreshNotificationModal = async () => {
             if(notificationModal){
@@ -128,6 +136,26 @@ const defaultLayoutEvent = (DefaultLayout) => {
 
                 setNotifications([...res.data]);
             }
+        }
+
+        const acceptNotification = async ( id, actionUrl ) => {
+            await ApiScaffold({
+                method: "get",
+                url: actionUrl,
+            });
+            await ApiScaffold({
+                method: "put",
+                url: `/notifications/${id}/is-confirmed`,
+            });
+            refreshNotificationModal();
+        }
+
+        const refusalNotification = async ( id ) => {
+            await ApiScaffold({
+                method: "put",
+                url: `/notifications/${id}/is-confirmed`,
+            });
+            refreshNotificationModal();
         }
 
         return (
@@ -152,6 +180,8 @@ const defaultLayoutEvent = (DefaultLayout) => {
             refreshNotificationModal={refreshNotificationModal}
             notificationModal={notificationModal}
             notifications={notifications}
+            refusalNotification={refusalNotification}
+            acceptNotification={acceptNotification}
         />
         );
     }

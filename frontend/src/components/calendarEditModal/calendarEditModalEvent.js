@@ -79,24 +79,22 @@ const calendarEditModalEvent = ( Compoent ) => {
                     method: "delete",
                     url: `/calendars/${calendarDetail.id}`,
                 });
+    
                 const calendarsRes = await ApiScaffold({
                     method: "get",
                     url: `/calendars?userId=${user.id}`
                 });
+                console.debug(calendarsRes);
+
                 setCalendars([...calendarsRes.data]);
-
-                if(calendarsRes.data[0].length !== 0){
-                    const defaultCalendarId = calendarsRes.data[0].id;
-                    const calendarDetailRes = await ApiScaffold({
-                        method: "get",
-                        url: `/calendars/${defaultCalendarId}`,
-                    });
-                    setCalendarDetail({...calendarDetailRes.data});
+                for(let calendar of calendarsRes.data){
+                    if(calendar.id === calendarDetail.id){
+                        setCalendarDetail({...calendar});
+                    }
                 }
-
-                resetCalendarEdit();
                 setCalendarEditModal({...calendarEditModal, open:false, submit:false});
             }
+            
         }
 
         return(

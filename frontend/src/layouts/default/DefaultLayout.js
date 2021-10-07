@@ -5,6 +5,7 @@ import LoadingPage from "../../components/loadingPage/LoadingPage";
 import waitingImg from "../../assets/images/wait.svg";
 import CalendarEditModal from "../../components/calendarEditModal/CalendarEditModal";
 import notificationImg from "../../assets/images/notification2.png";
+import fanfareImg from "../../assets/images/fanfare.png";
 
 const DefaultLayout = ({ 
     children, 
@@ -26,7 +27,9 @@ const DefaultLayout = ({
     toggleNotificationModal,
     refreshNotificationModal,
     notificationModal,
-    notifications
+    notifications,
+    acceptNotification,
+    refusalNotification
 }) => {
     return(
     <div className="fixed top-0 left-0 flex items-center w-full h-full text-black bg-red-300 font-noto-regular">
@@ -38,7 +41,7 @@ const DefaultLayout = ({
                         onClick={toggleNotificationModal}
                     >
                         <i className="text-2xl text-indigo-300 fab fas fa-bell"></i>
-                        <div className="absolute bottom-0 right-0 w-3 h-3 bg-indigo-500 rounded-full animate-bounce"></div>
+                        { notifications.length !== 0 && <div className="absolute bottom-0 right-0 w-3 h-3 bg-indigo-500 rounded-full animate-bounce"></div>}
                     </div>
                     <div className="w-2/5 my-3 border-t border-white border-dashed"></div>
                     {
@@ -79,7 +82,7 @@ const DefaultLayout = ({
                 <div className="relative flex flex-col items-center justify-start w-full h-full rounded-tl-xl bg-gray-50">
                     {
                         notificationModal &&
-                        <div className="absolute z-50 flex flex-col items-center justify-start p-4 bg-white border border-gray-200 rounded-md -left-2 top-4 min-w-250">
+                        <div className="absolute z-50 flex flex-col items-center justify-start p-2 bg-white border border-gray-200 rounded-md -left-2 top-4 min-w-250 max-w-250">
                             <div className="flex justify-end w-full mb-4">
                                 
                                 <button className="text-xs cursor-pointer"
@@ -90,13 +93,35 @@ const DefaultLayout = ({
                                 </button>
                             </div>
                             {
-                                notifications.length > 0 ?
-                                <div>
-                                    <img src={notificationImg} alt="img"/>
-                                    <p className="text-xl font-noto-medium">알림이 없어요!</p>
+                                notifications.length === 0 ?
+                                <div className="flex flex-col items-center justify-center w-full">
+                                    <img src={notificationImg} alt="img" className="w-32"/>
+                                    <p className="text-md">알림이 없어요!</p>
                                 </div> :
-                                <div className="w-full border rounded-md">
-                                    알림이 왔어요!
+                                <div className="overflow-y-auto max-h-400 custom-scroll">
+                                    {
+                                        // eslint-disable-next-line array-callback-return
+                                        notifications.map((item, index) => {
+                                            if(item.type === "JOIN_CALENDAR"){
+                                                return(
+                                                <div className="flex flex-col items-center justify-center w-full mb-2 border rounded-sm bg-gray-50" key={item.id}>
+                                                    <div className="flex flex-col items-center p-2">
+                                                        <img src={fanfareImg} alt="img" className="w-20"/>
+                                                        <p className="mt-4">{item.content}</p>
+                                                    </div>
+                                                    <div className="flex justify-between w-full border-t">
+                                                        <button className="w-1/2 p-2 border-r"
+                                                            onClick={() => acceptNotification(item.id, item.actionUrl)}
+                                                        >수락</button>
+                                                        <button className="w-1/2 p-2"
+                                                            onClick={() => refusalNotification(item.id)}
+                                                        >거절</button>
+                                                    </div>
+                                                </div>
+                                                )
+                                            }
+                                        })
+                                    }
                                 </div>
                             }
 
@@ -104,32 +129,48 @@ const DefaultLayout = ({
                     }
                     <div className="flex items-center justify-between w-full h-12 pl-3 text-xl border-b font-noto-bold">
                         <div>{calendarDetail.name}</div>
-                        <button onClick={editCalendarModalOpen}><i className="mx-2 fas fa-cog"></i></button>
+                        { 
+                            user.id === calendarDetail.userId &&
+                            <button onClick={editCalendarModalOpen}><i className="mx-2 fas fa-cog"></i></button>
+                        }
+                        
                     </div>
                     <div className="flex flex-col items-start justify-start w-full p-3">
-                        <div className="flex justify-between w-full mb-4 border border-gray-200 rounded-md">
-                            <input className="w-9/12 p-2 border-r outline-none rounded-l-md"
-                                value={inviteInput}
-                                onChange={changeInviteInput}
-                            />
-                            <button className="w-3/12 p-2 text-white bg-red-300 rounded-r-md"
-                                onClick={submitInviteInput}
-                            >초대</button>
-                        </div>
+                        {
+                            ( user.id === calendarDetail.userId ) &&
+                            <div className="flex justify-between w-full mb-4 border-gray-200 rounded-md ">
+                                <input className="w-9/12 p-2 border outline-none rounded-l-md focus:border-red-300 focus:border-2" 
+                                    value={inviteInput}
+                                    onChange={changeInviteInput}
+                                />
+                                <button className="w-3/12 p-2 text-white transition-all bg-red-300 rounded-r-md hover:bg-red-400"
+                                    onClick={submitInviteInput}
+                                >초대</button>
+                            </div>
+                        }
                         <h1 className="text-md font-noto-regular">참여 인원 ({calendarDetail.members.length})</h1>
                         <div className="flex flex-col items-start justify-start w-full pt-3 pl-3">
                             {
                                 calendarDetail.members.map((item, index) => {
                                     return(
-                                    <div key={item.id} className="flex items-center justify-start w-full p-1 pl-2 rounded-md cursor-pointer text-md hover:bg-gray-100">
-                                        {
-                                            item.profilePreviewImg ?
-                                            <img src={`${process.env.REACT_APP_API_URL}/images${item.profilePreviewImg}`} alt="img" className="w-8 h-8 mx-2 rounded-full"/> :
-                                            <div className="flex items-center justify-center w-8 h-8 mx-2 border border-gray-500 rounded-full">
-                                                <i className="far fa-user"></i>
+                                    <div key={item.id} className="flex items-center justify-between w-full p-1 pl-2 rounded-md cursor-pointer text-md hover:bg-gray-100">
+                                        <div className="flex items-center justify-start">
+                                            {
+                                                item.profilePreviewImg ?
+                                                <img src={`${process.env.REACT_APP_API_URL}/images${item.profilePreviewImg}`} alt="img" className="w-8 h-8 mx-2 rounded-full"/> :
+                                                <div className="flex items-center justify-center w-8 h-8 mx-2 border border-gray-500 rounded-full">
+                                                    <i className="far fa-user"></i>
+                                                </div>
+                                            }
+                                            {item.nickname}
+                                            {calendarDetail.userId}
+                                        </div>
+                                        {   
+                                            ( user.id === calendarDetail.userId ) &&
+                                            <div className="mr-2">          
+                                                <i className="text-yellow-400 fas fa-crown"></i>
                                             </div>
                                         }
-                                        {item.nickname}
                                     </div>
                                     )
                                 })

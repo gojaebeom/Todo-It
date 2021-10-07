@@ -5,6 +5,7 @@ export const calendarsState = atom({
     default: [
         {
             id: "",
+            userId: "",
             name: "",
             thumbnail: "",
             thumbnailPreview: "",

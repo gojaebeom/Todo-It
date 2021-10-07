@@ -4,6 +4,7 @@ export const calendarDetailState = atom({
     key: 'calendarDetailState', // unique ID (with respect to other atoms/selectors)
     default: {
         id: "",
+        userId: "",
         name: "",
         thumbnailPreview: "",
         isPrivate: 0,
