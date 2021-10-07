@@ -3,6 +3,7 @@ package kr.todoit.api.service;
 import kr.todoit.api.domain.User;
 import kr.todoit.api.dto.*;
 import kr.todoit.api.mapper.UserMapper;
+import kr.todoit.api.repository.CalendarRepository;
 import kr.todoit.api.repository.UserRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -21,9 +22,13 @@ import java.util.UUID;
 public class UserService {
 
     private TokenService tokenService;
+
     private UserRepository userRepository;
     private UserMapper userMapper;
+
     private CalendarService calendarService;
+    private CalendarRepository calendarRepository;
+
     private ImageService imageService;
 
     public TokenResponse joinByOauth(UserJoinRequest userJoinRequest) throws AuthenticationException, IOException {
@@ -63,20 +68,14 @@ public class UserService {
                 .build();
     }
 
-    public UserDetailWithCalendarsResponse show(Long id) {
-        return userMapper.findOneWithCalendarsById(id);
+    public UserDetailResponse show(Long id) {
+        return userMapper.findOneById(id);
     }
 
-    public void delete(Long id) {
-        log.info("회원삭제");
-        User user = userRepository.findUserById(id);
-        userRepository.delete(user);
-    }
-
-    public UserDetailResponse edit(UserEditRequest userEditRequest) throws IOException {
+    public void edit(UserEditRequest userEditRequest) throws IOException {
         User user = userRepository.findUserById(userEditRequest.getId());
         if(userEditRequest.getProfileImg() != null){
-            log.info("유저 프로필 파일 존재 -> 프로필, 프로필 프리뷰 이미지 생성,");
+            log.info("유저 프로필 파일 존재 -> 프로필, 프로필 프리뷰 이미지 생성.");
             HashMap<String, String> imageNameMap = imageService.upload(userEditRequest.getProfileImg());
             user.setProfileImg(imageNameMap.get("origin"));
             user.setProfilePreviewImg(imageNameMap.get("preview"));
@@ -84,16 +83,11 @@ public class UserService {
         if(userEditRequest.getNickname() != null){
             user.setNickname(userEditRequest.getNickname());
         }
+    }
 
-        return UserDetailResponse.builder()
-                .id(user.getId())
-                .nickname(user.getNickname())
-                .email(user.getEmail())
-                .profileImg(user.getProfileImg())
-                .profilePreviewImg(user.getProfilePreviewImg())
-                .userCode(user.getUserCode())
-                .createdAt(user.getCreatedAt())
-                .build();
-        // return userMapper.findOneById(userEditRequest.getId());
+    public void delete(Long id) {
+        log.info("회원삭제");
+        User user = userRepository.findUserById(id);
+        userRepository.delete(user);
     }
 }

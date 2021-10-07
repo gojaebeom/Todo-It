@@ -33,6 +33,10 @@ public class CalendarService {
         return calendarMapper.findAllByUserId(calendarIndexRequest.getUserId());
     }
 
+    public List<CalendarListResponse> index(Long userId) {
+        return calendarMapper.findAllByUserId(userId);
+    }
+
     public List<CalendarListResponse> store(CalendarStoreRequest storeRequest) throws IOException {
 
         if(storeRequest.getThumbnail() != null){
@@ -51,10 +55,6 @@ public class CalendarService {
         calendarGroupRepository.save(calendarGroup);
 
         return calendarMapper.findAllByUserId(storeRequest.getUserId());
-    }
-
-    public CalendarDetailResponse show(Long id) {
-        return calendarMapper.findOneById(id);
     }
 
     public void edit(CalendarEditRequest editRequest) throws IOException {

@@ -21,7 +21,7 @@ public class TodoController {
     private TodoService todoService;
 
     @GetMapping("")
-    public ResponseEntity<?> index(@Valid TodoIndexRequest todoIndexRequest){
+    public ResponseEntity<Map<String, Object>> index(@Valid TodoIndexRequest todoIndexRequest){
         System.out.println(todoIndexRequest);
         Map<String, Object> response = new HashMap<>();
         response.put("message","일정을 성공적으로 불러왔습니다.");
@@ -39,7 +39,7 @@ public class TodoController {
     }
 
     @PostMapping("")
-    public ResponseEntity<?> store(@Valid TodoStoreRequest todoStoreRequest){
+    public ResponseEntity<Map<String, Object>> store(@Valid TodoStoreRequest todoStoreRequest){
         todoService.store(todoStoreRequest);
 
         Map<String, Object> response = new HashMap<>();
@@ -49,7 +49,7 @@ public class TodoController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> edit(@Valid TodoEditRequest todoEditRequest){
+    public ResponseEntity<Map<String, Object>> edit(@Valid TodoEditRequest todoEditRequest){
         todoService.edit(todoEditRequest);
 
         Map<String, Object> response = new HashMap<>();
@@ -59,7 +59,7 @@ public class TodoController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> delete(@PathVariable  Long id){
+    public ResponseEntity<Map<String, Object>> delete(@PathVariable  Long id){
         todoService.delete(id);
 
         Map<String, Object> response = new HashMap<>();

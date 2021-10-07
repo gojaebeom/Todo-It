@@ -1,6 +1,7 @@
 package kr.todoit.api.controller;
 
 import kr.todoit.api.dto.*;
+import kr.todoit.api.service.CalendarService;
 import kr.todoit.api.service.OAuth2Service;
 import kr.todoit.api.service.UserService;
 import lombok.AllArgsConstructor;
@@ -16,6 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -27,9 +29,10 @@ public class UserController {
 
     private OAuth2Service oAuth2Service;
     private UserService userService;
+    private CalendarService calendarService;
 
     @PostMapping("/join-by-oauth")
-    public ResponseEntity<?> joinByOauth(HttpServletRequest request, @Valid @RequestBody UserJoinRequest joinRequest) throws Exception {
+    public ResponseEntity<Map<String, Object>> joinByOauth(HttpServletRequest request, @Valid @RequestBody UserJoinRequest joinRequest) throws Exception {
         String accessTokenString = request.getHeader("authorization");
         String email = oAuth2Service.getKakaoEmailByAccessToken(accessTokenString);
         joinRequest.setEmail(email);
@@ -49,8 +52,9 @@ public class UserController {
                 .build();
         return ResponseEntity.ok().header(HttpHeaders.SET_COOKIE, responseCookie.toString()).body(response);
     }
+
     @PostMapping("/join-free")
-    public ResponseEntity<?> joinFree(@RequestBody UserJoinRequest joinRequest) throws AuthenticationException, IOException {
+    public ResponseEntity<Map<String, Object>> joinFree(@RequestBody UserJoinRequest joinRequest) throws AuthenticationException, IOException {
         System.out.println(joinRequest);
         TokenResponse tokenResponse = userService.joinByOauth(joinRequest);
 
@@ -69,7 +73,7 @@ public class UserController {
     }
 
     @GetMapping("/logout")
-    public ResponseEntity<?> logout(){
+    public ResponseEntity<Map<String, Object>> logout(){
         log.info("로그아웃 요청 -> RFT 쿠키 제거");
         Map<String, Object> response = new HashMap<>();
         ResponseCookie responseCookie = ResponseCookie.from("rft", null)
@@ -84,34 +88,43 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<?> show(@PathVariable Long id) {
-        UserDetailWithCalendarsResponse userDetailResponse = userService.show(id);
+    public ResponseEntity<Map<String, Object>> show(@PathVariable Long id) {
+        UserDetailResponse userDetailResponse = userService.show(id);
+        List<CalendarListResponse> calendarListResponseList = calendarService.index(id);
+
+        System.out.println("-----------------------------------------------------------------------캘린더 검사");
+        for(CalendarListResponse calendarListResponse : calendarListResponseList){
+            System.out.println(calendarListResponse.getName());
+            System.out.println(calendarListResponse.getThumbnailPreview());
+        }
+
+        Map<String, Object> data = new HashMap<>();
+        data.put("user", userDetailResponse);
+        data.put("calendars", calendarListResponseList);
+
         Map<String, Object> response = new HashMap<>();
         response.put("message","회원 데이터를 정상적으로 가져왔습니다.");
         response.put("statusCode", 200);
-        response.put("data", userDetailResponse);
+        response.put("data", data);
         return ResponseEntity.ok(response);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> edit(@Valid UserEditRequest userEditRequest) throws IOException {
-        System.out.println(userEditRequest);
-        UserDetailResponse userDetailResponse = userService.edit(userEditRequest);
+    public ResponseEntity<Map<String, Object>> edit(@Valid UserEditRequest userEditRequest) throws IOException {
+        userService.edit(userEditRequest);
+
         Map<String, Object> response = new HashMap<>();
         response.put("message","회원 데이터를 정상적으로 수정하였습니다.");
         response.put("statusCode", 200);
-        response.put("data", userDetailResponse);
         return ResponseEntity.ok(response);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> delete(@PathVariable Long id) {
+    public ResponseEntity<Map<String, Object>> delete(@PathVariable Long id) {
         userService.delete(id);
         Map<String, Object> response = new HashMap<>();
         response.put("message","회원 데이터를 정상적으로 삭제했습니다.");
         response.put("statusCode", 200);
         return ResponseEntity.ok(response);
     }
-
-
 }

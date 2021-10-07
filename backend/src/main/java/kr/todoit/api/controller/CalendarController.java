@@ -25,7 +25,7 @@ public class CalendarController {
     private CalendarService calendarService;
 
     @GetMapping("")
-    public ResponseEntity<?> index(@Valid CalendarIndexRequest calendarIndexRequest){
+    public ResponseEntity<Map<String, Object>> index(@Valid CalendarIndexRequest calendarIndexRequest){
         List<CalendarListResponse> calendarListResponse = calendarService.index(calendarIndexRequest);
 
         Map<String, Object> response = new HashMap<>();
@@ -35,19 +35,8 @@ public class CalendarController {
         return ResponseEntity.ok(response);
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<?> show(@PathVariable Long id){
-        CalendarDetailResponse calendarDetailResponse = calendarService.show(id);
-
-        Map<String, Object> response = new HashMap<>();
-        response.put("message","캘린더 상세정보를 정상적으로 가져왔습니다.");
-        response.put("statusCode", 200);
-        response.put("data", calendarDetailResponse);
-        return ResponseEntity.ok(response);
-    }
-
     @PostMapping("")
-    public ResponseEntity<?> store(HttpServletRequest request, @Valid CalendarStoreRequest storeRequest) throws IOException, AuthenticationException {
+    public ResponseEntity<Map<String, Object>> store(HttpServletRequest request, @Valid CalendarStoreRequest storeRequest) throws IOException, AuthenticationException {
         TokenService.isMatched(storeRequest.getUserId(), Long.parseLong(request.getAttribute("id").toString()));
 
         System.out.println(storeRequest);
@@ -61,7 +50,7 @@ public class CalendarController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> edit(HttpServletRequest request, @Valid CalendarEditRequest editRequest) throws IOException, AuthenticationException {
+    public ResponseEntity<Map<String, Object>> edit(HttpServletRequest request, @Valid CalendarEditRequest editRequest) throws IOException, AuthenticationException {
         TokenService.isMatched(editRequest.getUserId(), Long.parseLong(request.getAttribute("id").toString()));
         System.out.println(editRequest);
         calendarService.edit(editRequest);
@@ -73,7 +62,7 @@ public class CalendarController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> delete(@PathVariable Long id){
+    public ResponseEntity<Map<String, Object>> delete(@PathVariable Long id){
         calendarService.delete(id);
 
         Map<String, Object> response = new HashMap<>();
