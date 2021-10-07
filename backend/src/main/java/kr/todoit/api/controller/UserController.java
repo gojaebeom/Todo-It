@@ -72,6 +72,17 @@ public class UserController {
         return ResponseEntity.ok().header(HttpHeaders.SET_COOKIE, responseCookie.toString()).body(response);
     }
 
+    @GetMapping("/{userCode}/join/calendars/{calendarId}")
+    public ResponseEntity<Map<String, Object>> joinCalendar(UserJoinCalendarRequest userJoinCalendarRequest){
+        System.out.println(userJoinCalendarRequest);
+        userService.joinCalendar(userJoinCalendarRequest);
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("message","캘린더 가입이 성공하였습니다.");
+        response.put("statusCode", 200);
+        return ResponseEntity.ok(response);
+    }
+
     @GetMapping("/logout")
     public ResponseEntity<Map<String, Object>> logout(){
         log.info("로그아웃 요청 -> RFT 쿠키 제거");

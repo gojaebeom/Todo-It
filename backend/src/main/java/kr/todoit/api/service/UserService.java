@@ -1,8 +1,11 @@
 package kr.todoit.api.service;
 
+import kr.todoit.api.domain.Calendar;
+import kr.todoit.api.domain.CalendarGroup;
 import kr.todoit.api.domain.User;
 import kr.todoit.api.dto.*;
 import kr.todoit.api.mapper.UserMapper;
+import kr.todoit.api.repository.CalendarGroupRepository;
 import kr.todoit.api.repository.CalendarRepository;
 import kr.todoit.api.repository.UserRepository;
 import lombok.AllArgsConstructor;
@@ -28,6 +31,7 @@ public class UserService {
 
     private CalendarService calendarService;
     private CalendarRepository calendarRepository;
+    private CalendarGroupRepository calendarGroupRepository;
 
     private ImageService imageService;
 
@@ -72,6 +76,30 @@ public class UserService {
         return userMapper.findOneById(id);
     }
 
+    public void joinCalendar(UserJoinCalendarRequest userJoinCalendarRequest) {
+
+        User user = userRepository.findByUserCode(userJoinCalendarRequest.getUserCode());
+        if(user == null){
+            log.info("유효한 유저코드 없음");
+            throw new IllegalArgumentException("유효한 유저코드가 아닙니다.");
+        }
+
+        Calendar calendar = calendarRepository.findCalendarById(userJoinCalendarRequest.getCalendarId());
+        if(calendar == null){
+            log.info("유효한 캘린더가 없음");
+            throw new IllegalArgumentException("유효한 캘린더가 없습니다.");
+        }
+        Long calendarGroupCount = calendarGroupRepository.countByUserAndCalendar(user, calendar);
+        if(calendarGroupCount != 0){
+            log.info("이미 가입한 유저");
+            throw new IllegalArgumentException("이미 가입한 유저입니다.");
+        }
+
+        CalendarGroup calendarGroup = userJoinCalendarRequest.toCalendarGroup(user, calendar);
+        calendarGroupRepository.save(calendarGroup);
+        log.info("캘린더 가입 완료");
+    }
+
     public void edit(UserEditRequest userEditRequest) throws IOException {
         User user = userRepository.findUserById(userEditRequest.getId());
         if(userEditRequest.getProfileImg() != null){
@@ -90,4 +118,6 @@ public class UserService {
         User user = userRepository.findUserById(id);
         userRepository.delete(user);
     }
+
+
 }

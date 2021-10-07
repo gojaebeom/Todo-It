@@ -8,6 +8,7 @@ import java.util.List;
 @Getter
 public class CalendarListResponse {
     private Long id;
+    private Long userId;
     private String name;
     private Byte isPrivate;
     private String thumbnailPreview;

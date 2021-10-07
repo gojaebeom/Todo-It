@@ -2,6 +2,7 @@ package kr.todoit.api.domain;
 
 import lombok.Builder;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
@@ -13,6 +14,7 @@ import java.time.LocalDateTime;
 @Table(name = "notifications")
 @Entity
 @NoArgsConstructor
+@Setter
 public class Notification {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

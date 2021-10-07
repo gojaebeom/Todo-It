@@ -42,4 +42,9 @@ public class NotificationService {
     public List<NotificationFindResponse> find(NotificationFindRequest notificationFindRequest) {
         return notificationMapper.findAllByToUserId(notificationFindRequest.getToUserId());
     }
+
+    public void editIsConfirmed(Long id) {
+        Notification notification = notificationRepository.findOneById(id);
+        notification.setIsConfirmed((byte)1);
+    }
 }

@@ -9,6 +9,7 @@
     </resultMap>
     <resultMap id="calendars" type="kr.todoit.api.dto.CalendarListResponse">
         <id column="c_id" property="id"/>
+        <result column="user_id" property="userId"/>
         <result column="name" property="name"/>
         <result column="is_private" property="isPrivate"/>
         <result column="thumbnail_preview" property="thumbnailPreview"/>
@@ -17,7 +18,7 @@
     <select id="findAllByUserId" parameterType="java.lang.Long" resultMap="calendars">
         select
             -- 캘린더 정보
-            c.id as c_id, c.name, if(c.thumbnail_preview is not null, c.thumbnail_preview, '') as thumbnail_preview, c.is_private,
+            c.id as c_id, c.name, if(c.thumbnail_preview is not null, c.thumbnail_preview, '') as thumbnail_preview, c.is_private, c.user_id,
             -- 유저 정보
             u.id as u_id, u.nickname, if(u.profile_preview_img is not null, u.profile_preview_img, '') as profile_preview_img
         from calendars c

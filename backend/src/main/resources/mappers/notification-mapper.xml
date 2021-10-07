@@ -11,6 +11,6 @@
     <select id="findAllByToUserId" parameterType="java.lang.Long" resultMap="defaultNotification">
         select n.id, n.type, n.action_url, n.content
         from notifications n
-        where to_user = 1 and is_confirmed = 0;
+        where to_user = #{id} and is_confirmed = 0;
     </select>
 </mapper>
