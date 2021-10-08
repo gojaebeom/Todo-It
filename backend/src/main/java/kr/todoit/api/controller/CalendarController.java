@@ -26,7 +26,7 @@ public class CalendarController {
 
     @GetMapping("")
     public ResponseEntity<Map<String, Object>> index(@Valid CalendarIndexRequest calendarIndexRequest){
-        List<CalendarListResponse> calendarListResponse = calendarService.index(calendarIndexRequest);
+        List<CalendarListResponse> calendarListResponse = calendarService.find(calendarIndexRequest);
 
         Map<String, Object> response = new HashMap<>();
         response.put("message","캘린더를 정상적으로 가져왔습니다.");

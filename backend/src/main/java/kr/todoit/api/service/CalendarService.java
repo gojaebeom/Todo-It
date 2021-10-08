@@ -5,6 +5,7 @@ import kr.todoit.api.domain.CalendarGroup;
 import kr.todoit.api.domain.User;
 import kr.todoit.api.dto.*;
 import kr.todoit.api.mapper.CalendarMapper;
+import kr.todoit.api.mapper.UserMapper;
 import kr.todoit.api.repository.CalendarGroupRepository;
 import kr.todoit.api.repository.CalendarRepository;
 import kr.todoit.api.repository.UserRepository;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -28,13 +30,43 @@ public class CalendarService {
     private CalendarMapper calendarMapper;
     private UserRepository userRepository;
     private ImageService imageService;
+    private UserMapper userMapper;
 
-    public List<CalendarListResponse> index(CalendarIndexRequest calendarIndexRequest) {
-        return calendarMapper.findAllByUserId(calendarIndexRequest.getUserId());
+    public List<CalendarListResponse> find(CalendarIndexRequest calendarIndexRequest) {
+        List<CalendarListResponse> calendarListResponses = new ArrayList<>();
+
+        // 특정 유저가 구독한 모든 캘린더 리스트를 불러온다.
+        List<HashMap<String, Object>> calendars = calendarMapper.findAllByUserId(calendarIndexRequest.getUserId());
+        return getCalendarListResponses(calendarListResponses, calendars);
     }
 
-    public List<CalendarListResponse> index(Long userId) {
-        return calendarMapper.findAllByUserId(userId);
+    public List<CalendarListResponse> find(Long userId) {
+        System.out.println(userId);
+        List<CalendarListResponse> calendarListResponses = new ArrayList<>();
+
+        // 특정 유저가 구독한 모든 캘린더 리스트를 불러온다.
+        List<HashMap<String, Object>> calendars = calendarMapper.findAllByUserId(userId);
+        return getCalendarListResponses(calendarListResponses, calendars);
+    }
+
+    private List<CalendarListResponse> getCalendarListResponses(List<CalendarListResponse> calendarListResponses, List<HashMap<String, Object>> calendars) {
+        for(HashMap<String, Object> calendar : calendars){
+            List<User> _users = new ArrayList<>();
+            List<HashMap<String, Object>> users = userMapper.findAllByCalendarId(Long.valueOf(calendar.get("id").toString()));
+
+            for(HashMap<String, Object> user : users){
+                User _user = User.builder()
+                        .id(Long.parseLong(user.get("id").toString()))
+                        .nickname(user.get("nickname").toString())
+                        .profilePreviewImg(user.get("profile_preview_img").toString())
+                        .build();
+                _users.add(_user);
+            }
+
+            CalendarListResponse calendarListResponse = CalendarListResponse.of(calendar, _users);
+            calendarListResponses.add(calendarListResponse);
+        }
+        return calendarListResponses;
     }
 
     public List<CalendarListResponse> store(CalendarStoreRequest storeRequest) throws IOException {
@@ -54,7 +86,7 @@ public class CalendarService {
         CalendarGroup calendarGroup = storeRequest.toCalendarGroup(calendar, user);
         calendarGroupRepository.save(calendarGroup);
 
-        return calendarMapper.findAllByUserId(storeRequest.getUserId());
+        return find(storeRequest.getUserId());
     }
 
     public void edit(CalendarEditRequest editRequest) throws IOException {
@@ -76,6 +108,4 @@ public class CalendarService {
     public void delete(Long id) {
         calendarRepository.deleteById(id);
     }
-
-
 }

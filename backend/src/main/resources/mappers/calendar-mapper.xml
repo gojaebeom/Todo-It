@@ -2,28 +2,12 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="kr.todoit.api.mapper.CalendarMapper">
-    <resultMap id="calendarMembers" type="java.util.HashMap">
-        <id column="u_id" property="id"/>
-        <result column="nickname" property="nickname"/>
-        <result column="profile_preview_img" property="profilePreviewImg"/>
-    </resultMap>
-    <resultMap id="calendars" type="kr.todoit.api.dto.CalendarListResponse">
-        <id column="c_id" property="id"/>
-        <result column="user_id" property="userId"/>
-        <result column="name" property="name"/>
-        <result column="is_private" property="isPrivate"/>
-        <result column="thumbnail_preview" property="thumbnailPreview"/>
-        <collection property="members" resultMap="calendarMembers"/>
-    </resultMap>
-    <select id="findAllByUserId" parameterType="java.lang.Long" resultMap="calendars">
+    <select id="findAllByUserId" parameterType="java.lang.Long" resultType="java.util.HashMap">
         select
-            -- 캘린더 정보
-            c.id as c_id, c.name, if(c.thumbnail_preview is not null, c.thumbnail_preview, '') as thumbnail_preview, c.is_private, c.user_id,
-            -- 유저 정보
-            u.id as u_id, u.nickname, if(u.profile_preview_img is not null, u.profile_preview_img, '') as profile_preview_img
+            c.id, c.name, ifnull(c.thumbnail_preview, '') as thumbnail_preview, c.is_private, c.user_id
         from calendars c
-                 left join calendar_groups cg on c.id = cg.calendar_id
-                 left join users u on cg.user_id = u.id
-        where c.user_id = #{id};
+                 left join calendar_groups cg on cg.calendar_id = c.id
+        where cg.user_id = #{id}
+        order by c.created_at asc;
     </select>
 </mapper>

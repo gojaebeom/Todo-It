@@ -101,13 +101,7 @@ public class UserController {
     @GetMapping("/{id}")
     public ResponseEntity<Map<String, Object>> show(@PathVariable Long id) {
         UserDetailResponse userDetailResponse = userService.show(id);
-        List<CalendarListResponse> calendarListResponseList = calendarService.index(id);
-
-        System.out.println("-----------------------------------------------------------------------캘린더 검사");
-        for(CalendarListResponse calendarListResponse : calendarListResponseList){
-            System.out.println(calendarListResponse.getName());
-            System.out.println(calendarListResponse.getThumbnailPreview());
-        }
+        List<CalendarListResponse> calendarListResponseList = calendarService.find(id);
 
         Map<String, Object> data = new HashMap<>();
         data.put("user", userDetailResponse);

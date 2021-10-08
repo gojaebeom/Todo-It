@@ -25,6 +25,7 @@ public class ExceptionController {
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity MethodArgumentNotValidExceptionHandler(MethodArgumentNotValidException e) {
+        System.out.println("-----MethodArgumentNotValidException Err------");
         log.error(e.getMessage());
         Map<String, Object> response = new HashMap<>();
         String message = e.getMessage() != null ? e.getMessage() : "잘못된 요청입니다.";
@@ -35,6 +36,7 @@ public class ExceptionController {
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity exceptionHandler(Exception e) {
+        System.out.println("-----Exception Err------");
         System.out.println(e.getMessage());
         System.out.println(e);
         log.error(e.getMessage());

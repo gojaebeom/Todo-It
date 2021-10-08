@@ -2,6 +2,7 @@ package kr.todoit.api.dto;
 
 import kr.todoit.api.domain.Notification;
 import kr.todoit.api.domain.User;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -32,5 +33,14 @@ public class NotificationStoreRequest {
                 .actionUrl(actionUrl)
                 .isConfirmed((byte)0)
                 .build();
+    }
+
+    @Builder
+    public NotificationStoreRequest(Long fromUserId, String toUserCode, String type, String actionUrl, String content) {
+        this.fromUserId = fromUserId;
+        this.toUserCode = toUserCode;
+        this.type = type;
+        this.actionUrl = actionUrl;
+        this.content = content;
     }
 }

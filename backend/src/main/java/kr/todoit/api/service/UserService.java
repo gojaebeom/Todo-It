@@ -2,11 +2,13 @@ package kr.todoit.api.service;
 
 import kr.todoit.api.domain.Calendar;
 import kr.todoit.api.domain.CalendarGroup;
+import kr.todoit.api.domain.Notification;
 import kr.todoit.api.domain.User;
 import kr.todoit.api.dto.*;
 import kr.todoit.api.mapper.UserMapper;
 import kr.todoit.api.repository.CalendarGroupRepository;
 import kr.todoit.api.repository.CalendarRepository;
+import kr.todoit.api.repository.NotificationRepository;
 import kr.todoit.api.repository.UserRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -32,6 +34,8 @@ public class UserService {
     private CalendarService calendarService;
     private CalendarRepository calendarRepository;
     private CalendarGroupRepository calendarGroupRepository;
+
+    private NotificationRepository notificationRepository;
 
     private ImageService imageService;
 
@@ -60,6 +64,15 @@ public class UserService {
                     .isPrivate((byte) 1)
                     .build();
             calendarService.store(calendarStoreRequest);
+
+            Notification notification = Notification.builder()
+                    .toUser(user)
+                    .fromUser(user)
+                    .type("WELCOME")
+                    .content("Todo-it을 방문해주셔서 감사합니다!")
+                    .isConfirmed((byte)0)
+                    .build();
+            notificationRepository.save(notification);
         }
 
         log.info("자동로그인 진행 -> 토큰 발급");

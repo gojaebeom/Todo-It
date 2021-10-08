@@ -17,4 +17,12 @@
         from users u
         where u.id = #{id}
     </select>
+
+    <select id="findAllByCalendarId" parameterType="java.lang.Long" resultType="java.util.HashMap">
+        select
+            u.id, u.nickname, ifnull(u.profile_preview_img, '') as profile_preview_img
+        from users u
+                 left join calendar_groups cg on u.id = cg.user_id
+        where cg.calendar_id = #{id};
+    </select>
 </mapper>
