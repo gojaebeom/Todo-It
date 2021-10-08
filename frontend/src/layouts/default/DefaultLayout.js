@@ -6,6 +6,7 @@ import waitingImg from "../../assets/images/wait.svg";
 import CalendarEditModal from "../../components/calendarEditModal/CalendarEditModal";
 import notificationImg from "../../assets/images/notification2.png";
 import fanfareImg from "../../assets/images/fanfare.png";
+import welcomeImg from "../../assets/images/welcome.png";
 
 const DefaultLayout = ({ 
     children, 
@@ -59,7 +60,7 @@ const DefaultLayout = ({
                             >
                                 {
                                     item.thumbnailPreview ?
-                                    <img src={`${process.env.REACT_APP_API_URL}/images${item.thumbnailPreview}`} alt="img" className="w-full h-full rounded-full"/> :
+                                    <img src={`${process.env.REACT_APP_API_URL}/images${item.thumbnailPreview}`} alt="img" className="w-full h-full border border-white rounded-full"/> :
                                     <div className="flex items-center justify-center w-full h-full bg-white rounded-full text-md font-noto-medium">{item.name[0]}{item.name[1]}</div>
                                 }
                             </button>
@@ -82,7 +83,7 @@ const DefaultLayout = ({
                 <div className="relative flex flex-col items-center justify-start w-full h-full rounded-tl-xl bg-gray-50">
                     {
                         notificationModal &&
-                        <div className="absolute z-50 flex flex-col items-center justify-start p-2 bg-white border border-gray-200 rounded-md -left-2 top-4 min-w-250 max-w-250">
+                        <div className="absolute z-50 flex flex-col items-center justify-start p-2 bg-white border border-gray-200 rounded-md shadow-lg -left-2 top-4 min-w-250 max-w-250">
                             <div className="flex justify-end w-full mb-4">
                                 
                                 <button className="text-xs cursor-pointer"
@@ -116,6 +117,20 @@ const DefaultLayout = ({
                                                         <button className="w-1/2 p-2"
                                                             onClick={() => refusalNotification(item.id)}
                                                         >거절</button>
+                                                    </div>
+                                                </div>
+                                                )
+                                            } else if(item.type === "WELCOME"){
+                                                return(
+                                                <div className="flex flex-col items-center justify-center w-full mt-2 border rounded-sm bg-gray-50" key={item.id}>
+                                                    <div className="flex flex-col items-center p-4">
+                                                        <p className="text-6xl">👋</p>
+                                                        <p className="mt-4">{item.content}</p>
+                                                    </div>
+                                                    <div className="flex justify-center w-full border-t">
+                                                        <button className="w-full p-2"
+                                                            onClick={() => refusalNotification(item.id)}
+                                                        >확인</button>
                                                     </div>
                                                 </div>
                                                 )
@@ -157,16 +172,15 @@ const DefaultLayout = ({
                                         <div className="flex items-center justify-start">
                                             {
                                                 item.profilePreviewImg ?
-                                                <img src={`${process.env.REACT_APP_API_URL}/images${item.profilePreviewImg}`} alt="img" className="w-8 h-8 mx-2 rounded-full"/> :
+                                                <img src={`${process.env.REACT_APP_API_URL}/images${item.profilePreviewImg}`} alt="img" className="w-8 h-8 mx-2 border border-gray-300 rounded-full"/> :
                                                 <div className="flex items-center justify-center w-8 h-8 mx-2 border border-gray-500 rounded-full">
                                                     <i className="far fa-user"></i>
                                                 </div>
                                             }
                                             {item.nickname}
-                                            {calendarDetail.userId}
                                         </div>
                                         {   
-                                            ( user.id === calendarDetail.userId ) &&
+                                            ( item.id === calendarDetail.userId ) &&
                                             <div className="mr-2">          
                                                 <i className="text-yellow-400 fas fa-crown"></i>
                                             </div>
@@ -181,7 +195,7 @@ const DefaultLayout = ({
                         <div className="flex items-center justify-start">
                             {
                                 user.profilePreviewImg ? 
-                                <img src={`${process.env.REACT_APP_API_URL}/images${user.profilePreviewImg}`} alt="img" className="w-8 h-8 mx-2 rounded-full"/> :
+                                <img src={`${process.env.REACT_APP_API_URL}/images${user.profilePreviewImg}`} alt="img" className="w-8 h-8 mx-2 border border-gray-300 rounded-full"/> :
                                 <div className="flex items-center justify-center w-8 h-8 mx-2 border border-gray-500 rounded-full">
                                     <i className="far fa-user"></i>
                                 </div>

@@ -18,8 +18,9 @@ const defaultLayoutEvent = (DefaultLayout) => {
     return ({ children }) => {
         const history = useHistory();
 
-        const user = useRecoilValue(userState);
-        const calendars = useRecoilValue(calendarsState);
+        const [user, setUser] = useRecoilState(userState);
+        const [calendars, setCalendars] = useRecoilState(calendarsState);
+
         const [userEdit, setUserEdit] = useRecoilState(userEditState);
 
         const [createionCalendarModalOpen, setCreationCalendarModalOpen] = useRecoilState(creationCalendarModalState);
@@ -34,15 +35,9 @@ const defaultLayoutEvent = (DefaultLayout) => {
         const [notifications, setNotifications ] = useRecoilState(notificationsState);
 
         useEffect(() => {
-            console.debug(notifications);
-        }, [notifications]);
-
-
-        useEffect(() => {
-            console.debug(calendars);
-            console.debug(calendarDetail);
+            refreshNotificationModal();
         // eslint-disable-next-line react-hooks/exhaustive-deps
-        }, [calendarDetail]);
+        }, [user]);
         
         const clickLogoutEvent = async () => {
             // eslint-disable-next-line no-restricted-globals
@@ -73,7 +68,7 @@ const defaultLayoutEvent = (DefaultLayout) => {
         }
 
         const clickCalendarSelectEvent = async ( item ) => {
-            console.debug(item.id);
+            console.debug(calendarDetail);
             for(let calendar of calendars){
                 if(calendar.id === item.id){
                     setCalendarDetail({...calendar});
@@ -127,13 +122,13 @@ const defaultLayoutEvent = (DefaultLayout) => {
         
 
         const refreshNotificationModal = async () => {
-            if(notificationModal){
+            if(user.id){
                 const res = await ApiScaffold({
                     method: "get",
                     url: `/notifications?toUserId=${user.id}`,
                 });
                 console.debug(res.data);
-
+    
                 setNotifications([...res.data]);
             }
         }
@@ -142,12 +137,24 @@ const defaultLayoutEvent = (DefaultLayout) => {
             await ApiScaffold({
                 method: "get",
                 url: actionUrl,
+            },( err ) => {
+                alert(err.data.message);
             });
             await ApiScaffold({
                 method: "put",
                 url: `/notifications/${id}/is-confirmed`,
             });
             refreshNotificationModal();
+
+            const userRes = await ApiScaffold({
+                method: "get",
+                url: `/users/${user.id}`
+            });
+            setUser({...userRes.data.user});
+            if(userRes.data.calendars.length !== 0){
+                setCalendars([...userRes.data.calendars]);
+                setCalendarDetail({...userRes.data.calendars[0]});
+            }
         }
 
         const refusalNotification = async ( id ) => {

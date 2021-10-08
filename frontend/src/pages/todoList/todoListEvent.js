@@ -70,6 +70,9 @@ const todoListEvent = (TodoList) => {
         }
 
         const clickTodoCreateHandler = async ( e ) => {
+
+            if(!todoStore.title) return alert("할일 제목은 필수값입니다.");
+
             setFormIsOpen(false);
 
             const formData = new FormData();
@@ -129,12 +132,14 @@ const todoListEvent = (TodoList) => {
                 url: `/todos/${item.id}`,
                 data: formData
             });
-            await loadTodos();
+            await loadTodos(); 
         }
 
         const closeTodoEditForm = () => setEditTodoForm(false);
 
         const sumitTodoEdit = async () => {
+            if(!todoEdit.title) return alert("할일 제목은 필수값입니다.");
+
             const formData = new FormData();
             formData.append("id", todoEdit.id);
             formData.append("title", todoEdit.title);

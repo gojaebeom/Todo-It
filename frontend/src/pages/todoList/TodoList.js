@@ -123,7 +123,7 @@ const TodoList =({
                         <div className="flex items-center justify-start w-full mb-3">
                             {
                                 writer.profilePreviewImg ? 
-                                <img src={`${process.env.REACT_APP_API_URL}/images${writer.profilePreviewImg}`} alt="img" className="w-8 h-8 mr-2 rounded-full"/> :
+                                <img src={`${process.env.REACT_APP_API_URL}/images${writer.profilePreviewImg}`} alt="img" className="w-8 h-8 mr-2 border border-gray-300 rounded-full"/> :
                                 <div className="flex items-center justify-center w-8 h-8 mr-2 border border-gray-500 rounded-full">
                                     <i className="far fa-user"></i>
                                 </div>
@@ -136,19 +136,28 @@ const TodoList =({
                                 writer.todos &&
                                 writer.todos.map((item)=>{
                                     return(
-                                    <div key={item.id} className="flex items-center justify-between w-full p-2 rounded-md cursor-pointer hover:bg-gray-600 hover:text-white hover:shadow-md"
+                                    <div key={item.id} className="flex items-center justify-between w-full p-2 rounded-md cursor-pointer hover:bg-red-100 hover:text-black"
                                         style={{borderRadius:"3px"}}
                                     >
                                         <div className="flex justify-start itmes-center">
-                                            <label className="flex items-center mr-2 space-x-3 cursor-pointer">
-                                                <input 
-                                                    type="checkbox" 
-                                                    name="isFinished"
-                                                    defaultChecked={item.isFinished ? true : false}
-                                                    onChange={() => changeTodoEditIsFinished(item)}
-                                                    className="w-5 h-5 border border-gray-100 outline-none cursor-pointer"
-                                                />
-                                                <p onClick={() => changeTodoEditIsFinished(item)}>{item.title}</p>
+                                            <label className="flex items-center mr-2 cursor-pointer">
+                                                <label className={`w-5 h-5 border border-gray-200 rounded-full outline-none cursor-pointer mt-1 mr-2
+                                                    ${item.isFinished ? 'bg-red-300':'bg-white'}`}>
+                                                    <input
+                                                        type="checkbox" 
+                                                        name="isFinished"
+                                                        defaultChecked={item.isFinished ? true : false}
+                                                        onChange={() => {
+                                                            if(user.id !== writer.id){
+                                                                alert("다른 맴버의 글을 토글할 수 없어요!");
+                                                                return false;
+                                                            }
+                                                            changeTodoEditIsFinished(item)
+                                                        }}
+                                                        className="w-0 h-0"
+                                                    />
+                                                </label>
+                                                <p>{item.title}</p>
                                             </label>
                                         </div>
                                         {

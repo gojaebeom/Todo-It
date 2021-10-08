@@ -38,6 +38,8 @@ const calendarCreateModalEvent = ( Compoent ) => {
         }
 
         const submitCalendarEvent = async () => {
+            if(!storeCalendar.name) return alert("캘린더의 이름은 필수값입니다.");
+
             setCreationCalendarModalOpen({...creationCalendarModalOpen, submit:true});
             
             const formData = new FormData();

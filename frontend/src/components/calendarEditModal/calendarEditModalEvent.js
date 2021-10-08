@@ -39,6 +39,8 @@ const calendarEditModalEvent = ( Compoent ) => {
         }
 
         const submitCalendarEdit = async () => {
+            if(!calendarEdit.name) return alert("캘린더의 이름은 필수값입니다.");
+
             setCalendarEditModal({...calendarEditModal, submit:true});
             
             const formData = new FormData();
