@@ -1,20 +1,20 @@
 import axios from "axios";
 import { useEffect } from "react";
 import { useHistory } from "react-router";
-import { useRecoilValue, useSetRecoilState } from "recoil";
+import { useSetRecoilState } from "recoil";
 import { calendarDetailState } from "./atoms/calendarDetailState";
 import { calendarsState } from "./atoms/calendarsState";
 import { loadingPageState } from "./atoms/ui/loadingPage";
+import { toastState } from "./atoms/ui/toastState";
 import { userState } from "./atoms/userState";
 import ApiScaffold from "./shared/api";
 
 const appEvent = (App) => {
     return () => {
 
-
+        const setToast = useSetRecoilState(toastState);
         const history = useHistory();
         const setUser = useSetRecoilState(userState);
-        const user = useRecoilValue(userState);
         const setCalendars = useSetRecoilState(calendarsState);
         const setCalendarDetail = useSetRecoilState(calendarDetailState);
         const setLoadingPage = useSetRecoilState(loadingPageState);
@@ -24,7 +24,8 @@ const appEvent = (App) => {
                 method: "get",
                 url: `/auth/silent-refresh`,
             }, ( err ) => {
-                if(err.message === "ERR:NOT_FINE_RFT"){
+                setToast({open:true, message:err, type:"ERROR" ,second:2000})
+                if(err === "ERR:NOT_FINE_RFT"){
                     history.push("/403");
                 }else{
                     history.push("/login");
@@ -41,22 +42,17 @@ const appEvent = (App) => {
             const pathname = history.location.pathname;
 
             if(pathname !== "/login" && pathname !== "/auth/kakao"){
-                console.debug("토큰 자동 갱신");
-
                 const act = await silentRefresh();
 
                 const userRes = await ApiScaffold({
                     method: "get",
                     url: `/users/${act.id}`
-                });
+                }, (err) => setToast({open:true, message:err, type:"ERROR" ,second:2000}));
                 setUser({...userRes.data.user});
 
                 if(userRes.data.calendars.length !== 0){
                     setCalendars([...userRes.data.calendars]);
-                    console.debug("--------------------------------");
-                    console.debug(userRes.data.calendars[0]);
                     setCalendarDetail({...userRes.data.calendars[0]});
-                    console.debug("--------------------------------");
                 }
                 setLoadingPage({ step1:false, step2:true });
 

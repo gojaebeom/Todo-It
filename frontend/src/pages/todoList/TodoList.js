@@ -1,6 +1,8 @@
 import DefaultLayout from "../../layouts/default/DefaultLayout";
 import emptyImg from "../../assets/images/null.png";
 import todoEvent from "./todoListEvent";
+import { useSetRecoilState } from "recoil";
+import { toastState } from "../../atoms/ui/toastState";
 
 const TodoList =({
     user,
@@ -24,6 +26,9 @@ const TodoList =({
 
     deleteTodoEvent,
 }) => {
+
+    const setToast = useSetRecoilState(toastState);
+
     return(
     <DefaultLayout>
         <div className="relative flex flex-col items-center w-full">
@@ -149,7 +154,7 @@ const TodoList =({
                                                         defaultChecked={item.isFinished ? true : false}
                                                         onChange={() => {
                                                             if(user.id !== writer.id){
-                                                                alert("다른 맴버의 글을 토글할 수 없어요!");
+                                                                setToast({open:true, message:"다른 맴버의 글을 토글할 수 없어요!", type:"WARNING",second:2000});
                                                                 return false;
                                                             }
                                                             changeTodoEditIsFinished(item)

@@ -3,12 +3,15 @@ import { calendarDetailState } from "../../atoms/calendarDetailState";
 import { calendarEditState } from "../../atoms/calendarEditState";
 import { calendarsState } from "../../atoms/calendarsState";
 import { editCalendarModalState } from "../../atoms/ui/editCalendarModalState";
+import { toastState } from "../../atoms/ui/toastState";
 import { userState } from "../../atoms/userState";
 import ApiScaffold from "../../shared/api";
 import readImgFile from "../../shared/readImgFile";
 
 const calendarEditModalEvent = ( Compoent ) => {
     return () => {
+        const setToast = useSetRecoilState(toastState);
+
         const user = useRecoilValue(userState);
         const [calendarDetail, setCalendarDetail] = useRecoilState(calendarDetailState);
         const [calendarEdit, setCalendarEdit] = useRecoilState(calendarEditState);
@@ -39,7 +42,8 @@ const calendarEditModalEvent = ( Compoent ) => {
         }
 
         const submitCalendarEdit = async () => {
-            if(!calendarEdit.name) return alert("캘린더의 이름은 필수값입니다.");
+            if(!calendarEdit.name) 
+                return setToast({open:true, message:"캘린더 이름은 필수값입니다!", type:"WARNING",second:2000});
 
             setCalendarEditModal({...calendarEditModal, submit:true});
             

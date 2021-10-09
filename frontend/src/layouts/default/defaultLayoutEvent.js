@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useHistory } from "react-router";
-import { useRecoilState, useRecoilValue } from "recoil";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import { calendarDetailState } from "../../atoms/calendarDetailState";
 import { calendarEditState } from "../../atoms/calendarEditState";
 import { calendarsState } from "../../atoms/calendarsState";
@@ -9,6 +9,7 @@ import { notificationsState } from "../../atoms/notificationsState";
 import { creationCalendarModalState } from "../../atoms/ui/creationCalendarModalState";
 import { editCalendarModalState } from "../../atoms/ui/editCalendarModalState";
 import { notificationModalState } from "../../atoms/ui/notificationModalState";
+import { toastState } from "../../atoms/ui/toastState";
 import { updateUserModalState } from "../../atoms/ui/updateUserModalState";
 import { userEditState } from "../../atoms/userEditState";
 import { userState } from "../../atoms/userState";
@@ -17,6 +18,8 @@ import ApiScaffold from "../../shared/api";
 const defaultLayoutEvent = (DefaultLayout) => {
     return ({ children }) => {
         const history = useHistory();
+
+        const setToast = useSetRecoilState(toastState);
 
         const [user, setUser] = useRecoilState(userState);
         const [calendars, setCalendars] = useRecoilState(calendarsState);
@@ -47,7 +50,7 @@ const defaultLayoutEvent = (DefaultLayout) => {
             await ApiScaffold({
                 method: "get",
                 url: `/users/logout`,
-            });
+            }, (err) => setToast({open:true, message:err, type:"ERROR" ,second:2000}));
             // history.push("/login");
             window.location.href = "/login";
         }
@@ -92,12 +95,12 @@ const defaultLayoutEvent = (DefaultLayout) => {
         }
         const submitInviteInput = async ( ) => {
             if(!inviteInput){
-                alert("유저코드를 입력하지 않았어요!");
+                setToast({open:true, message:"유저코드를 입력하지 않았어요!", type:"WARNING",second:2000});
                 setInviteInput("");
                 return false;
             }
             if(inviteInput === user.userCode){
-                alert("본인을 초대할 수 없어요!");
+                setToast({open:true, message:"본인을 초대할 수 없어요!", type:"WARNING",second:2000});
                 setInviteInput("");
                 return false;
             }
@@ -113,8 +116,9 @@ const defaultLayoutEvent = (DefaultLayout) => {
                 method: "post",
                 url: `/notifications`,
                 data: formData
-            });
+            }, (err) => setToast({open:true, message:err, type:"ERROR" ,second:2000}));
             
+            setToast({open:true, message:"초대 알림을 보냈어요!", type:"SUCCESS",second:2000});
             setInviteInput("");
         }
 
@@ -126,10 +130,9 @@ const defaultLayoutEvent = (DefaultLayout) => {
                 const res = await ApiScaffold({
                     method: "get",
                     url: `/notifications?toUserId=${user.id}`,
-                });
-                console.debug(res.data);
-    
+                }, (err) => setToast({open:true, message:err, type:"ERROR", second:2000}));
                 setNotifications([...res.data]);
+                // setToast({open:true, message:"새로고침 완료!", type:"SUCCESS",second:2000});
             }
         }
 
@@ -137,19 +140,17 @@ const defaultLayoutEvent = (DefaultLayout) => {
             await ApiScaffold({
                 method: "get",
                 url: actionUrl,
-            },( err ) => {
-                alert(err.data.message);
-            });
+            }, (err) => setToast({open:true, message:err, type:"ERROR" ,second:2000}));
             await ApiScaffold({
                 method: "put",
                 url: `/notifications/${id}/is-confirmed`,
-            });
+            }, (err) => setToast({open:true, message:err, type:"ERROR" ,second:2000}));
             refreshNotificationModal();
 
             const userRes = await ApiScaffold({
                 method: "get",
                 url: `/users/${user.id}`
-            });
+            }, (err) => setToast({open:true, message:err, type:"ERROR" ,second:2000}));
             setUser({...userRes.data.user});
             if(userRes.data.calendars.length !== 0){
                 setCalendars([...userRes.data.calendars]);
@@ -161,7 +162,7 @@ const defaultLayoutEvent = (DefaultLayout) => {
             await ApiScaffold({
                 method: "put",
                 url: `/notifications/${id}/is-confirmed`,
-            });
+            }, (err) => setToast({open:true, message:err, type:"ERROR" ,second:2000}));
             refreshNotificationModal();
         }
 

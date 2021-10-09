@@ -1,17 +1,20 @@
 import moment from "moment";
 import { useEffect, useState } from "react";
 import { useHistory } from "react-router";
-import { useRecoilState, useRecoilValue, useResetRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue, useResetRecoilState, useSetRecoilState } from "recoil";
 import { calendarDetailState } from "../../atoms/calendarDetailState";
 import { todoEditState } from "../../atoms/todoEditState";
 import { todosState } from "../../atoms/todosState";
 import { todoStoreState } from "../../atoms/todoStoreState";
 import { editTodoFormState } from "../../atoms/ui/editTodoFormState";
+import { toastState } from "../../atoms/ui/toastState";
 import { userState } from "../../atoms/userState";
 import ApiScaffold from "../../shared/api";
 
 const todoListEvent = (TodoList) => {
     return () => {
+        const setToast = useSetRecoilState(toastState);
+
         const calendar = useRecoilValue(calendarDetailState);
         const user = useRecoilValue(userState);
         const [todoStore, setTodoStore] = useRecoilState(todoStoreState);
@@ -71,7 +74,8 @@ const todoListEvent = (TodoList) => {
 
         const clickTodoCreateHandler = async ( e ) => {
 
-            if(!todoStore.title) return alert("할일 제목은 필수값입니다.");
+            if(!todoStore.title) 
+                return setToast({open:true, message:"제목은 필수입니다!", type:"WARNING",second:2000});
 
             setFormIsOpen(false);
 
@@ -138,7 +142,8 @@ const todoListEvent = (TodoList) => {
         const closeTodoEditForm = () => setEditTodoForm(false);
 
         const sumitTodoEdit = async () => {
-            if(!todoEdit.title) return alert("할일 제목은 필수값입니다.");
+            if(!todoEdit.title) 
+                return setToast({open:true, message:"제목은 필수입니다!", type:"WARNING",second:2000});
 
             const formData = new FormData();
             formData.append("id", todoEdit.id);

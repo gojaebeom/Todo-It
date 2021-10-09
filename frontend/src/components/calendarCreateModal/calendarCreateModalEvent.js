@@ -2,6 +2,7 @@ import { useRecoilState, useRecoilValue, useResetRecoilState, useSetRecoilState 
 import { calendarsState } from "../../atoms/calendarsState";
 import { calendarStoreState } from "../../atoms/calendarStoreState";
 import { creationCalendarModalState } from "../../atoms/ui/creationCalendarModalState";
+import { toastState } from "../../atoms/ui/toastState";
 import { userState } from "../../atoms/userState";
 import ApiScaffold from "../../shared/api";
 import readImgFile from "../../shared/readImgFile";
@@ -9,6 +10,9 @@ import sleep from "../../shared/sleep";
 
 const calendarCreateModalEvent = ( Compoent ) => {
     return () => {
+
+        const setToast = useSetRecoilState(toastState);
+
         const user = useRecoilValue(userState);
         const [storeCalendar, setStoreCalendar] = useRecoilState(calendarStoreState);
         const [creationCalendarModalOpen, setCreationCalendarModalOpen] = useRecoilState(creationCalendarModalState);
@@ -38,7 +42,9 @@ const calendarCreateModalEvent = ( Compoent ) => {
         }
 
         const submitCalendarEvent = async () => {
-            if(!storeCalendar.name) return alert("캘린더의 이름은 필수값입니다.");
+            if(!storeCalendar.name) 
+                return setToast({open:true, message:"캘린더 이름은 필수값입니다!", type:"WARNING",second:2000});
+            
 
             setCreationCalendarModalOpen({...creationCalendarModalOpen, submit:true});
             

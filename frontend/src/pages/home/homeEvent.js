@@ -2,14 +2,18 @@ import moment from "moment";
 import { useEffect } from "react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { useRecoilState, useRecoilValue } from "recoil";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import { calendarDetailState } from "../../atoms/calendarDetailState";
 import { todosByMonthState } from "../../atoms/todosByMonthState";
+import { toastState } from "../../atoms/ui/toastState";
 import { userState } from "../../atoms/userState";
 import ApiScaffold from "../../shared/api";
 
 const homeEvent = (Home) => {
     return () => {
+
+        const setToast = useSetRecoilState(toastState);
+
         const calendarDetail = useRecoilValue(calendarDetailState);
         const user = useRecoilValue(userState);
         const [todosByMonth, setTodosByMonth ] = useRecoilState(todosByMonthState);
@@ -24,7 +28,7 @@ const homeEvent = (Home) => {
                 const loadRes = await ApiScaffold({
                     method: "get",
                     url: `/todos?calendarId=${calendarDetail.id}&userId=${user.id}`
-                });
+                }, (err) => setToast({open:true, message:err, type:"ERROR",second:2000}));
                 setTodosByMonth(loadRes.data);
             }
         }, [calendarDetail.id, setTodosByMonth, user.id]);

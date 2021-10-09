@@ -1,6 +1,7 @@
 import { useRecoilState, useSetRecoilState } from "recoil";
 import { calendarDetailState } from "../../atoms/calendarDetailState";
 import { calendarsState } from "../../atoms/calendarsState";
+import { toastState } from "../../atoms/ui/toastState";
 import { updateUserModalState } from "../../atoms/ui/updateUserModalState";
 import { userEditState } from "../../atoms/userEditState";
 import { userState } from "../../atoms/userState";
@@ -9,6 +10,8 @@ import readImgFile from "../../shared/readImgFile";
 
 const userUpdateModalEvent = ( UserUpdateModal ) => {
     return () => {
+        const setToast = useSetRecoilState(toastState);
+
         const [user, setUser] = useRecoilState(userState);
         const [userEdit, setUserEdit] = useRecoilState(userEditState);
         const [updateUserModalOpen, setUpdateUserModalOpen] = useRecoilState(updateUserModalState);
@@ -41,13 +44,16 @@ const userUpdateModalEvent = ( UserUpdateModal ) => {
                 }, ( err ) => {
                     alert(err.data.message);
                 });
-                alert("그동안 Todoit을 이용해주셔서 감사합니다.");
+                setToast({open:true, message:"그동안 Todoit을 이용해주셔서 감사합니다.", type:"INFO",second:2000});
                 window.location.href = "/login";
                 
             }
         }
 
         const submitEvent = async () => {
+            if(!userEdit.nickname)
+                return setToast({open:true, message:"회원 닉네임은 필수값입니다!", type:"WARNING",second:2000});
+
             setUpdateUserModalOpen({...updateUserModalOpen, submit:true});
             const formData = new FormData();
             formData.append("id", userEdit.id);

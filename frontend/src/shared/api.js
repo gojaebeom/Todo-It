@@ -11,7 +11,7 @@ const ApiScaffold = async ({ method, url, data, token }, callback) => {
     })
     .catch(err => {
         if(callback){
-            callback(err.response);
+            callback(err.response.data.message);
         }
         throw new Error(err.response.data.message);
     });
