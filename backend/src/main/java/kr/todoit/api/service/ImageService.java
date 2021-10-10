@@ -100,4 +100,19 @@ public class ImageService {
         log.info("[ 파일 사이즈 검사 OK ]");
     }
 
+    public void delete(String profileImg) {
+        // 파일의 경로 + 파일명
+        String filePath = uploadPath+profileImg;
+
+        File deleteFile = new File(filePath);
+
+        // 파일이 존재하는지 체크 존재할경우 true, 존재하지않을경우 false
+        if(deleteFile.exists()) {
+            // 파일을 삭제합니다.
+            deleteFile.delete();
+            log.info("파일을 삭제하였습니다.");
+        } else {
+            log.info("파일이 존재하지 않습니다.");
+        }
+    }
 }

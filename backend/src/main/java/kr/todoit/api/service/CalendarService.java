@@ -92,6 +92,11 @@ public class CalendarService {
     public void edit(CalendarEditRequest editRequest) throws IOException {
         Calendar calendar = calendarRepository.findCalendarById(editRequest.getId());
         if(editRequest.getThumbnail() != null){
+            log.info("캘린더 썸네일 파일 존재 -> 이전 썸네일, 썸네일 프리뷰 이미지 삭제,");
+            imageService.delete(calendar.getThumbnail());
+            imageService.delete(calendar.getThumbnailPreview());
+
+
             log.info("캘린더 썸네일 파일 존재 -> 썸네일, 썸네일 프리뷰 이미지 생성,");
             HashMap<String, String> imageNameMap = imageService.upload(editRequest.getThumbnail());
             calendar.setThumbnail(imageNameMap.get("origin"));
@@ -106,6 +111,10 @@ public class CalendarService {
     }
 
     public void delete(Long id) {
-        calendarRepository.deleteById(id);
+        log.info("캘린더 삭제");
+        Calendar calendar = calendarRepository.findCalendarById(id);
+        imageService.delete(calendar.getThumbnail());
+        imageService.delete(calendar.getThumbnailPreview());
+        calendarRepository.delete(calendar);
     }
 }

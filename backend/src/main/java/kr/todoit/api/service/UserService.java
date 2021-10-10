@@ -116,7 +116,11 @@ public class UserService {
     public void edit(UserEditRequest userEditRequest) throws IOException {
         User user = userRepository.findUserById(userEditRequest.getId());
         if(userEditRequest.getProfileImg() != null){
-            log.info("유저 프로필 파일 존재 -> 프로필, 프로필 프리뷰 이미지 생성.");
+            log.info("유저 프로필 파일 존재 -> 기존의 프로필, 프로필 프리뷰 삭제.");
+            imageService.delete(user.getProfileImg());
+            imageService.delete(user.getProfilePreviewImg());
+
+            log.info("유저 프로필 파일 존재 -> 새로운 프로필, 프로필 프리뷰 이미지 생성.");
             HashMap<String, String> imageNameMap = imageService.upload(userEditRequest.getProfileImg());
             user.setProfileImg(imageNameMap.get("origin"));
             user.setProfilePreviewImg(imageNameMap.get("preview"));
@@ -129,8 +133,11 @@ public class UserService {
     public void delete(Long id) {
         log.info("회원삭제");
         User user = userRepository.findUserById(id);
+        if(user.getProfileImg() != null){
+            log.info("유저 프로필 파일 존재 -> 기존의 프로필, 프로필 프리뷰 삭제.");
+            imageService.delete(user.getProfileImg());
+            imageService.delete(user.getProfilePreviewImg());
+        }
         userRepository.delete(user);
     }
-
-
 }
