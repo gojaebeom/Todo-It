@@ -60,7 +60,7 @@ const DefaultLayout = ({
                             >
                                 {
                                     item.thumbnailPreview ?
-                                    <img src={`${process.env.REACT_APP_API_URL}/images${item.thumbnailPreview}`} alt="img" className="w-full h-full border border-white rounded-full"/> :
+                                    <img src={`${process.env.REACT_APP_API_URL}/images${item.thumbnailPreview}`} alt="img" className={`w-full h-full ${item.id !== calendarDetail.id && 'border border-red-200'} rounded-full`}/> :
                                     <div className="flex items-center justify-center w-full h-full bg-white rounded-full text-md font-noto-medium">{item.name[0]}{item.name[1]}</div>
                                 }
                             </button>
