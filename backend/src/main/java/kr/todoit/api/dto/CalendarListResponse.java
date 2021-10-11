@@ -13,15 +13,17 @@ public class CalendarListResponse {
     private Long userId;
     private String name;
     private Byte isPrivate;
+    private Byte isDefault;
     private String thumbnailPreview;
     private List<User> members;
 
     @Builder
-    public CalendarListResponse(Long id, Long userId, String name, Byte isPrivate, String thumbnailPreview, List<User> members) {
+    public CalendarListResponse(Long id, Long userId, String name, Byte isPrivate, Byte isDefault, String thumbnailPreview, List<User> members) {
         this.id = id;
         this.userId = userId;
         this.name = name;
         this.isPrivate = isPrivate;
+        this.isDefault = isDefault;
         this.thumbnailPreview = thumbnailPreview;
         this.members = members;
     }
@@ -33,6 +35,7 @@ public class CalendarListResponse {
                 .name(calendar.get("name").toString())
                 .thumbnailPreview(calendar.get("thumbnail_preview").toString())
                 .isPrivate(Byte.parseByte(calendar.get("is_private").toString()))
+                .isDefault(Byte.parseByte(calendar.get("is_default").toString()))
                 .members(users)
                 .build();
     }

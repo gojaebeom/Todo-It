@@ -38,7 +38,7 @@ public class CalendarController {
     @PostMapping("")
     public ResponseEntity<Map<String, Object>> store(HttpServletRequest request, @Valid CalendarStoreRequest storeRequest) throws IOException, AuthenticationException {
         TokenService.isMatched(storeRequest.getUserId(), Long.parseLong(request.getAttribute("id").toString()));
-
+        storeRequest.setIsPrivate((byte)0);
         System.out.println(storeRequest);
         List<CalendarListResponse> calendarListResponse = calendarService.store(storeRequest);
 

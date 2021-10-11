@@ -5,6 +5,8 @@ import kr.todoit.api.domain.CalendarGroup;
 import kr.todoit.api.domain.Notification;
 import kr.todoit.api.domain.User;
 import kr.todoit.api.dto.*;
+import kr.todoit.api.exception.CustomException;
+import kr.todoit.api.exception.ExceptionType;
 import kr.todoit.api.mapper.UserMapper;
 import kr.todoit.api.repository.CalendarGroupRepository;
 import kr.todoit.api.repository.CalendarRepository;
@@ -62,6 +64,7 @@ public class UserService {
                     .userId(user.getId())
                     .name("개인일정")
                     .isPrivate((byte) 1)
+                    .isDefault((byte) 1)
                     .build();
             calendarService.store(calendarStoreRequest);
 
@@ -94,18 +97,18 @@ public class UserService {
         User user = userRepository.findByUserCode(userJoinCalendarRequest.getUserCode());
         if(user == null){
             log.info("유효한 유저코드 없음");
-            throw new IllegalArgumentException("유효한 유저코드가 아닙니다.");
+            throw new CustomException(ExceptionType.NOT_FOUND_USER);
         }
 
         Calendar calendar = calendarRepository.findCalendarById(userJoinCalendarRequest.getCalendarId());
         if(calendar == null){
             log.info("유효한 캘린더가 없음");
-            throw new IllegalArgumentException("유효한 캘린더가 없습니다.");
+            throw new CustomException(ExceptionType.NOT_FOUND_CALENDAR);
         }
         Long calendarGroupCount = calendarGroupRepository.countByUserAndCalendar(user, calendar);
         if(calendarGroupCount != 0){
             log.info("이미 가입한 유저");
-            throw new IllegalArgumentException("이미 가입한 유저입니다.");
+            throw new CustomException(ExceptionType.DID_INVITE);
         }
 
         CalendarGroup calendarGroup = userJoinCalendarRequest.toCalendarGroup(user, calendar);

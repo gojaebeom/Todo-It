@@ -23,6 +23,12 @@ public class CalendarStoreRequest {
     private String thumbnailPath;
     private String thumbnailPreviewPath;
     private Byte isPrivate;
+    private Byte isDefault;
+
+    public void setName(String name) {
+        if(name.length() > 10) throw new IllegalArgumentException("캘린더 이름은 10글자 이하로 작성해주세요.");
+        this.name = name;
+    }
 
     public Calendar toCalendar(User user){
         return Calendar.builder()
@@ -31,6 +37,7 @@ public class CalendarStoreRequest {
                 .thumbnail(thumbnailPath)
                 .thumbnailPreview(thumbnailPreviewPath)
                 .isPrivate(isPrivate)
+                .isDefault(isPrivate)
                 .build();
     }
 
@@ -42,12 +49,13 @@ public class CalendarStoreRequest {
     }
 
     @Builder
-    public CalendarStoreRequest(Long userId, String name, MultipartFile thumbnail, String thumbnailPath, String thumbnailPreviewPath, Byte isPrivate) {
+    public CalendarStoreRequest(Long userId, String name, MultipartFile thumbnail, String thumbnailPath, String thumbnailPreviewPath, Byte isPrivate, Byte isDefault) {
         this.userId = userId;
         this.name = name;
         this.thumbnail = thumbnail;
         this.thumbnailPath = thumbnailPath;
         this.thumbnailPreviewPath = thumbnailPreviewPath;
         this.isPrivate = isPrivate;
+        this.isDefault = isDefault;
     }
 }

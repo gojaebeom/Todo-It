@@ -53,25 +53,6 @@ public class UserController {
         return ResponseEntity.ok().header(HttpHeaders.SET_COOKIE, responseCookie.toString()).body(response);
     }
 
-    @PostMapping("/join-free")
-    public ResponseEntity<Map<String, Object>> joinFree(@RequestBody UserJoinRequest joinRequest) throws AuthenticationException, IOException {
-        System.out.println(joinRequest);
-        TokenResponse tokenResponse = userService.joinByOauth(joinRequest);
-
-        Map<String, Object> response = new HashMap<>();
-        response.put("message","로그인이 정상적으로 처리되었습니다.");
-        response.put("statusCode", 200);
-        response.put("act", tokenResponse.getActInfo());
-        final Long time = 3600 * 24 * 14L;
-        ResponseCookie responseCookie = ResponseCookie.from("rft", tokenResponse.getRftInfo().get("token").toString())
-                .httpOnly(true)
-                .path("/")
-                .maxAge(time)
-                .sameSite("Strict")
-                .build();
-        return ResponseEntity.ok().header(HttpHeaders.SET_COOKIE, responseCookie.toString()).body(response);
-    }
-
     @GetMapping("/{userCode}/join/calendars/{calendarId}")
     public ResponseEntity<Map<String, Object>> joinCalendar(UserJoinCalendarRequest userJoinCalendarRequest){
         System.out.println(userJoinCalendarRequest);

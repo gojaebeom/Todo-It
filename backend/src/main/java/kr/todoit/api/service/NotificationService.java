@@ -5,6 +5,8 @@ import kr.todoit.api.domain.User;
 import kr.todoit.api.dto.NotificationFindRequest;
 import kr.todoit.api.dto.NotificationFindResponse;
 import kr.todoit.api.dto.NotificationStoreRequest;
+import kr.todoit.api.exception.CustomException;
+import kr.todoit.api.exception.ExceptionType;
 import kr.todoit.api.mapper.NotificationMapper;
 import kr.todoit.api.repository.NotificationRepository;
 import kr.todoit.api.repository.UserRepository;
@@ -28,11 +30,11 @@ public class NotificationService {
     public void store(NotificationStoreRequest notificationStoreRequest){
         User toUser = userRepository.findByUserCode(notificationStoreRequest.getToUserCode());
         if(toUser == null){
-            throw new IllegalArgumentException("받는 회원을 확인할 수 없습니다.");
+            throw new CustomException(ExceptionType.NOT_FOUND_TO_USER);
         }
         User fromUser = userRepository.findUserById(notificationStoreRequest.getFromUserId());
         if(fromUser == null){
-            throw new IllegalArgumentException(("작성자를 확인할 수 없습니다."));
+            throw new CustomException(ExceptionType.NOT_FOUND_FROM_USER);
         }
 
         Notification notification = notificationStoreRequest.toNotification(fromUser, toUser);

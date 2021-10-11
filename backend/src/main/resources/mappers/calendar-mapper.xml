@@ -4,7 +4,7 @@
 <mapper namespace="kr.todoit.api.mapper.CalendarMapper">
     <select id="findAllByUserId" parameterType="java.lang.Long" resultType="java.util.HashMap">
         select
-            c.id, c.name, ifnull(c.thumbnail_preview, '') as thumbnail_preview, c.is_private, c.user_id
+            c.id, c.name, ifnull(c.thumbnail_preview, '') as thumbnail_preview, c.is_private, c.is_default, c.user_id
         from calendars c
                  left join calendar_groups cg on cg.calendar_id = c.id
         where cg.user_id = #{id}

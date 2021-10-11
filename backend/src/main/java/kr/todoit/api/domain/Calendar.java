@@ -32,6 +32,9 @@ public class Calendar {
     @Column(name = "is_private", columnDefinition = "tinyint default 1")
     private Byte isPrivate;
 
+    @Column(name = "is_default", columnDefinition = "tinyint default 0")
+    private Byte isDefault;
+
     @Column(name = "thumbnail", length = 200)
     private String thumbnail;
 
@@ -45,11 +48,12 @@ public class Calendar {
     private LocalDateTime updatedAt;
 
     @Builder
-    public Calendar(Long id, User user, String name, Byte isPrivate, String thumbnail, String thumbnailPreview) {
+    public Calendar(Long id, User user, String name, Byte isPrivate, Byte isDefault, String thumbnail, String thumbnailPreview) {
         this.id = id;
         this.user = user;
         this.name = name;
         this.isPrivate = isPrivate;
+        this.isDefault = isDefault;
         this.thumbnail = thumbnail;
         this.thumbnailPreview = thumbnailPreview;
     }

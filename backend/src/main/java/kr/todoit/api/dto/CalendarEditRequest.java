@@ -19,4 +19,9 @@ public class CalendarEditRequest {
     private String thumbnailPath;
     private String thumbnailPreviewPath;
     private Byte isPrivate;
+
+    public void setName(String name) {
+        if(name.length() > 10) throw new IllegalArgumentException("캘린더 이름은 10글자 이하로 작성해주세요.");
+        this.name = name;
+    }
 }
