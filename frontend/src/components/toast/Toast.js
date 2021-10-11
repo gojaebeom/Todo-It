@@ -28,10 +28,10 @@ const Toast = () => {
     toast.open &&
     <div className={`fixed right-10 top-10 flex items-center justify-between px-4 py-2 ${bgColor} rounded-sm shadow-lg min-w-200 animate-bounce z-50 overflow-hidden`}>
         { toast.type === "SUCCESS" && <i className="far fa-check-circle"></i> }
-        { toast.type === "INFO" && <i className="far fa-info-circle"></i> }
+        { toast.type === "INFO" && <i className="fas fa-info-circle"></i> }
         { toast.type === "WARNING" && <i className="fas fa-exclamation-circle"></i> }
         { toast.type === "ERROR" && <i className="fas fa-bomb"></i> }
-        <p className="mx-2 overflow-visible truncate font-noto-light max-w-250 whitespace-nowrap">{toast.message}</p>
+        <p className="mx-2 overflow-visible truncate font-noto-light max-w-350 whitespace-nowrap">{toast.message}</p>
         <i className="cursor-pointer fas fa-times" onClick={() => resetToast()}></i>
     </div>
 

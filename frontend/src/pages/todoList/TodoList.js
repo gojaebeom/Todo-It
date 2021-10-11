@@ -7,6 +7,8 @@ import { toastState } from "../../atoms/ui/toastState";
 const TodoList =({
     user,
     todos, 
+    todoDetail,
+    todoDetailToggle,
     filterDay, 
     toBack, 
     
@@ -53,6 +55,7 @@ const TodoList =({
                             name="title"
                             onChange={changeTodoEditInputs}
                             value={todoEdit.title}
+                            maxLength={30}
                         />
                         <textarea 
                             className="w-full p-2 border-t outline-none rounded-b-md" 
@@ -95,6 +98,7 @@ const TodoList =({
                             name="title"
                             onChange={changeStoreHandler}
                             value={todoStore.title}
+                            maxLength={30}
                         />
                         <textarea 
                             className="w-full p-2 border-t outline-none rounded-b-md" 
@@ -141,40 +145,54 @@ const TodoList =({
                                 writer.todos &&
                                 writer.todos.map((item)=>{
                                     return(
-                                    <div key={item.id} className="flex items-center justify-between w-full p-2 rounded-md cursor-pointer hover:bg-red-100 hover:text-black"
+                                    <div key={item.id} className="flex flex-col items-center justify-center w-full p-2 rounded-md cursor-pointer hover:bg-red-100 hover:text-black"
                                         style={{borderRadius:"3px"}}
                                     >
-                                        <div className="flex justify-start itmes-center">
-                                            <label className="flex items-center mr-2 cursor-pointer">
-                                                <label className={`w-5 h-5 border border-gray-200 rounded-full outline-none cursor-pointer mt-1 mr-2
-                                                    ${item.isFinished ? 'bg-red-300':'bg-white'}`}>
-                                                    <input
-                                                        type="checkbox" 
-                                                        name="isFinished"
-                                                        defaultChecked={item.isFinished ? true : false}
-                                                        onChange={() => {
-                                                            if(user.id !== writer.id){
-                                                                setToast({open:true, message:"다른 맴버의 글을 토글할 수 없어요!", type:"WARNING",second:2000});
-                                                                return false;
+                                        <div className="flex items-center justify-between w-full">
+                                            <div className="flex justify-start itmes-center">
+                                                <label className="flex items-center mr-2 cursor-pointer">
+                                                    <label className={`w-5 h-5 flex justify-center items-center border border-gray-200 rounded-full outline-none cursor-pointer mt-1 mr-2
+                                                        ${item.isFinished ? 'bg-red-300':'bg-white'}`}>
+                                                            {
+                                                                item.isFinished ?<i className="pt-1 text-xs text-white fas fa-check"></i>:""
                                                             }
-                                                            changeTodoEditIsFinished(item)
-                                                        }}
-                                                        className="w-0 h-0"
-                                                    />
+                                                        <input
+                                                            type="checkbox" 
+                                                            name="isFinished"
+                                                            defaultChecked={item.isFinished ? true : false}
+                                                            onChange={() => {
+                                                                if(user.id !== writer.id){
+                                                                    setToast({open:true, message:"다른 맴버의 글을 토글할 수 없어요!", type:"WARNING",second:2000});
+                                                                    return false;
+                                                                }
+                                                                changeTodoEditIsFinished(item)
+                                                            }}
+                                                            className="w-0 h-0"
+                                                        />
+                                                    </label>
+                                                    <p>{item.title}</p>
                                                 </label>
-                                                <p>{item.title}</p>
-                                            </label>
+                                                <button 
+                                                    onClick={() => todoDetailToggle(item)}
+                                                    className="mt-1 text-xs hover:text-indigo-400"
+                                                >{(todoDetail.id && todoDetail.id === item.id ) ? '..접기' : '..자세히'}</button>
+                                            </div>
+                                            {
+                                                writer.id === user.id &&
+                                                <div className="flex justify-start itmes-center">
+                                                    {/* <i className="mr-4 far fa-caret-square-up"></i>
+                                                    <i className="mr-4 far fa-caret-square-down"></i> */}
+                                                    <i className="mr-4 far fa-edit" onClick={() => editFormOpenEvent(item)}></i>
+                                                    <i className="mr-4 far fa-trash-alt" onClick={() => deleteTodoEvent(item.id)}></i>
+                                                </div>
+                                            }
                                         </div>
                                         {
-                                            writer.id === user.id &&
-                                            <div className="flex justify-start itmes-center">
-                                                {/* <i className="mr-4 far fa-caret-square-up"></i>
-                                                <i className="mr-4 far fa-caret-square-down"></i> */}
-                                                <i className="mr-4 far fa-edit" onClick={() => editFormOpenEvent(item)}></i>
-                                                <i className="mr-4 far fa-trash-alt" onClick={() => deleteTodoEvent(item.id)}></i>
+                                            (todoDetail.id && todoDetail.id === item.id ) &&
+                                            <div className={`flex items-center justify-start w-full mt-2`}>
+                                                <pre className="pl-6 font-noto-light">{item.description}</pre>
                                             </div>
                                         }
-
                                     </div>
                                     )
                                 })

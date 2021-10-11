@@ -31,6 +31,7 @@ const homeEvent = (Home) => {
                 }, (err) => setToast({open:true, message:err, type:"ERROR",second:2000}));
                 setTodosByMonth(loadRes.data);
             }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
         }, [calendarDetail.id, setTodosByMonth, user.id]);
     
         const calendarArray = () =>{
@@ -46,34 +47,33 @@ const homeEvent = (Home) => {
                                 let days = today.clone().startOf('year').week(week).startOf('week').add(index, 'day');
                                 return(
                                     <td key={index} className={`
-                                        table-fixed min-h-120
+                                        border h-120
                                         ${ index % 7 === 0 || index % 6 === 0 ? 'bg-gray-100':'' }
                                         hover:shadow-inner
                                         `}
                                     >
                                         <Link 
                                             to={`/calendars/${calendarDetail.id}/days/${days.format('YYYY-MM-DD')}`} 
-                                            className={`${days.format('MM') !== today.format('MM') && 'opacity-30'} flex flex-col justify-start items-end min-h-100 max-h-100 overflow-hidden`}
+                                            className={`${days.format('MM') !== today.format('MM') && 'opacity-30'} flex flex-col justify-start items-end h-full`}
                                         >
                                             <span className={`mb-2 ${moment().format('YYYYMMDD') === days.format('YYYYMMDD') && 'bg-red-400  text-white rounded-2xl px-2'}`}>
                                                 {days.format('D')}
                                             </span>
-                                            <div className="flex flex-col items-start justify-center w-full">
+                                            <ul className="flex flex-col items-start justify-center w-full">
                                                 {
                                                     // eslint-disable-next-line array-callback-return
                                                     todosByMonth.map((item, index) => {
                                                         if(days.format('YYYY-MM-DD') === item.matchedDate) {
                                                             return(
-                                                            <div className="relative w-auto overflow-hidden truncate overflow-ellipsis custom-shadow-blue whitespace-nowrap " key={item.id}>
-                                                                <div className="absolute bottom-0 left-0 w-full h-2 bg-yellow-300 bg-opacity-70" ></div>
-                                                                { item.title }
-                                                            </div>
+                                                            <li className="relative w-full text-sm truncate overflow-ellipsis" key={item.id}>
+                                                                ·{ item.title }
+                                                            </li>
                                                             )
                                                         }
                                                         
                                                     })
                                                 }
-                                            </div>
+                                            </ul>
                                         </Link>
                                     </td>
                                 );

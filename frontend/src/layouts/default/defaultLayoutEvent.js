@@ -1,9 +1,10 @@
 import { useEffect } from "react";
 import { useHistory } from "react-router";
-import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue, useResetRecoilState, useSetRecoilState } from "recoil";
 import { calendarDetailState } from "../../atoms/calendarDetailState";
 import { calendarEditState } from "../../atoms/calendarEditState";
 import { calendarsState } from "../../atoms/calendarsState";
+import { calendarStoreState } from "../../atoms/calendarStoreState";
 import { inviteInputState } from "../../atoms/inviteInputState";
 import { notificationsState } from "../../atoms/notificationsState";
 import { creationCalendarModalState } from "../../atoms/ui/creationCalendarModalState";
@@ -37,6 +38,8 @@ const defaultLayoutEvent = (DefaultLayout) => {
         const [notificationModal, setNotificationModal ] = useRecoilState(notificationModalState);
         const [notifications, setNotifications ] = useRecoilState(notificationsState);
 
+        const resetCalendarStore = useResetRecoilState(calendarStoreState);
+
         useEffect(() => {
             refreshNotificationModal();
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -55,8 +58,14 @@ const defaultLayoutEvent = (DefaultLayout) => {
             window.location.href = "/login";
         }
 
-        const clickCreationCalendarModalOpenEvent = () => 
+        const clickCreationCalendarModalOpenEvent = () => {
+            if(calendars.length >= 5){
+                setToast({open:true, message:"한 계정당 5개까지 캘린더를 만들 수 있습니다.", type:"INFO" ,second:2000});
+                return false;
+            }
+            resetCalendarStore();
             setCreationCalendarModalOpen({...createionCalendarModalOpen, open:true});
+        }
 
         const clickUpdateUserModalOpenEvent = () => {
             setUserEdit({

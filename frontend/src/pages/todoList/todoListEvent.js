@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { useHistory } from "react-router";
 import { useRecoilState, useRecoilValue, useResetRecoilState, useSetRecoilState } from "recoil";
 import { calendarDetailState } from "../../atoms/calendarDetailState";
+import { todoDetailState } from "../../atoms/todoDetailState";
 import { todoEditState } from "../../atoms/todoEditState";
 import { todosState } from "../../atoms/todosState";
 import { todoStoreState } from "../../atoms/todoStoreState";
@@ -24,6 +25,7 @@ const todoListEvent = (TodoList) => {
         const [editTodoForm, setEditTodoForm] = useRecoilState(editTodoFormState);
         const history = useHistory();
         const [ formIsOpen, setFormIsOpen ] = useState(false);
+        const [todoDetail, setTodoDetail] = useRecoilState(todoDetailState);
 
         const makeDayStrings = () => {
             let day = history.location.pathname.split("days/")[1];
@@ -70,6 +72,14 @@ const todoListEvent = (TodoList) => {
 
         const toBack = () => {
             history.goBack();
+        }
+
+        const todoDetailToggle = ( todo ) => {
+            if(!todoDetail.id){
+                setTodoDetail({...todoDetail, id: todo.id, description: todo.description});
+            }else{
+                setTodoDetail({...todoDetail, id: "", description: ""});
+            }
         }
 
         const clickTodoCreateHandler = async ( e ) => {
@@ -177,6 +187,8 @@ const todoListEvent = (TodoList) => {
             filterDay={filterDay}
             toBack={toBack}
             todos={todos}
+            todoDetail={todoDetail}
+            todoDetailToggle={todoDetailToggle}
             
             todoStore={todoStore}
             changeStoreHandler={changeStoreHandler}
