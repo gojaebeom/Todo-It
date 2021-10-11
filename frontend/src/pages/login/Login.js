@@ -3,7 +3,6 @@ import coverImg from "../../assets/images/cover_.png";
 import { useEffect } from "react";
 import { useHistory } from "react-router";
 import { useRecoilValue } from "recoil";
-import ApiScaffold from "../../shared/api";
 import { userState } from "../../atoms/userState";
 
 const Login = () => {
@@ -24,7 +23,7 @@ const Login = () => {
             </div>
             <img src={coverImg} alt="img" />
             <div className="flex flex-col items-center justify-center">
-                <button className="mb-2" onClick={
+                {/* <button className="mb-2" onClick={
                     async () => {
                         await ApiScaffold({
                             method: "post",
@@ -38,7 +37,7 @@ const Login = () => {
                         });
                         history.push("/");
                     }
-                }>무지성 로그인하기</button>
+                }>무지성 로그인하기</button> */}
                 <div className="mb-2">선택지가 없는 카카오톡 로그인하기</div>
                 <a 
                     href={`https://kauth.kakao.com/oauth/authorize?client_id=${process.env.REACT_APP_KAKAO_CLIENT_ID}&redirect_uri=${process.env.REACT_APP_KAKAO_REDIRECT_URL}&response_type=code`}

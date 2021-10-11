@@ -27,6 +27,29 @@ const userUpdateModalEvent = ( UserUpdateModal ) => {
                 setUserEdit({...userEdit, profilePreviewImg: event.target.result, profileImgFile: file });
             });
         }
+
+        const deleteImage = async (userId) =>{
+            // eslint-disable-next-line no-restricted-globals
+            const result = confirm("이미지를 초기화하시겠습니까?");
+            setUserEdit({...userEdit, profilePreviewImg: "", profileImgFile: null});
+            if(!result) return false;
+
+            await ApiScaffold({
+                method: "delete",
+                url: `/users/${userId}/images`
+            }, ( err ) => {
+                setUpdateUserModalOpen({...updateUserModalOpen, submit:false});
+            });
+            const userRes = await ApiScaffold({
+                method: "get",
+                url: `/users/${userId}`
+            });
+            setUser({...userRes.data.user});
+            if(userRes.data.calendars.length !== 0){
+                setCalendars([...userRes.data.calendars]);
+                setCalendarDetail({...userRes.data.calendars[0]});
+            }
+        }
         
         const changeInputEvent = ( e ) => {
             const value = e.target.value;
@@ -87,6 +110,7 @@ const userUpdateModalEvent = ( UserUpdateModal ) => {
             updateUserModalOpen={updateUserModalOpen}
             clickUpdateUserModalCloseEvent={clickUpdateUserModalCloseEvent}
             changeImageEvent={changeImageEvent}
+            deleteImage={deleteImage}
             changeInputEvent={changeInputEvent}
             clickDeleteUserEvent={clickDeleteUserEvent}
             submitEvent={submitEvent}

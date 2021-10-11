@@ -61,7 +61,15 @@ const DefaultLayout = ({
                             >
                                 {
                                     item.thumbnailPreview ?
-                                    <img src={`${process.env.REACT_APP_API_URL}/images${item.thumbnailPreview}`} alt="img" className={`w-full h-full ${item.id !== calendarDetail.id && 'border border-red-200'} rounded-full`}/> :
+                                    <React.Fragment>
+                                        <img 
+                                            src={`${process.env.REACT_APP_API_URL}/images${item.thumbnailPreview}`} 
+                                            alt="img" 
+                                            className={`w-full h-full ${item.id !== calendarDetail.id && 'border border-red-200'} rounded-full`}
+                                        />
+                                        <div className="absolute top-0 left-0 flex items-center justify-center w-full h-full text-white rounded-full text-md font-noto-medium">{item.name[0]}{item.name[1]}</div>
+                                    </React.Fragment>
+                                     :
                                     <div className="flex items-center justify-center w-full h-full bg-white rounded-full text-md font-noto-medium">{item.name[0]}{item.name[1]}</div>
                                 }
                             </button>

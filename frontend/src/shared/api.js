@@ -7,21 +7,16 @@ const ApiScaffold = async ({ method, url, data, token }, callback) => {
         data: data ? data : null
     })
     .then(data => {
-        console.debug(data.data);
-        console.debug(data.data);
-        console.debug(data.data);
+        console.log(data);
         if(data.data.error){
-            console.debug("에러존재!!!");
-            console.debug("에러존재!!!");
-            console.debug("에러존재!!!");
+            const error = data.data.error;
+            if(callback) callback(error.message);
+            throw new Error(error.message);
         }
         return data.data;
     })
-    .catch(err => {
-        if(callback){
-            callback(err.response.data.message);
-        }
-        throw new Error(err.response.data.message);
+    .catch(errMessage => {
+        throw new Error(errMessage);
     });
 }
 export default ApiScaffold;

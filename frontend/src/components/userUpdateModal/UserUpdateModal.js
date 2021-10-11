@@ -4,6 +4,7 @@ const UserUpdateModal = ({
     updateUserModalOpen,
     clickUpdateUserModalCloseEvent,
     changeImageEvent,
+    deleteImage,
     changeInputEvent,
     clickDeleteUserEvent,
     userEdit,
@@ -35,6 +36,8 @@ const UserUpdateModal = ({
                     onChange={changeImageEvent}
                 />
             </label>
+            <button className="text-xs" onClick={() => deleteImage(user.id)}>이미지 초기화</button>
+
             <div className="w-full">
                 <label className="text-xs">유저코드</label>
                 <input className="w-full p-3 border rounded-sm outline-none" placeholder="회원코드"
@@ -50,6 +53,7 @@ const UserUpdateModal = ({
                     value={userEdit.nickname || ''}
                     onChange={changeInputEvent}
                     name="nickname"
+                    maxLength={7}
                 />
             </div>
             <div className="flex justify-end w-full mt-5">

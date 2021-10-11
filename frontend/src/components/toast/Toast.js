@@ -22,7 +22,7 @@ const Toast = () => {
     let bgColor = "bg-green-400";
     if(toast.type === "INFO") bgColor = "bg-blue-400";
     else if(toast.type === "WARNING")  bgColor = "bg-yellow-400";
-    else if(toast.type === "ERROR")  bgColor = "bg-red-400";
+    else if(toast.type === "ERROR")  bgColor = "bg-red-300";
     
     return(
     toast.open &&

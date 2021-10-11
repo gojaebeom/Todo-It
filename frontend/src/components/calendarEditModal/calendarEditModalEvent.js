@@ -30,6 +30,32 @@ const calendarEditModalEvent = ( Compoent ) => {
             });
         }
 
+        const deleteImage = async (calendarId) => {
+            // eslint-disable-next-line no-restricted-globals
+            const result = confirm("이미지를 초기화하시겠습니까?");
+            setCalendarEdit({...calendarEdit, thumbnail: ""});
+            if(!result) return false;
+            await ApiScaffold({
+                method: "delete",
+                url: `/calendars/${calendarId}/images`,
+            }, ( err ) => {
+                setCalendarEditModal({...calendarEditModal, submit:false});
+                setToast({open:true, message: err, type:"WARNING",second:2000});
+            });
+            setToast({open:true, message: "썸네일이 초기화 되었습니다", type:"SUCCESS",second:2000});
+
+            const calendarsRes = await ApiScaffold({
+                method: "get",
+                url: `/calendars?userId=${user.id}`
+            });
+            setCalendars([...calendarsRes.data]);
+            for(let calendar of calendarsRes.data){
+                if(calendar.id === calendarDetail.id){
+                    setCalendarDetail({...calendar});
+                }
+            }
+        }
+
         const changeCalendarEditInputs = ( e ) => {
             const name = e.target.name;
             const value = e.target.value;
@@ -66,14 +92,12 @@ const calendarEditModalEvent = ( Compoent ) => {
                 method: "get",
                 url: `/calendars?userId=${user.id}`
             });
-            console.debug(calendarsRes);
             setCalendars([...calendarsRes.data]);
             for(let calendar of calendarsRes.data){
                 if(calendar.id === calendarDetail.id){
                     setCalendarDetail({...calendar});
                 }
             }
-            
             
             setCalendarEditModal({...calendarEditModal, open:false, submit:false});
         }
@@ -110,6 +134,7 @@ const calendarEditModalEvent = ( Compoent ) => {
             calendarEditModal={calendarEditModal}
             calendarEdit={calendarEdit}
             changeImage={changeImage}
+            deleteImage={deleteImage}
             changeCalendarEditInputs={changeCalendarEditInputs}
             calendarEditModalClose={calendarEditModalClose}
             submitCalendarEdit={submitCalendarEdit}
