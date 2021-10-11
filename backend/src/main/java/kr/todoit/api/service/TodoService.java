@@ -4,6 +4,8 @@ import kr.todoit.api.domain.Calendar;
 import kr.todoit.api.domain.Todo;
 import kr.todoit.api.domain.User;
 import kr.todoit.api.dto.*;
+import kr.todoit.api.exception.CustomException;
+import kr.todoit.api.exception.ExceptionType;
 import kr.todoit.api.mapper.TodoMapper;
 import kr.todoit.api.repository.CalendarRepository;
 import kr.todoit.api.repository.TodoRepository;
@@ -42,7 +44,7 @@ public class TodoService {
             Todo todo = todoStoreRequest.toTodo(user, calendar);
             todoRepository.save(todo);
         }else{
-            throw new IllegalArgumentException("저장하려는 일정정보의 회원, 또는 캘린더가 존재하지 않습니다.");
+            throw new CustomException(ExceptionType.TODO_STORE_FAILS);
         }
     }
 

@@ -9,6 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -21,7 +22,7 @@ public class NotificationController {
     private NotificationService notificationService;
 
     @GetMapping("")
-    public ResponseEntity<Map<String, Object>> find(NotificationFindRequest notificationFindRequest){
+    public ResponseEntity<Map<String, Object>> find(@Valid NotificationFindRequest notificationFindRequest){
         List<NotificationFindResponse> notificationFindResponses = notificationService.find(notificationFindRequest);
 
         Map<String, Object> response = new HashMap<>();
@@ -32,8 +33,7 @@ public class NotificationController {
     }
 
     @PostMapping("")
-    public ResponseEntity<Map<String, Object>> store(NotificationStoreRequest notificationStoreRequest){
-        System.out.println(notificationStoreRequest);
+    public ResponseEntity<Map<String, Object>> store(@Valid NotificationStoreRequest notificationStoreRequest){
         notificationService.store(notificationStoreRequest);
 
         Map<String, Object> response = new HashMap<>();

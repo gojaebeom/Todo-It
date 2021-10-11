@@ -3,6 +3,8 @@ package kr.todoit.api.dto;
 import kr.todoit.api.domain.Calendar;
 import kr.todoit.api.domain.CalendarGroup;
 import kr.todoit.api.domain.User;
+import kr.todoit.api.exception.CustomException;
+import kr.todoit.api.exception.ExceptionType;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
@@ -10,11 +12,13 @@ import lombok.ToString;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.constraints.NotNull;
+import java.net.BindException;
 
 @Getter
 @Setter
 @ToString
 public class CalendarStoreRequest {
+
     @NotNull(message = "최초 생성자 id는 필수값입니다.")
     private Long userId;
     @NotNull(message = "캘린더 이름은 필수값입니다.")
@@ -25,8 +29,12 @@ public class CalendarStoreRequest {
     private Byte isPrivate;
     private Byte isDefault;
 
-    public void setName(String name) {
-        if(name.length() > 10) throw new IllegalArgumentException("캘린더 이름은 10글자 이하로 작성해주세요.");
+    public void setName(String name)  {
+        // 최초 생성자 id는 필수값 에러 필요
+        // 캘린더 null 안됨
+        // 캘린더 명 10글자 이하
+        if(name.length() > 10) throw new CustomException(ExceptionType.OVERFLOW_CALENDAR_NAME);
+
         this.name = name;
     }
 

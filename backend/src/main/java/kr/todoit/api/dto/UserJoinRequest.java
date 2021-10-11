@@ -13,7 +13,6 @@ import javax.validation.constraints.NotNull;
 public class UserJoinRequest {
     private String email;
     private String userCode;
-
     @NotNull(message = "provide type 은 필수값입니다.")
     private String provideType;
 

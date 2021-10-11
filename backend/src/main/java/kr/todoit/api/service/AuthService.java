@@ -2,6 +2,8 @@ package kr.todoit.api.service;
 
 import kr.todoit.api.domain.User;
 import kr.todoit.api.dto.TokenResponse;
+import kr.todoit.api.exception.CustomException;
+import kr.todoit.api.exception.ExceptionType;
 import kr.todoit.api.repository.UserRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -26,7 +28,7 @@ public class AuthService {
         User user = userRepository.findUserById(Long.valueOf(tokenInfo.get("id").toString()));
 
         if(user == null){
-            throw new AuthenticationException("일치하는 회원을 찾지 못했습니다.");
+            throw new CustomException(ExceptionType.NOT_FOUND_USER);
         }
 
         HashMap<String, Object> actInfo = tokenService.getAct(Long.valueOf(tokenInfo.get("id").toString()));

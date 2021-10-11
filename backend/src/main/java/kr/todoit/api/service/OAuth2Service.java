@@ -1,5 +1,7 @@
 package kr.todoit.api.service;
 
+import kr.todoit.api.exception.CustomException;
+import kr.todoit.api.exception.ExceptionType;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -45,7 +47,7 @@ public class OAuth2Service {
             System.out.println(resultMap);
 
         }catch (HttpClientErrorException e){
-            throw new Exception(TYPE+" 로그인에 실패하였습니다.");
+            throw new CustomException(ExceptionType.LOGIN_FAILS);
         }
         return resultMap;
     }
@@ -55,7 +57,7 @@ public class OAuth2Service {
             accessToken = accessToken.split("bearer ")[1];
             log.info("정상적인 토큰 받음.");
         }catch(ArrayIndexOutOfBoundsException e){
-            throw new Exception("엑세스 토큰 값이 올바르지 않습니다.");
+            throw new CustomException(ExceptionType.NOT_MATCHED_OAUTH_TOKEN);
         }
         return accessToken;
     }

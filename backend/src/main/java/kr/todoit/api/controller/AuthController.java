@@ -4,6 +4,8 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
 import kr.todoit.api.dto.TokenResponse;
+import kr.todoit.api.exception.CustomException;
+import kr.todoit.api.exception.ExceptionType;
 import kr.todoit.api.service.AuthService;
 import kr.todoit.api.service.TokenService;
 import lombok.AllArgsConstructor;
@@ -34,7 +36,7 @@ public class AuthController {
 
         if(token == null){
             log.info("쿠키 확인 -> 저장된 토큰 없음( 로그인 하지 않은 유저 )");
-            throw new AuthenticationException("ERR:NOT_FINE_RFT");
+            throw new CustomException(ExceptionType.NOT_FOUND_USER);
         }
 
         TokenResponse tokenResponse = authService.verify(token);

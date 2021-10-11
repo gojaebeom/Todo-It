@@ -32,7 +32,7 @@ public class UserController {
     private CalendarService calendarService;
 
     @PostMapping("/join-by-oauth")
-    public ResponseEntity<Map<String, Object>> joinByOauth(HttpServletRequest request, @Valid @RequestBody UserJoinRequest joinRequest) throws Exception {
+    public ResponseEntity<Map<String, Object>> joinByOauth(HttpServletRequest request,@Valid @RequestBody UserJoinRequest joinRequest) throws Exception {
         String accessTokenString = request.getHeader("authorization");
         String email = oAuth2Service.getKakaoEmailByAccessToken(accessTokenString);
         joinRequest.setEmail(email);
@@ -54,7 +54,7 @@ public class UserController {
     }
 
     @GetMapping("/{userCode}/join/calendars/{calendarId}")
-    public ResponseEntity<Map<String, Object>> joinCalendar(UserJoinCalendarRequest userJoinCalendarRequest){
+    public ResponseEntity<Map<String, Object>> joinCalendar(@Valid UserJoinCalendarRequest userJoinCalendarRequest){
         System.out.println(userJoinCalendarRequest);
         userService.joinCalendar(userJoinCalendarRequest);
 
@@ -110,6 +110,15 @@ public class UserController {
         userService.delete(id);
         Map<String, Object> response = new HashMap<>();
         response.put("message","회원 데이터를 정상적으로 삭제했습니다.");
+        response.put("statusCode", 200);
+        return ResponseEntity.ok(response);
+    }
+
+    @DeleteMapping("/{id}/images")
+    public ResponseEntity<Map<String, Object>> deleteImages(@PathVariable Long id) {
+        userService.deleteImages(id);
+        Map<String, Object> response = new HashMap<>();
+        response.put("message","회원 이미지를 정상적으로 삭제했습니다.");
         response.put("statusCode", 200);
         return ResponseEntity.ok(response);
     }

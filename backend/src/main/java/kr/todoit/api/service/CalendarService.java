@@ -4,6 +4,8 @@ import kr.todoit.api.domain.Calendar;
 import kr.todoit.api.domain.CalendarGroup;
 import kr.todoit.api.domain.User;
 import kr.todoit.api.dto.*;
+import kr.todoit.api.exception.CustomException;
+import kr.todoit.api.exception.ExceptionType;
 import kr.todoit.api.mapper.CalendarMapper;
 import kr.todoit.api.mapper.UserMapper;
 import kr.todoit.api.repository.CalendarGroupRepository;
@@ -113,8 +115,20 @@ public class CalendarService {
     public void delete(Long id) {
         log.info("캘린더 삭제");
         Calendar calendar = calendarRepository.findCalendarById(id);
+        if(calendar.getIsDefault() == 1){
+            throw new CustomException(ExceptionType.NOT_DELETED_DEFAULT_CALENDAR);
+        }
         imageService.delete(calendar.getThumbnail());
         imageService.delete(calendar.getThumbnailPreview());
         calendarRepository.delete(calendar);
+    }
+
+    public void deleteImages(Long id) {
+        log.info("캘린더 썸네일 삭제");
+        Calendar calendar = calendarRepository.findCalendarById(id);
+        imageService.delete(calendar.getThumbnail());
+        imageService.delete(calendar.getThumbnailPreview());
+        calendar.setThumbnail("");
+        calendar.setThumbnailPreview("");
     }
 }

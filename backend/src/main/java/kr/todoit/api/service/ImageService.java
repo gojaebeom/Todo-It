@@ -1,5 +1,7 @@
 package kr.todoit.api.service;
 
+import kr.todoit.api.exception.CustomException;
+import kr.todoit.api.exception.ExceptionType;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.imgscalr.Scalr;
@@ -87,7 +89,7 @@ public class ImageService {
         System.out.println("파일 이름 : "+ fileName);
         // TODO: 이미지 파일 타입 검사
         if(!fileName.matches(regExp)){
-            throw new IllegalArgumentException("Is Not Image File: jpg, png, gif, bmp 확장자 파일만 사용할 수 있습니다.");
+            throw new CustomException(ExceptionType.NOT_MATCHED_FILE_TYPE);
         }
         log.info("[ 확장자 검사 OK ]");
 
@@ -95,7 +97,7 @@ public class ImageService {
         final int limitSize = 2000000;
         // TODO: 이미지 사이즈 초과시 실패 응답
         if( fileSize > limitSize  ){
-            throw new IllegalArgumentException("File Size Overflow: 파일 하나의 사이즈는 최대 2MB로 제한됩니다.");
+            throw new CustomException(ExceptionType.FILE_SIZE_OVERFLOW);
         }
         log.info("[ 파일 사이즈 검사 OK ]");
     }

@@ -1,6 +1,8 @@
 package kr.todoit.api.service;
 
 import io.jsonwebtoken.*;
+import kr.todoit.api.exception.CustomException;
+import kr.todoit.api.exception.ExceptionType;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -75,10 +77,10 @@ public class TokenService {
         }catch(ExpiredJwtException e){
             log.info("토큰 만료됨");
             System.out.println(e.getMessage());
-            throw new AuthenticationException("EXPIRED_TOKEN");
+            throw new CustomException(ExceptionType.EXPIRED_TOKEN);
         }catch(Exception e) {
             System.out.println(e.getMessage());
-            throw new AuthenticationException("NOT_MATCHED_TOKEN");
+            throw new CustomException(ExceptionType.NOT_MATCHED_TOKEN);
         }
     }
 }
