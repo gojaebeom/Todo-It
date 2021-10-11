@@ -11,7 +11,6 @@ import ApiScaffold from "./shared/api";
 
 const appEvent = (App) => {
     return () => {
-
         const setToast = useSetRecoilState(toastState);
         const history = useHistory();
         const setUser = useSetRecoilState(userState);
@@ -24,12 +23,8 @@ const appEvent = (App) => {
                 method: "get",
                 url: `/auth/silent-refresh`,
             }, ( err ) => {
-                setToast({open:true, message:err, type:"ERROR" ,second:2000})
-                if(err === "ERR:NOT_FINE_RFT"){
-                    history.push("/403");
-                }else{
-                    history.push("/login");
-                }
+                // setToast({open:true, message:err, type:"ERROR" ,second:2000});
+                history.push("/login");
             });
             
             console.debug(refreshRes);

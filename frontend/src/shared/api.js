@@ -7,6 +7,14 @@ const ApiScaffold = async ({ method, url, data, token }, callback) => {
         data: data ? data : null
     })
     .then(data => {
+        console.debug(data.data);
+        console.debug(data.data);
+        console.debug(data.data);
+        if(data.data.error){
+            console.debug("에러존재!!!");
+            console.debug("에러존재!!!");
+            console.debug("에러존재!!!");
+        }
         return data.data;
     })
     .catch(err => {

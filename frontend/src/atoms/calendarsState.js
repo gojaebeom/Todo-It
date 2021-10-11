@@ -10,6 +10,7 @@ export const calendarsState = atom({
             thumbnail: "",
             thumbnailPreview: "",
             isPrivate: 0,
+            isDefault: 0,
         }
     ], // default value (aka initial value)
 });

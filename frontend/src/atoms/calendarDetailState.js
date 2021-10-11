@@ -8,8 +8,7 @@ export const calendarDetailState = atom({
         name: "",
         thumbnailPreview: "",
         isPrivate: 0,
-        members:[
-            
-        ]
+        isDefault: 0,
+        members:[]
     }, // default value (aka initial value)
 });

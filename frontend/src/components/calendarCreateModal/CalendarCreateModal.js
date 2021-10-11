@@ -15,7 +15,7 @@ const CalendarCreateModal = ({
             <p className="text-2xl font-noto-medium">새로운 캘린더 생성</p>
             <p className="text-sm">목적에 맞는 캘린더를 생성하고 일정을 가득 채워보세요 :D</p>
         
-            <label className="flex flex-col items-center justify-center w-20 h-20 my-5 border-2 border-gray-500 border-dashed rounded-full cursor-pointer" htmlFor="file">
+            {/* <label className="flex flex-col items-center justify-center w-20 h-20 my-5 border-2 border-gray-500 border-dashed rounded-full cursor-pointer" htmlFor="file">
                 {
                     !storeCalendar.thumbnail ?
                     <>
@@ -27,9 +27,9 @@ const CalendarCreateModal = ({
                 <input id="file" type="file" className="w-0 h-0"
                     onChange={changeImageEvent}
                 />
-            </label>
+            </label> */}
 
-            <div className="w-full">
+            <div className="w-full mt-4">
                 <label className="mb-1 text-xs">캘린더 이름</label>
                 <input className="w-full p-3 border rounded-sm outline-none" placeholder="ex) 여행계획일정"
                     value={storeCalendar.name}

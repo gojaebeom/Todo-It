@@ -59,6 +59,7 @@ const calendarEditModalEvent = ( Compoent ) => {
                 data: formData
             }, ( err ) => {
                 setCalendarEditModal({...calendarEditModal, submit:false});
+                setToast({open:true, message: err, type:"WARNING",second:2000});
             });
 
             const calendarsRes = await ApiScaffold({

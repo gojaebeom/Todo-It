@@ -14,10 +14,10 @@ const CalendarEditModal = ({
     calendarEditModal.open &&
     <div className={`fixed top-0 left-0 flex items-center justify-center w-full h-full bg-black bg-opacity-50`}>
         <div className={`flex flex-col items-center p-5 bg-white rounded-sm w-400 overflow-hidden`}>
-            <p className="text-2xl font-noto-medium">새로운 캘린더 수정</p>
+            <p className="text-2xl font-noto-medium">캘린더 수정</p>
             {/* <p className="text-sm">목적에 맞는 캘린더를 생성하고 일정을 가득 채워보세요 :D</p> */}
         
-            <label className="flex flex-col items-center justify-center w-20 h-20 my-5 border-2 border-gray-500 border-dashed rounded-full cursor-pointer" htmlFor="file">            
+            {/* <label className="flex flex-col items-center justify-center w-20 h-20 my-5 border-2 border-gray-500 border-dashed rounded-full cursor-pointer" htmlFor="file">            
                 {
                     ( !calendarEdit.thumbnail && calendarDetail.thumbnailPreview ) ?
                     <img src={`${process.env.REACT_APP_API_URL}/images${calendarDetail.thumbnailPreview}`} alt="img" className="w-full h-full rounded-full"/>:
@@ -36,9 +36,9 @@ const CalendarEditModal = ({
                 <input id="file" type="file" className="w-0 h-0"
                     onChange={changeImage}
                 />
-            </label>
+            </label> */}
 
-            <div className="w-full">
+            <div className="w-full mt-4">
                 <label className="mb-1 text-xs">캘린더 이름</label>
                 <input className="w-full p-3 border rounded-sm outline-none" placeholder="ex) 여행계획일정"
                     value={calendarEdit.name}
@@ -46,24 +46,26 @@ const CalendarEditModal = ({
                 />
             </div>
 
-            <div className="flex flex-col w-full mt-5">
-                <label className="mb-1 text-xs">공개여부</label>
-                <div className="flex items-center justify-start">
-                    <div className="relative inline-block w-10 mr-2 align-middle select-none">
-                        <input 
-                            type="checkbox" 
-                            name="isPrivate" 
-                            id="checkbox" 
-                            className={`absolute block w-6 h-6 duration-200 ease-in  border-4 rounded-full outline-none appearance-none cursor-pointer focus:outline-none 
-                            ${!calendarEdit.isPrivate ? "right-0 bg-red-400" : "right-4 bg-white"}`}
-                            onChange={changeCalendarEditInputs}
-                        />
-                        <label htmlFor="checkbox" className="block h-6 overflow-hidden bg-gray-300 rounded-full cursor-pointer"></label>
+            {
+                !calendarDetail.isDefault &&
+                <div className="flex flex-col w-full mt-5">
+                    <label className="mb-1 text-xs">공개여부</label>
+                    <div className="flex items-center justify-start">
+                        <div className="relative inline-block w-10 mr-2 align-middle select-none">
+                            <input 
+                                type="checkbox" 
+                                name="isPrivate" 
+                                id="checkbox" 
+                                className={`absolute block w-6 h-6 duration-200 ease-in  border-4 rounded-full outline-none appearance-none cursor-pointer focus:outline-none 
+                                ${!calendarEdit.isPrivate ? "right-0 bg-red-400" : "right-4 bg-white"}`}
+                                onChange={changeCalendarEditInputs}
+                            />
+                            <label htmlFor="checkbox" className="block h-6 overflow-hidden bg-gray-300 rounded-full cursor-pointer"></label>
+                        </div>
+                        <div>{ calendarEdit.isPrivate ? "비공개": "공개"}</div>
                     </div>
-                    <div>{ calendarEdit.isPrivate ? "비공개": "공개"}</div>
                 </div>
-
-            </div>
+            }
 
             <div className="flex justify-between w-full">
                 <button className="px-5 py-2 mt-5 rounded-sm font-noto-medium"
@@ -72,11 +74,14 @@ const CalendarEditModal = ({
                     취소
                 </button>
                 <div className="flex">
-                    <button className="flex items-center justify-center px-5 py-2 mt-5 mr-2 text-white bg-gray-300 rounded-sm font-noto-medium"
-                        onClick={deleteCalendarEdit}
-                    >
-                        삭제
-                    </button>
+                    {
+                        !calendarDetail.isDefault &&
+                        <button className="flex items-center justify-center px-5 py-2 mt-5 mr-2 text-white bg-gray-300 rounded-sm font-noto-medium"
+                            onClick={deleteCalendarEdit}
+                        >
+                            삭제
+                        </button>
+                    }
                     <button className="flex items-center justify-center px-5 py-2 mt-5 text-white bg-red-400 rounded-sm font-noto-medium"
                         onClick={submitCalendarEdit}
                     >

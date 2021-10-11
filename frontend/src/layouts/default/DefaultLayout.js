@@ -7,6 +7,7 @@ import CalendarEditModal from "../../components/calendarEditModal/CalendarEditMo
 import notificationImg from "../../assets/images/notification2.png";
 import fanfareImg from "../../assets/images/fanfare.png";
 import welcomeImg from "../../assets/images/welcome.png";
+import React from "react";
 
 const DefaultLayout = ({ 
     children, 
@@ -152,16 +153,22 @@ const DefaultLayout = ({
                     </div>
                     <div className="flex flex-col items-start justify-start w-full p-3">
                         {
-                            ( user.id === calendarDetail.userId ) &&
-                            <div className="flex justify-between w-full mb-4 border-gray-200 rounded-md ">
-                                <input className="w-9/12 p-2 border outline-none rounded-l-md focus:border-red-300 focus:border-2" 
-                                    value={inviteInput}
-                                    onChange={changeInviteInput}
-                                />
-                                <button className="w-3/12 p-2 text-white transition-all bg-red-300 rounded-r-md hover:bg-red-400"
-                                    onClick={submitInviteInput}
-                                >초대</button>
-                            </div>
+                            ( !calendarDetail.isDefault ) ? // 기본캘린더가 아닐 경우만 초대 보이기
+                            <React.Fragment>
+                                {
+                                    ( user.id === calendarDetail.userId ) && // 기본캘린더가 아니면서 캘린더 생성자만 초대 가능
+                                    <div className="flex justify-between w-full mb-4 border-gray-200 rounded-md ">
+                                        <input className="w-9/12 p-2 border outline-none rounded-l-md focus:border-red-300 focus:border-2" 
+                                            value={inviteInput}
+                                            onChange={changeInviteInput}
+                                        />
+                                        <button className="w-3/12 p-2 text-white transition-all bg-red-300 rounded-r-md hover:bg-red-400"
+                                            onClick={submitInviteInput}
+                                        >초대</button>
+                                    </div>
+                                }
+                            </React.Fragment> :
+                            <div className="w-full p-2 mb-2 text-sm bg-white border rounded-md">이 캘린더는 개인 캘린더입니다. 팀 공유 캘린더가 필요하다면, 새로운 캘린더를 만들어주세요!🐥</div>
                         }
                         <h1 className="text-md font-noto-regular">참여 인원 ({calendarDetail.members.length})</h1>
                         <div className="flex flex-col items-start justify-start w-full pt-3 pl-3">
