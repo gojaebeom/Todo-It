@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const ApiScaffold = async ({ method, url, data, token }, callback) => {
+const apiScaffold = async ({ method, url, data, token }, callback) => {
     return await axios({
         method: method,
         url: url,
@@ -19,4 +19,4 @@ const ApiScaffold = async ({ method, url, data, token }, callback) => {
         throw new Error(errMessage);
     });
 }
-export default ApiScaffold;
+export default apiScaffold;
