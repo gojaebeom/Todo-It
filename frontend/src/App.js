@@ -1,12 +1,12 @@
 import { Route, Switch } from "react-router-dom";
 import appEvent from "./appEvent";
-import Home from "./pages/home/Home";
-import Login from "./pages/login/Login";
-import Redirector from "./pages/login/Redirector";
-import TodoList from "./pages/todoList/TodoList";
-import Error403 from "./pages/err/Error403";
+import Home from "./components/pages/Home";
+import Login from "./components/pages/Login";
+import Redirector from "./components/pages/Redirector";
+import TodoList from "./components/pages/TodoList";
+import Error403 from "./components/pages/Error403";
 import React from "react";
-import Toast from "./components/toast/Toast";
+import Toast from "./components/commons/toast/Toast";
 
 const App = () => {
     return(

@@ -20,4 +20,4 @@ const readImgFile = ( event, callback ) => {
     // reader가 이미지 읽도록 하기
     reader.readAsDataURL(event.target.files[0]);
 }
-export default readImgFile
+export default readImgFile;

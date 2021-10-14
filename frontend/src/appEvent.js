@@ -53,7 +53,7 @@ const appEvent = (App) => {
 
                 // accessToken 만료하기 1분 전에 로그인 연장
                 const JWT_EXPIRY_TIME = 1800 * 1000;
-                setTimeout(loadEvent, JWT_EXPIRY_TIME - 60000);
+                // setTimeout(loadEvent, JWT_EXPIRY_TIME - 60000);
             }
         }
 
