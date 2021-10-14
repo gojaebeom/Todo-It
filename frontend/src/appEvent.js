@@ -52,15 +52,14 @@ const appEvent = (App) => {
                 setLoadingPage({ step1:false, step2:true });
 
                 // accessToken 만료하기 1분 전에 로그인 연장
-                const JWT_EXPIRY_TIME = 1800 * 1000;
+                // const JWT_EXPIRY_TIME = 1800 * 1000;
                 // setTimeout(loadEvent, JWT_EXPIRY_TIME - 60000);
             }
         }
 
-        useEffect(() => {
+        useEffect(async () => {
             console.debug(`%c APP MOUNTED`,`color:red`);
-            loadEvent();
-            
+            await loadEvent();
         // eslint-disable-next-line react-hooks/exhaustive-deps
         }, []);
 

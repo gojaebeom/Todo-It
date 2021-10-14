@@ -71,7 +71,6 @@ const CalendarCreateModal = ({
                         <div className="w-3 h-3 mx-2 border-t-2 border-r-2 rounded-full animate-spin"></div> : 
                         "만들기"
                     }
-                    
                 </button>
             </div>
         </div>

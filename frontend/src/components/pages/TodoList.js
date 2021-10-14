@@ -1,38 +1,15 @@
 import DefaultLayout from "../layouts/default/DefaultLayout";
-import emptyImg from "../../assets/images/null.png";
-import todoEvent from "./todoListEvent";
-import { useSetRecoilState } from "recoil";
-import { toastState } from "../../atoms/ui/toastState";
 import TodoEditForm from "../commons/todo/TodoEditForm";
 import TodoCreateForm from "../commons/todo/TodoCreateForm";
 import TodoGroup from "../commons/todo/TodoGroup";
 import TodoIsNull from "../commons/todo/TodoIsNull";
 import moment from "moment";
 import {useHistory} from "react-router-dom";
+import dateFormat from "../../shared/dateFormat";
 
 const TodoList =() => {
     const history = useHistory();
-    const makeDayStrings = () => {
-        let day = history.location.pathname.split("days/")[1];
-        let filterDay = day;
-        const today = moment().format('YYYY-MM-DD');
-        const yesterday = moment().subtract(1, "day").format('YYYY-MM-DD');
-        const tomorrow = moment().add(1, "day").format('YYYY-MM-DD');
-        switch(filterDay){
-            case yesterday:
-                filterDay = "어제";
-                break;
-            case today:
-                filterDay = "오늘";
-                break;
-            case tomorrow:
-                filterDay = "내일";
-                break;
-            default:
-        }
-        return {day, filterDay};
-    }
-    const {day, filterDay} = makeDayStrings();
+    const { filterDay } = dateFormat(history);
 
     return(
     <DefaultLayout>
@@ -56,4 +33,4 @@ const TodoList =() => {
     </DefaultLayout>  
     )
 }
-export default todoEvent(TodoList);
+export default TodoList;

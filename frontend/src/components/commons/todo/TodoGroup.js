@@ -1,9 +1,14 @@
 import TodoGroupItem from "./TodoGroupItem";
-import {useRecoilState} from "recoil";
-import {todosState} from "../../../atoms/todosState";
+import {useTodos} from "../../../atoms/todosState";
+import {useEffect} from "react";
 
 const TodoGroup = () => {
-    const [todos, setTodos] = useRecoilState(todosState);
+    const { user, calendar, todos, refreshTodos } = useTodos();
+
+    useEffect(async()=>{
+        await refreshTodos();
+    }, [user, calendar]);
+
     return(
     todos.length !== 0 &&
     todos.map((writer) => {

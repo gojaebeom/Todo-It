@@ -1,4 +1,4 @@
-import { atom } from "recoil";
+import {atom, useRecoilState} from "recoil";
 
 export const todoDetailState = atom({
     key:'todoDetailState',
@@ -7,3 +7,21 @@ export const todoDetailState = atom({
         description:''
     }
 })
+
+export const useTodoDetail = () => {
+
+    const [todoDetail, setTodoDetail] = useRecoilState(todoDetailState);
+
+    const todoDetailToggle = ( todo ) => {
+        if(!todoDetail.id){
+            setTodoDetail({...todoDetail, id: todo.id, description: todo.description});
+        }else{
+            setTodoDetail({...todoDetail, id: "", description: ""});
+        }
+    }
+
+    return {
+        todoDetail,
+        todoDetailToggle
+    }
+}

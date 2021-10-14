@@ -1,17 +1,11 @@
 import emptyImg from "../../../assets/images/null.png";
-import {useRecoilState, useResetRecoilState} from "recoil";
+import {useRecoilValue} from "recoil";
 import {todosState} from "../../../atoms/todosState";
-import {useState} from "react";
-import {todoStoreState} from "../../../atoms/todoStoreState";
+import {useCreateTodoForm} from "../../../atoms/ui/createTodoFormState";
 
 const TodoIsNull = () =>{
-    const [todos, setTodos] = useRecoilState(todosState);
-    const [ formIsOpen, setFormIsOpen ] = useState(false);
-    const resetTodoStore =  useResetRecoilState(todoStoreState);
-    const storeTodoFormToggle = () => {
-        resetTodoStore();
-        setFormIsOpen(!formIsOpen);
-    }
+    const todos = useRecoilValue(todosState);
+    const { storeTodoFormToggle } = useCreateTodoForm();
     return(
     todos.length === 0 &&
     <div className="fixed flex flex-col items-center justify-center h-full">
