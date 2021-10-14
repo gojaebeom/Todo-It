@@ -71,4 +71,14 @@ public class CalendarController {
         return ResponseEntity.ok(response);
     }
 
+    @DeleteMapping("/{id}/images")
+    public ResponseEntity<Map<String, Object>> deleteImg(@PathVariable Long id){
+        calendarService.deleteImages(id);
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("message","캘린더 이미지 삭제가 정상적으로 완료되었습니다.");
+        response.put("statusCode", 200);
+        return ResponseEntity.ok(response);
+    }
+
 }

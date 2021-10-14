@@ -9,10 +9,12 @@ import lombok.ToString;
 
 import javax.validation.constraints.NotNull;
 
+
 @Getter
 @Setter
 @ToString
 public class NotificationStoreRequest {
+
     @NotNull(message = "작성자 ID는 필수값입니다.")
     private Long fromUserId;
     @NotNull(message = "받는 회원의 유저코드는 필수값입니다.")

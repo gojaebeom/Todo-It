@@ -143,4 +143,16 @@ public class UserService {
         }
         userRepository.delete(user);
     }
+
+    public void deleteImages(Long id) {
+        log.info("회원삭제");
+        User user = userRepository.findUserById(id);
+        if(user.getProfileImg() != null){
+            log.info("유저 프로필 파일 존재 -> 기존의 프로필, 프로필 프리뷰 삭제.");
+            imageService.delete(user.getProfileImg());
+            imageService.delete(user.getProfilePreviewImg());
+            user.setProfileImg("");
+            user.setProfilePreviewImg("");
+        }
+    }
 }

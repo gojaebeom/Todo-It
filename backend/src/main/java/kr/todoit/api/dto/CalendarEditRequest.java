@@ -1,5 +1,7 @@
 package kr.todoit.api.dto;
 
+import kr.todoit.api.exception.CustomException;
+import kr.todoit.api.exception.ExceptionType;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.web.multipart.MultipartFile;
@@ -20,8 +22,8 @@ public class CalendarEditRequest {
     private String thumbnailPreviewPath;
     private Byte isPrivate;
 
-    public void setName(String name) {
-        if(name.length() > 10) throw new IllegalArgumentException("캘린더 이름은 10글자 이하로 작성해주세요.");
+    public void setName(String name){
+        if(name.length() > 10) throw new CustomException(ExceptionType.OVERFLOW_CALENDAR_NAME);
         this.name = name;
     }
 }
