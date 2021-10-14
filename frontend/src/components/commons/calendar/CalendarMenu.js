@@ -21,6 +21,10 @@ const CalendarMenu = () => {
                 )
             })
         }
+<<<<<<< HEAD
+=======
+
+>>>>>>> 37eb860fe05fa445dc37d2f788d841dadce1554d
         <CalendarCreateModalOpenButton/>
         <div className="flex items-center justify-center w-12 h-12 mb-2 overflow-hidden rounded-full cursor-pointer bg-gray-50"
              title="공개 캘린더"
