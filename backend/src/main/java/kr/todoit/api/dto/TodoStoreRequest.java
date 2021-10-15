@@ -8,12 +8,14 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.util.List;
+
 @Getter
 @Setter
 @ToString
 public class TodoStoreRequest {
     private Long userId;
-    private Long calendarId;
+    private List<Long> calendarIdList;
     private String title;
     private String description;
     private String matchedDate;

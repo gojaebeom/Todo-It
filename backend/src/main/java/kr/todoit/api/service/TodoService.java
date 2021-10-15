@@ -1,5 +1,6 @@
 package kr.todoit.api.service;
 
+import com.sun.xml.bind.v2.TODO;
 import kr.todoit.api.domain.Calendar;
 import kr.todoit.api.domain.Todo;
 import kr.todoit.api.domain.User;
@@ -38,13 +39,19 @@ public class TodoService {
 
     public void store(TodoStoreRequest todoStoreRequest){
         User user = userRepository.findUserById(todoStoreRequest.getUserId());
-        Calendar calendar = calendarRepository.findCalendarById(todoStoreRequest.getCalendarId());
-        if(user != null && calendar != null){
-            log.info("유저, 캘린더 매칭 -> 투두 저장");
-            Todo todo = todoStoreRequest.toTodo(user, calendar);
-            todoRepository.save(todo);
-        }else{
-            throw new CustomException(ExceptionType.TODO_STORE_FAILS);
+        /**
+         * TODO : 2021.10.15
+         * 여러 캘린더에 배포하는 방식으로 변경
+         */
+        for(Long calendarId : todoStoreRequest.getCalendarIdList()){
+            Calendar calendar = calendarRepository.findCalendarById(calendarId);
+            if(user != null && calendar != null){
+                log.info("유저, 캘린더 매칭 -> 투두 저장");
+                Todo todo = todoStoreRequest.toTodo(user, calendar);
+                todoRepository.save(todo);
+            }else{
+                throw new CustomException(ExceptionType.TODO_STORE_FAILS);
+            }
         }
     }
 

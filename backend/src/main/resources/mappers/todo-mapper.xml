@@ -30,11 +30,12 @@
     <resultMap id="monthTodo" type="kr.todoit.api.dto.TodosByMonthResponse">
         <id column="id" property="id"/>
         <result column="title" property="title"/>
+        <result column="is_finished" property="isFinished"/>
         <result column="matched_date" property="matchedDate"/>
     </resultMap>
     <select id="findMonthByCalendarId" parameterType="kr.todoit.api.dto.TodoIndexRequest" resultMap="monthTodo">
         select
-            t.id, t.title, t.matched_date
+            t.id, t.title, t.is_finished, t.matched_date
         from todos t
         where t.calendar_id = #{calendarId};
     </select>
