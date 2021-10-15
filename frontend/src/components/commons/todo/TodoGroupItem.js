@@ -1,11 +1,8 @@
-import {useRecoilState, useRecoilValue, useSetRecoilState} from "recoil";
-import {userState} from "../../../atoms/userState";
-import {toastState} from "../../../atoms/ui/toastState";
-import {todoDetailState, useTodoDetail} from "../../../atoms/todoDetailState";
-import {todoEditState, useTodoEdit} from "../../../atoms/todoEditState";
+import { useRecoilValue,} from "recoil";
+import { userState } from "../../../atoms/userState";
+import { useTodoEdit} from "../../../atoms/todoEditState";
 
 const TodoGroupItem = ({ item, writer }) => {
-
     const user = useRecoilValue(userState);
     const {
         setToast,
@@ -13,16 +10,16 @@ const TodoGroupItem = ({ item, writer }) => {
         editFormOpenEvent,
         deleteTodoEvent
     } = useTodoEdit();
-    const { todoDetail, todoDetailToggle } = useTodoDetail();
+    // const { todoDetail, todoDetailToggle } = useTodoDetail();
 
     return(
-    <div key={item.id} className="flex flex-col items-center justify-center w-full p-2 rounded-md cursor-pointer hover:bg-red-100 hover:text-black"
-         style={{borderRadius:"3px"}}
+    <div key={item.id} className="flex flex-col items-center justify-center w-full p-2 mb-2 bg-white border rounded-md cursor-pointer"
+        style={{borderRadius:"3px"}}
     >
         <div className="flex items-center justify-between w-full">
             <div className="flex justify-start itmes-center">
                 <label className="flex items-center mr-2 cursor-pointer">
-                    <label className={`w-5 h-5 flex justify-center items-center border border-gray-200 rounded-full outline-none cursor-pointer mt-1 mr-2
+                    <label className={`w-5 h-5 flex justify-center items-center border border-gray-200 rounded-full outline-none cursor-pointer mr-2
                                                 ${item.isFinished ? 'bg-red-300':'bg-white'}`}>
                         { item.isFinished ?<i className="pt-1 text-xs text-white fas fa-check"></i>:"" }
                         <input
@@ -41,10 +38,10 @@ const TodoGroupItem = ({ item, writer }) => {
                     </label>
                     <p>{item.title}</p>
                 </label>
-                <button
+                {/* <button
                     onClick={() => todoDetailToggle(item)}
                     className="mt-1 text-xs hover:text-indigo-400"
-                >{(todoDetail.id && todoDetail.id === item.id ) ? '..접기' : '..자세히'}</button>
+                >{(todoDetail.id && todoDetail.id === item.id ) ? '..접기' : '..자세히'}</button> */}
             </div>
             {
                 writer.id === user.id &&
@@ -57,9 +54,9 @@ const TodoGroupItem = ({ item, writer }) => {
             }
         </div>
         {
-            (todoDetail.id && todoDetail.id === item.id ) &&
+            ( item.description ) &&
             <div className={`flex items-center justify-start w-full mt-2`}>
-                <pre className="pl-6 font-noto-light">{item.description}</pre>
+                <pre className="px-2 py-1 font-noto-light">{item.description}</pre>
             </div>
         }
     </div>

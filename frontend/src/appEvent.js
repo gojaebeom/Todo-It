@@ -57,6 +57,7 @@ const appEvent = (App) => {
             }
         }
 
+        // eslint-disable-next-line react-hooks/exhaustive-deps
         useEffect(async () => {
             console.debug(`%c APP MOUNTED`,`color:red`);
             await loadEvent();

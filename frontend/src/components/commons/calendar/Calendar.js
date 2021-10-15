@@ -1,20 +1,18 @@
-import {useRecoilState, useRecoilValue, useSetRecoilState} from "recoil";
-import {toastState} from "../../../atoms/ui/toastState";
-import {calendarDetailState} from "../../../atoms/calendarDetailState";
-import {userState} from "../../../atoms/userState";
-import {todosByMonthState} from "../../../atoms/todosByMonthState";
 import moment from "moment";
 import ApiScaffold from "../../../shared/api";
 import {Link} from "react-router-dom";
 import {useEffect, useState} from "react";
+import { useCalendars } from "../../../atoms/calendarsState";
 
 const Calendar = () => {
 
-    const setToast = useSetRecoilState(toastState);
-
-    const calendarDetail = useRecoilValue(calendarDetailState);
-    const user = useRecoilValue(userState);
-    const [todosByMonth, setTodosByMonth ] = useRecoilState(todosByMonthState);
+    const {
+        calendarDetail,
+        user,
+        setToast,
+        setTodosByMonth,
+        todosByMonth
+    } = useCalendars();
 
     const [today, setToday] = useState(moment());
     const firstWeek = today.clone().startOf('month').week();
@@ -44,32 +42,32 @@ const Calendar = () => {
                     Array(7).fill(0).map((data, index) => {
                         let days = today.clone().startOf('year').week(week).startOf('week').add(index, 'day');
                         return(
-                            <td key={index} className={`border h-120 hover:shadow-inner
-                                ${ index % 7 === 0 || index % 6 === 0 ? 'bg-gray-100':'' }`}
+                        <td key={index} className={`border h-120 hover:shadow-inner
+                            ${ index % 7 === 0 || index % 6 === 0 ? 'bg-gray-100':'' } ${ ( index === 3 && week === 40 ) && 'bg-red-100'}`}
+                        >
+                            <Link
+                                to={`/calendars/${calendarDetail.id}/days/${days.format('YYYY-MM-DD')}`}
+                                className={`${days.format('MM') !== today.format('MM') && 'opacity-30'} flex flex-col justify-start items-end h-full`}
                             >
-                                <Link
-                                    to={`/calendars/${calendarDetail.id}/days/${days.format('YYYY-MM-DD')}`}
-                                    className={`${days.format('MM') !== today.format('MM') && 'opacity-30'} flex flex-col justify-start items-end h-full`}
-                                >
-                                        <span className={`mb-2 ${moment().format('YYYYMMDD') === days.format('YYYYMMDD') && 'bg-red-400  text-white rounded-2xl px-2'}`}>
-                                            {days.format('D')}
-                                        </span>
-                                    <ul className="flex flex-col items-start justify-center w-full">
-                                        {
-                                            // eslint-disable-next-line array-callback-return
-                                            todosByMonth.map((item, index) => {
-                                                if(days.format('YYYY-MM-DD') === item.matchedDate) {
-                                                    return(
-                                                        <li className="relative w-full text-sm truncate overflow-ellipsis" key={item.id}>
-                                                            ·{ item.title }
-                                                        </li>
-                                                    )
-                                                }
-                                            })
+                                <span className={`mb-2 ${moment().format('YYYYMMDD') === days.format('YYYYMMDD') && 'bg-red-400  text-white rounded-2xl px-2'}`}>
+                                    {days.format('D')}
+                                </span>
+                                <ul className="flex flex-col items-start justify-center w-full">
+                                {
+                                    // eslint-disable-next-line array-callback-return
+                                    todosByMonth.map((item, index) => {
+                                        if(days.format('YYYY-MM-DD') === item.matchedDate) {
+                                            return(
+                                                <li className={`relative w-full text-sm truncate overflow-ellipsis ${ item.isFinished && ""}`} key={item.id}>
+                                                    ·{ item.title }
+                                                </li>
+                                            )
                                         }
-                                    </ul>
-                                </Link>
-                            </td>
+                                    })
+                                }
+                                </ul>
+                            </Link>
+                        </td>
                         );
                     })
                     }

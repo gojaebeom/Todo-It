@@ -4,7 +4,7 @@ export const todoStoreState = atom({
     key: 'todoStoreState', // unique ID (with respect to other atoms/selectors)
     default: {
         userId: "",
-        calendarId: "",
+        calendarId: [],
         title: "",
         description:"",
         matchedDate: "",
