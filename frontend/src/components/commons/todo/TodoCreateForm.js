@@ -41,7 +41,7 @@ const TodoCreateForm = () => {
         {
             calendars.map((item) => {
                 return(
-                <label className="px-2 py-1 mr-2 rounded-sm bg-gray-50" key={item.id}>
+                <label className="px-2 py-1 mr-2 rounded-sm cursor-pointer bg-gray-50" key={item.id}>
                     <span className="mr-1">{item.name}</span>
                     <input type="checkbox"
                         defaultChecked={calendar.id === item.id ? true : false}

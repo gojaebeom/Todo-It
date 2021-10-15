@@ -19,7 +19,7 @@ const DefaultLayout = ({ children }) => {
 
             <section className="flex flex-col items-start justify-start w-full h-full bg-white">
                 <div className="flex items-center w-full pl-3 text-2xl border-b h-13 font-noto-bold"></div>
-                <div className="flex flex-col items-center justify-start w-full h-full p-5 overflow-y-auto custom-scroll">
+                <div className="flex flex-col items-center justify-start w-full h-full p-5 overflow-y-scroll custom-scroll">
                     { children }
                 </div>
             </section>

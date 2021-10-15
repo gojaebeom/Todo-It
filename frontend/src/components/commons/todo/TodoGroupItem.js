@@ -21,7 +21,7 @@ const TodoGroupItem = ({ item, writer }) => {
                 <label className="flex items-center mr-2 cursor-pointer">
                     <label className={`w-5 h-5 flex justify-center items-center border border-gray-200 rounded-full outline-none cursor-pointer mr-2
                                                 ${item.isFinished ? 'bg-red-300':'bg-white'}`}>
-                        { item.isFinished ?<i className="pt-1 text-xs text-white fas fa-check"></i>:"" }
+                        { item.isFinished ?<i className="pt-1 text-xs text-white fas fa-check"></i> : "" }
                         <input
                             type="checkbox"
                             name="isFinished"

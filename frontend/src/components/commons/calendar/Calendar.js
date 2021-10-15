@@ -5,13 +5,14 @@ import {useEffect, useState} from "react";
 import { useCalendars } from "../../../atoms/calendarsState";
 
 const Calendar = () => {
-
     const {
         calendarDetail,
         user,
         setToast,
         setTodosByMonth,
-        todosByMonth
+        todosByMonth,
+        contextMenu,
+        setContextMenu
     } = useCalendars();
 
     const [today, setToday] = useState(moment());
@@ -37,40 +38,67 @@ const Calendar = () => {
         for(week; week <= lastWeek; week++){
             result = result.concat(
                 <tr key={week}>
-                    {
-                    // eslint-disable-next-line no-loop-func
-                    Array(7).fill(0).map((data, index) => {
-                        let days = today.clone().startOf('year').week(week).startOf('week').add(index, 'day');
-                        return(
-                        <td key={index} className={`border h-120 hover:shadow-inner
-                            ${ index % 7 === 0 || index % 6 === 0 ? 'bg-gray-100':'' } ${ ( index === 3 && week === 40 ) && 'bg-red-100'}`}
+                {
+                // eslint-disable-next-line no-loop-func
+                Array(7).fill(0).map((data, index) => {
+                    let days = today.clone().startOf('year').week(week).startOf('week').add(index, 'day');
+                    return(
+                    <td key={index} className={`border h-120 hover:shadow-inner
+                        ${ index % 7 === 0 || index % 6 === 0 ? 'bg-gray-100':'' } ${ ( index === 3 && week === 40 ) && 'bg-red-100'}`}
+                        onContextMenu={
+                            (event) => {
+                                console.debug("hello");
+                                setContextMenu({
+                                    isOpen: true,
+                                    matchedCalendarId: calendarDetail.id,
+                                    matchedDate: days.format('YYYYMMDD'),
+                                });
+                                event.preventDefault();
+                            }
+                        }
+                    >
+                        <Link
+                            to={`/calendars/${calendarDetail.id}/days/${days.format('YYYY-MM-DD')}`}
+                            className={`${days.format('MM') !== today.format('MM') && 'opacity-30'} relative flex flex-col justify-start items-end h-full`}
                         >
-                            <Link
-                                to={`/calendars/${calendarDetail.id}/days/${days.format('YYYY-MM-DD')}`}
-                                className={`${days.format('MM') !== today.format('MM') && 'opacity-30'} flex flex-col justify-start items-end h-full`}
-                            >
-                                <span className={`mb-2 ${moment().format('YYYYMMDD') === days.format('YYYYMMDD') && 'bg-red-400  text-white rounded-2xl px-2'}`}>
-                                    {days.format('D')}
-                                </span>
-                                <ul className="flex flex-col items-start justify-center w-full">
-                                {
-                                    // eslint-disable-next-line array-callback-return
-                                    todosByMonth.map((item, index) => {
-                                        if(days.format('YYYY-MM-DD') === item.matchedDate) {
-                                            return(
-                                                <li className={`relative w-full text-sm truncate overflow-ellipsis ${ item.isFinished && ""}`} key={item.id}>
-                                                    ·{ item.title }
-                                                </li>
-                                            )
-                                        }
-                                    })
-                                }
-                                </ul>
-                            </Link>
-                        </td>
-                        );
-                    })
-                    }
+                            <span className={`mb-2 ${moment().format('YYYYMMDD') === days.format('YYYYMMDD') && 'bg-red-400  text-white rounded-2xl px-2'}`}>
+                                {days.format('D')}
+                            </span>
+                            <ul className="flex flex-col items-start justify-center w-full">
+                            {
+                                // eslint-disable-next-line array-callback-return
+                                todosByMonth.map((item, index) => {
+                                    if(days.format('YYYY-MM-DD') === item.matchedDate) {
+                                        return(
+                                        <li className={`relative w-full text-sm truncate overflow-ellipsis ${ item.isFinished === "1" && "line-through"}`} key={item.id}>
+                                            ·{ item.title }
+                                        </li>
+                                        )
+                                    }
+                                })
+                            }
+                            </ul>
+                            {
+                                (
+                                days.format('MM') === today.format('MM') &&
+                                contextMenu.isOpen && 
+                                contextMenu.matchedCalendarId === calendarDetail.id && 
+                                contextMenu.matchedDate === days.format('YYYYMMDD') ) &&
+                                <div className="absolute right-0 z-50 flex flex-col items-center justify-center p-1 bg-white border rounded-tr-none shadow-lg top-7 rounded-3xl">
+                                    <button className="w-5 h-5 mb-1 bg-white border-2 border-gray-200 rounded-full hover:bg-gray-50"></button>
+                                    <button className="w-5 h-5 mb-1 bg-red-100 border-2 border-gray-200 rounded-full hover:bg-red-200"></button>
+                                    <button className="w-5 h-5 mb-1 bg-blue-100 border-2 border-gray-200 rounded-full hover:bg-blue-200"></button>
+                                    <button className="w-5 h-5 mb-1 bg-green-100 border-2 border-gray-200 rounded-full hover:bg-green-200"></button>
+                                    <button className="w-5 h-5 mb-1 bg-yellow-100 border-2 border-gray-200 rounded-full hover:bg-yellow-200"></button>
+                                    <button className="w-5 h-5 mb-1 bg-purple-100 border-2 border-gray-200 rounded-full hover:bg-purple-200"></button>
+                                    <button className="w-5 h-5 mb-1 bg-indigo-100 border-2 border-gray-200 rounded-full hover:bg-indigo-200"></button>
+                                </div>
+                            }
+                        </Link>
+                    </td>
+                    );
+                })
+                }
                 </tr>
             )
         }

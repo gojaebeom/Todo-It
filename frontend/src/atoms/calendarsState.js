@@ -23,18 +23,22 @@ export const calendarsState = atom({
 
 export const useCalendars = () => {
     const setToast = useSetRecoilState(toastState);
-
     const calendarDetail = useRecoilValue(calendarDetailState);
     const user = useRecoilValue(userState);
     const [todosByMonth, setTodosByMonth ] = useRecoilState(todosByMonthState);
-
-    
+    const [contextMenu, setContextMenu] = useState({
+        isOpen: false,
+        matchedCalendarId: "",
+        matchedDate: "",
+    });
 
     return {
         setToast,
         calendarDetail,
         user,
         todosByMonth,
-        setTodosByMonth
+        setTodosByMonth,
+        contextMenu,
+        setContextMenu
     }
 }
