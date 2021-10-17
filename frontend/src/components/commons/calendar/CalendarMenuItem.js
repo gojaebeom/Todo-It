@@ -22,9 +22,9 @@ const CalendarMenuItem = ({ item }) => {
         <button
             onClick={() => clickCalendarSelectEvent(item)}
             className={`
-            relative flex items-center justify-center w-12 h-12 mb-2 
-            rounded-full cursor-pointer calendarSelector transition-all delay-75
-            ${item.id === calendarDetail.id && "border-4 border-indigo-400"}`}
+            relative flex items-center justify-center w-12 h-12 mb-2 overflow-hidden
+             cursor-pointer calendarSelector transition-all
+            ${ item.id === calendarDetail.id ? "rounded-2xl" : "rounded-full"}`}
             title={item.name}
         >
         {
@@ -33,11 +33,11 @@ const CalendarMenuItem = ({ item }) => {
                 <img
                     src={`${process.env.REACT_APP_API_URL}/images${item.thumbnailPreview}`}
                     alt="img"
-                    className={`w-full h-full ${item.id !== calendarDetail.id && 'border border-red-200'} rounded-full`}
+                    className={`w-full h-full`}
                 />
-                <div className="absolute top-0 left-0 flex items-center justify-center w-full h-full text-white rounded-full text-md font-noto-medium">{item.name[0]}{item.name[1]}</div>
+                <div className="absolute top-0 left-0 flex items-center justify-center w-full h-full text-white text-md font-noto-medium">{item.name[0]}{item.name[1]}</div>
             </React.Fragment> : 
-            <div className="flex items-center justify-center w-full h-full bg-white rounded-full text-md font-noto-medium">{item.name[0]}{item.name[1]}</div>
+            <div className="flex items-center justify-center w-full h-full bg-white text-md font-noto-medium">{item.name[0]}{item.name[1]}</div>
         }
         </button>
     );

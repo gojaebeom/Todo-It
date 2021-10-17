@@ -13,14 +13,14 @@ const TodoGroupItem = ({ item, writer }) => {
     // const { todoDetail, todoDetailToggle } = useTodoDetail();
 
     return(
-    <div key={item.id} className="flex flex-col items-center justify-center w-full p-2 mb-2 bg-white border rounded-md cursor-pointer"
+    <div key={item.id} className="flex flex-col items-center justify-center w-full p-2 mb-2 bg-gray-100 shadow-sm rounded-md cursor-pointer border-2 border-dashed border-gray-200"
         style={{borderRadius:"3px"}}
     >
         <div className="flex items-center justify-between w-full">
             <div className="flex justify-start itmes-center">
                 <label className="flex items-center mr-2 cursor-pointer">
-                    <label className={`w-5 h-5 flex justify-center items-center border border-gray-200 rounded-full outline-none cursor-pointer mr-2
-                                                ${item.isFinished ? 'bg-red-300':'bg-white'}`}>
+                    <label className={`w-5 h-5 flex justify-center items-center border border-gray-200 rounded-sm outline-none cursor-pointer mr-2
+                                                ${item.isFinished ? 'bg-indigo-400':'bg-white'}`}>
                         { item.isFinished ?<i className="pt-1 text-xs text-white fas fa-check"></i> : "" }
                         <input
                             type="checkbox"
@@ -36,7 +36,7 @@ const TodoGroupItem = ({ item, writer }) => {
                             className="w-0 h-0"
                         />
                     </label>
-                    <p>{item.title}</p>
+                    <p className={'hover:text-indigo-500'}>{item.title}</p>
                 </label>
                 {/* <button
                     onClick={() => todoDetailToggle(item)}
@@ -45,11 +45,11 @@ const TodoGroupItem = ({ item, writer }) => {
             </div>
             {
                 writer.id === user.id &&
-                <div className="flex justify-start itmes-center">
+                <div className="flex justify-center items-center w-auto p-1 rounded-sm bg-gray-200 border border-dashed">
                     {/* <i className="mr-4 far fa-caret-square-up"></i>
                      <i className="mr-4 far fa-caret-square-down"></i> */}
-                    <i className="mr-4 far fa-edit" onClick={() => editFormOpenEvent(item)}></i>
-                    <i className="mr-4 far fa-trash-alt" onClick={() => deleteTodoEvent(item.id)}></i>
+                    <i className="mx-2 far fa-edit hover:text-yellow-500" onClick={() => editFormOpenEvent(item)}></i>
+                    <i className="mx-2 far fa-trash-alt hover:text-red-500" onClick={() => deleteTodoEvent(item.id)}></i>
                 </div>
             }
         </div>

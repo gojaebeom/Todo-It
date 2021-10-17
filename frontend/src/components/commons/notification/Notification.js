@@ -60,10 +60,9 @@ const Notification = () => {
         refreshNotificationModal();
     }
 
-
     return(
     notificationModal &&
-    <div className="absolute z-50 flex flex-col items-center justify-start p-2 bg-white border border-gray-200 rounded-md shadow-lg -left-2 top-4 min-w-250 max-w-250">
+    <div className="notification absolute z-50 flex flex-col items-center justify-start p-2 bg-white border border-gray-200 rounded-md shadow-lg -left-2 top-4 min-w-250 max-w-250">
         <div className="flex justify-end w-full mb-4">
             <NotificationRefreshButton/>
         </div>

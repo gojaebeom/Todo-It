@@ -1,13 +1,14 @@
 import axios from "axios";
 import { useEffect } from "react";
 import { useHistory } from "react-router";
-import { useSetRecoilState } from "recoil";
+import {useResetRecoilState, useSetRecoilState} from "recoil";
 import { calendarDetailState } from "./atoms/calendarDetailState";
-import { calendarsState } from "./atoms/calendarsState";
+import {calendarsState, useCalendars} from "./atoms/calendarsState";
 import { loadingPageState } from "./atoms/ui/loadingPage";
 import { toastState } from "./atoms/ui/toastState";
 import { userState } from "./atoms/userState";
 import ApiScaffold from "./shared/api";
+import {notificationModalState} from "./atoms/ui/notificationModalState";
 
 const appEvent = (App) => {
     return () => {
@@ -17,6 +18,11 @@ const appEvent = (App) => {
         const setCalendars = useSetRecoilState(calendarsState);
         const setCalendarDetail = useSetRecoilState(calendarDetailState);
         const setLoadingPage = useSetRecoilState(loadingPageState);
+        // const resetNotificationModal = useResetRecoilState(notificationModalState);
+
+        const {
+            resetContextMenu
+        } = useCalendars();
 
         const silentRefresh = async () => {
             const refreshRes = await ApiScaffold({
@@ -62,6 +68,21 @@ const appEvent = (App) => {
             console.debug(`%c APP MOUNTED`,`color:red`);
             await loadEvent();
         // eslint-disable-next-line react-hooks/exhaustive-deps
+        }, []);
+
+        useEffect(() => {
+            window.addEventListener("click", (event) => {
+                let elem = event.target;
+                const calendarCellCustomizeBar = document.querySelector(".calendar-cell-customize-bar");
+                // const notification = document.querySelector(".notification");
+
+                if(calendarCellCustomizeBar && elem !== calendarCellCustomizeBar){
+                    resetContextMenu();
+                }
+                // if(notification && elem !== notification){
+                //     resetNotificationModal();
+                // }
+            })
         }, []);
 
         return(

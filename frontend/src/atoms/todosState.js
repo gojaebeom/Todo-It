@@ -16,7 +16,6 @@ export const useTodos = () => {
     const calendar = useRecoilValue(calendarDetailState);
     const user = useRecoilValue(userState);
 
-
     const refreshTodos = async () => {
         if(calendar.id && user.id ){
             const loadRes = await ApiScaffold({

@@ -1,5 +1,6 @@
 import DefaultLayout from "../layouts/default/DefaultLayout";
 import Calendar from "../commons/calendar/Calendar";
+import AlertPositionWrap from "../commons/alert/AlertPositionWrap";
 
 const Home = () => {
     return(
@@ -14,6 +15,11 @@ const Home = () => {
                 아직 베타버전으로 잔버그가 나올 수 있는 점 양해바랍니다. 😰 앞으로 추가적인 기능, UI 개선 등 꾸준한 업데이트가 있을 예정입니다.
             </div>
         </div>
+        {
+            window.localStorage.getItem("todoit-alert") !== "ok" &&
+            <AlertPositionWrap/>
+        }
+
     </DefaultLayout>
     )
 }
