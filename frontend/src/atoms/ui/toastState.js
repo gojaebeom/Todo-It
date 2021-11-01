@@ -1,11 +1,11 @@
-import { atom } from "recoil";
+import { atom } from 'recoil'
 
 export const toastState = atom({
-    key:'toastState',
-    default:{
-        open:false,
-        type:"SUCCESS",
-        message:"",
-        second:"",
-    }
+  key: 'toastState',
+  default: {
+    open: false,
+    type: 'SUCCESS',
+    message: '',
+    second: '',
+  },
 })

@@ -1,9 +1,9 @@
-import { atom } from "recoil";
+import { atom } from 'recoil'
 export const creationCalendarModalInitState = {
-    open: false,
-    submit: false
+  open: false,
+  submit: false,
 }
 export const creationCalendarModalState = atom({
-    key: 'creationCalendarModalState', // unique ID (with respect to other atoms/selectors)
-    default: creationCalendarModalInitState, // default value (aka initial value)
-});
+  key: 'creationCalendarModalState', // unique ID (with respect to other atoms/selectors)
+  default: creationCalendarModalInitState, // default value (aka initial value)
+})

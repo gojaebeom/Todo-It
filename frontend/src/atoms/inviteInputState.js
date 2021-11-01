@@ -1,6 +1,6 @@
-import { atom } from "recoil";
+import { atom } from 'recoil'
 
 export const inviteInputState = atom({
-    key: 'inviteInputState', // unique ID (with respect to other atoms/selectors)
-    default: "", // default value (aka initial value)
-});
+  key: 'inviteInputState', // unique ID (with respect to other atoms/selectors)
+  default: '', // default value (aka initial value)
+})

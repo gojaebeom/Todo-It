@@ -1,27 +1,30 @@
-import {atom, useRecoilState} from "recoil";
+import { atom, useRecoilState } from 'recoil'
 
 export const todoDetailState = atom({
-    key:'todoDetailState',
-    default:{
-        id:'',
-        description:''
-    }
+  key: 'todoDetailState',
+  default: {
+    id: '',
+    description: '',
+  },
 })
 
 export const useTodoDetail = () => {
+  const [todoDetail, setTodoDetail] = useRecoilState(todoDetailState)
 
-    const [todoDetail, setTodoDetail] = useRecoilState(todoDetailState);
-
-    const todoDetailToggle = ( todo ) => {
-        if(!todoDetail.id){
-            setTodoDetail({...todoDetail, id: todo.id, description: todo.description});
-        }else{
-            setTodoDetail({...todoDetail, id: "", description: ""});
-        }
+  const todoDetailToggle = (todo) => {
+    if (!todoDetail.id) {
+      setTodoDetail({
+        ...todoDetail,
+        id: todo.id,
+        description: todo.description,
+      })
+    } else {
+      setTodoDetail({ ...todoDetail, id: '', description: '' })
     }
+  }
 
-    return {
-        todoDetail,
-        todoDetailToggle
-    }
+  return {
+    todoDetail,
+    todoDetailToggle,
+  }
 }
