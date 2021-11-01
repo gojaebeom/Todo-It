@@ -4,11 +4,11 @@ import {
   useResetRecoilState,
   useSetRecoilState,
 } from 'recoil'
-import { calendarsState } from '../../../atoms/calendarsState'
-import { calendarStoreState } from '../../../atoms/calendarStoreState'
-import { creationCalendarModalState } from '../../../atoms/ui/creationCalendarModalState'
-import { toastState } from '../../../atoms/ui/toastState'
-import { userState } from '../../../atoms/userState'
+import { calendarsState } from '../../../states/calendarsState'
+import { calendarStoreState } from '../../../states/calendarStoreState'
+import { creationCalendarModalState } from '../../../states/ui/creationCalendarModalState'
+import { toastState } from '../../../states/ui/toastState'
+import { userState } from '../../../states/userState'
 import ApiScaffold from '../../../shared/api'
 import readImgFile from '../../../shared/readImgFile'
 import sleep from '../../../shared/sleep'

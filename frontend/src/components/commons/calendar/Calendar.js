@@ -1,6 +1,6 @@
 import ApiScaffold from '../../../shared/api'
 import { useEffect } from 'react'
-import { useCalendars } from '../../../atoms/calendarsState'
+import { useCalendars } from '../../../states/calendarsState'
 import CalendarCell from './CalendarCell'
 
 const Calendar = () => {

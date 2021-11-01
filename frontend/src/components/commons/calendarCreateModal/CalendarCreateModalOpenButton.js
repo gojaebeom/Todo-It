@@ -5,10 +5,10 @@ import {
   useResetRecoilState,
   useSetRecoilState,
 } from 'recoil'
-import { calendarsState } from '../../../atoms/calendarsState'
-import { toastState } from '../../../atoms/ui/toastState'
-import { calendarStoreState } from '../../../atoms/calendarStoreState'
-import { creationCalendarModalState } from '../../../atoms/ui/creationCalendarModalState'
+import { calendarsState } from '../../../states/calendarsState'
+import { toastState } from '../../../states/ui/toastState'
+import { calendarStoreState } from '../../../states/calendarStoreState'
+import { creationCalendarModalState } from '../../../states/ui/creationCalendarModalState'
 
 const CalendarCreateModalOpenButton = () => {
   const calendars = useRecoilValue(calendarsState)

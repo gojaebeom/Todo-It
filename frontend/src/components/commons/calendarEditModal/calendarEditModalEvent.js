@@ -4,12 +4,12 @@ import {
   useResetRecoilState,
   useSetRecoilState,
 } from 'recoil'
-import { calendarDetailState } from '../../../atoms/calendarDetailState'
-import { calendarEditState } from '../../../atoms/calendarEditState'
-import { calendarsState } from '../../../atoms/calendarsState'
-import { editCalendarModalState } from '../../../atoms/ui/editCalendarModalState'
-import { toastState } from '../../../atoms/ui/toastState'
-import { userState } from '../../../atoms/userState'
+import { calendarDetailState } from '../../../states/calendarDetailState'
+import { calendarEditState } from '../../../states/calendarEditState'
+import { calendarsState } from '../../../states/calendarsState'
+import { editCalendarModalState } from '../../../states/ui/editCalendarModalState'
+import { toastState } from '../../../states/ui/toastState'
+import { userState } from '../../../states/userState'
 import ApiScaffold from '../../../shared/api'
 import readImgFile from '../../../shared/readImgFile'
 

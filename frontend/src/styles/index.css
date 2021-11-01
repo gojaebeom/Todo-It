@@ -744,6 +744,9 @@ video {
 .mt-5 {
 	margin-top: 1.25rem;
 }
+.mt-3 {
+	margin-top: 0.75rem;
+}
 .mr-3 {
 	margin-right: 0.75rem;
 }
@@ -819,14 +822,17 @@ video {
 .w-6 {
 	width: 1.5rem;
 }
+.w-\[400px\] {
+	width: 400px;
+}
 .w-16 {
 	width: 4rem;
 }
 .w-14 {
 	width: 3.5rem;
 }
-.w-72 {
-	width: 18rem;
+.w-\[95\%\] {
+	width: 95%;
 }
 .w-1\/2 {
 	width: 50%;
@@ -915,6 +921,9 @@ video {
 .cursor-pointer {
 	cursor: pointer;
 }
+.cursor-default {
+	cursor: default;
+}
 .select-none {
 	-webkit-user-select: none;
 	        user-select: none;
@@ -958,6 +967,9 @@ video {
 }
 .overflow-y-auto {
 	overflow-y: auto;
+}
+.overflow-y-scroll {
+	overflow-y: scroll;
 }
 .truncate {
 	overflow: hidden;
@@ -1061,6 +1073,10 @@ video {
 .border-gray-50 {
 	--tw-border-opacity: 1;
 	border-color: rgba(249, 250, 251, var(--tw-border-opacity));
+}
+.border-red-400 {
+	--tw-border-opacity: 1;
+	border-color: rgba(248, 113, 113, var(--tw-border-opacity));
 }
 .bg-indigo-900 {
 	--tw-bg-opacity: 1;
@@ -1228,6 +1244,9 @@ video {
 }
 .pt-1 {
 	padding-top: 0.25rem;
+}
+.pb-20 {
+	padding-bottom: 5rem;
 }
 .pr-4 {
 	padding-right: 1rem;
@@ -1609,12 +1628,20 @@ button:focus, input:focus{
 		height: auto;
 	}
 
-	.sm\:w-\[300px\] {
-		width: 300px;
+	.sm\:h-\[80\%\] {
+		height: 80%;
 	}
 
 	.sm\:w-\[400px\] {
 		width: 400px;
+	}
+
+	.sm\:w-\[300px\] {
+		width: 300px;
+	}
+
+	.sm\:w-\[450px\] {
+		width: 450px;
 	}
 
 	.sm\:w-\[380px\] {
@@ -1651,6 +1678,11 @@ button:focus, input:focus{
 	.sm\:text-2xl {
 		font-size: 1.5rem;
 		line-height: 2rem;
+	}
+
+	.sm\:text-xl {
+		font-size: 1.25rem;
+		line-height: 1.75rem;
 	}
 }
 

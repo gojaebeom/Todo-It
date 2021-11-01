@@ -1,9 +1,9 @@
 import React from 'react'
 import { useRecoilValue, useSetRecoilState } from 'recoil'
-import { userState } from '../../../atoms/userState'
-import { toastState } from '../../../atoms/ui/toastState'
+import { userState } from '../../../states/userState'
+import { toastState } from '../../../states/ui/toastState'
 import ApiScaffold from '../../../shared/api'
-import { notificationsState } from '../../../atoms/notificationsState'
+import { notificationsState } from '../../../states/notificationsState'
 
 const NotificationRefreshButton = () => {
   const user = useRecoilValue(userState)

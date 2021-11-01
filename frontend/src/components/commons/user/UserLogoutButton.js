@@ -1,7 +1,7 @@
 import React from 'react'
 import ApiScaffold from '../../../shared/api'
 import { useSetRecoilState } from 'recoil'
-import { toastState } from '../../../atoms/ui/toastState'
+import { toastState } from '../../../states/ui/toastState'
 
 const UserLogoutButton = () => {
   const setToast = useSetRecoilState(toastState)

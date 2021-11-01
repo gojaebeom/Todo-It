@@ -1,5 +1,5 @@
 import { useRecoilValue } from 'recoil'
-import { calendarDetailState } from '../../../atoms/calendarDetailState'
+import { calendarDetailState } from '../../../states/calendarDetailState'
 
 const CalendarMenuDetailItem = ({ item }) => {
   const calendarDetail = useRecoilValue(calendarDetailState)

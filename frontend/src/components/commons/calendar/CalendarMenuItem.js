@@ -1,7 +1,7 @@
 import { useHistory } from 'react-router-dom'
 import { useRecoilState, useRecoilValue } from 'recoil'
-import { calendarDetailState } from '../../../atoms/calendarDetailState'
-import { calendarsState } from '../../../atoms/calendarsState'
+import { calendarDetailState } from '../../../states/calendarDetailState'
+import { calendarsState } from '../../../states/calendarsState'
 import React from 'react'
 
 const CalendarMenuItem = ({ item }) => {

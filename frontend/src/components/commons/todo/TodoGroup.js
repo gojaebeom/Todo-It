@@ -1,5 +1,5 @@
 import TodoGroupItem from './TodoGroupItem'
-import { useTodos } from '../../../atoms/todosState'
+import { useTodos } from '../../../states/todosState'
 import { useEffect } from 'react'
 
 const TodoGroup = () => {

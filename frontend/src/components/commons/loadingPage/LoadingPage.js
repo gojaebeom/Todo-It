@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 import { useRecoilState } from 'recoil'
-import { loadingPageState } from '../../../atoms/ui/loadingPage'
+import { loadingPageState } from '../../../states/ui/loadingPage'
 
 const LoadingPage = () => {
   const [loading, setLoading] = useRecoilState(loadingPageState)

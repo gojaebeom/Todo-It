@@ -1,7 +1,7 @@
 import emptyImg from '../../../assets/images/null.png'
 import { useRecoilValue } from 'recoil'
-import { todosState } from '../../../atoms/todosState'
-import { useCreateTodoForm } from '../../../atoms/ui/createTodoFormState'
+import { todosState } from '../../../states/todosState'
+import { useCreateTodoForm } from '../../../states/ui/createTodoFormState'
 
 const TodoIsNull = () => {
   const todos = useRecoilValue(todosState)

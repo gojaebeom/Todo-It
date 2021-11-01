@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom'
 import moment from 'moment'
-import { useCalendars } from '../../../atoms/calendarsState'
+import { useCalendars } from '../../../states/calendarsState'
 import { useEffect, useRef } from 'react'
 
 const CalendarCell = ({ index, week }) => {

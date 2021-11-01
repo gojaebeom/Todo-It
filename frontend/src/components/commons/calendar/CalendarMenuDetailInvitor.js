@@ -1,9 +1,9 @@
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
-import { userState } from '../../../atoms/userState'
-import { calendarDetailState } from '../../../atoms/calendarDetailState'
-import { inviteInputState } from '../../../atoms/inviteInputState'
+import { userState } from '../../../states/userState'
+import { calendarDetailState } from '../../../states/calendarDetailState'
+import { inviteInputState } from '../../../states/inviteInputState'
 import ApiScaffold from '../../../shared/api'
-import { toastState } from '../../../atoms/ui/toastState'
+import { toastState } from '../../../states/ui/toastState'
 
 const CalendarMenuDetailInvitor = () => {
   const user = useRecoilValue(userState)

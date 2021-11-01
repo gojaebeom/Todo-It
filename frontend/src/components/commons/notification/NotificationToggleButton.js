@@ -1,7 +1,7 @@
 import React from 'react'
 import { useRecoilState, useRecoilValue } from 'recoil'
-import { notificationModalState } from '../../../atoms/ui/notificationModalState'
-import { notificationsState } from '../../../atoms/notificationsState'
+import { notificationModalState } from '../../../states/ui/notificationModalState'
+import { notificationsState } from '../../../states/notificationsState'
 
 const NotificationToggleButton = () => {
   const [notificationModal, setNotificationModal] = useRecoilState(

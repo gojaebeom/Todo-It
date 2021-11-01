@@ -1,6 +1,6 @@
 import { useRecoilValue } from 'recoil'
-import { userState } from '../../../atoms/userState'
-import { useTodoEdit } from '../../../atoms/todoEditState'
+import { userState } from '../../../states/userState'
+import { useTodoEdit } from '../../../states/todoEditState'
 
 const TodoGroupItem = ({ item, writer }) => {
   const user = useRecoilValue(userState)

@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 import { useRecoilValue, useResetRecoilState } from 'recoil'
-import { toastState } from '../../../atoms/ui/toastState'
+import { toastState } from '../../../states/ui/toastState'
 
 const Toast = () => {
   const toast = useRecoilValue(toastState)

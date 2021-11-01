@@ -1,8 +1,8 @@
 import React from 'react'
 import { useRecoilState, useRecoilValue } from 'recoil'
-import { userEditState } from '../../../atoms/userEditState'
-import { userState } from '../../../atoms/userState'
-import { updateUserModalState } from '../../../atoms/ui/updateUserModalState'
+import { userEditState } from '../../../states/userEditState'
+import { userState } from '../../../states/userState'
+import { updateUserModalState } from '../../../states/ui/updateUserModalState'
 
 const UserUpdateModalOpenButton = () => {
   const [userEdit, setUserEdit] = useRecoilState(userEditState)

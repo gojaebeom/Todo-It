@@ -1,7 +1,7 @@
-import { calendarEditState } from '../../../atoms/calendarEditState'
+import { calendarEditState } from '../../../states/calendarEditState'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
-import { calendarDetailState } from '../../../atoms/calendarDetailState'
-import { editCalendarModalState } from '../../../atoms/ui/editCalendarModalState'
+import { calendarDetailState } from '../../../states/calendarDetailState'
+import { editCalendarModalState } from '../../../states/ui/editCalendarModalState'
 
 const CalendarEditModalOpenButton = () => {
   const setCalendarEdit = useSetRecoilState(calendarEditState)

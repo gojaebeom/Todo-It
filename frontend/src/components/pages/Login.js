@@ -2,7 +2,7 @@ import coverImg from '../../assets/images/cover_.png'
 import { useEffect } from 'react'
 import { useHistory } from 'react-router'
 import { useRecoilValue } from 'recoil'
-import { userState } from '../../atoms/userState'
+import { userState } from '../../states/userState'
 
 const Login = () => {
   const user = useRecoilValue(userState)
@@ -15,7 +15,7 @@ const Login = () => {
 
   return (
     <div className="relative flex items-center justify-center w-full h-screen overflow-hidden text-black bg-red-300 font-noto-light">
-      <div className="flex flex-col justify-between p-5 bg-white border rounded-md w-400">
+      <div className="flex flex-col justify-between p-5 bg-white border rounded-md w-[400px]">
         <div>
           <p className="text-2xl">간단한 협업 일정 관리</p>
           <p className="text-2xl font-noto-bold">'투두잇'으로 관리하세요.</p>
