@@ -1,4 +1,4 @@
-/*! tailwindcss v2.2.16 | MIT License | https://tailwindcss.com *//*! modern-normalize v1.1.0 | MIT License | https://github.com/sindresorhus/modern-normalize */
+/*! tailwindcss v2.2.19 | MIT License | https://tailwindcss.com *//*! modern-normalize v1.1.0 | MIT License | https://github.com/sindresorhus/modern-normalize */
 
 /*
 Document
@@ -816,6 +816,9 @@ video {
 .h-2 {
 	height: 0.5rem;
 }
+.h-\[100px\] {
+	height: 100px;
+}
 .w-full {
 	width: 100%;
 }
@@ -881,6 +884,9 @@ video {
 }
 .w-auto {
 	width: auto;
+}
+.w-\[100px\] {
+	width: 100px;
 }
 .w-10\/12 {
 	width: 83.333333%;
@@ -1278,6 +1284,9 @@ video {
 .font-noto-thin {
 	font-family: noto-thin;
 }
+.font-noto-black {
+	font-family: noto-black;
+}
 .text-5xl {
 	font-size: 3rem;
 	line-height: 1;
@@ -1313,6 +1322,14 @@ video {
 .text-6xl {
 	font-size: 3.75rem;
 	line-height: 1;
+}
+.text-4xl {
+	font-size: 2.25rem;
+	line-height: 2.5rem;
+}
+.text-3xl {
+	font-size: 1.875rem;
+	line-height: 2.25rem;
 }
 .font-extrabold {
 	font-weight: 800;
@@ -1365,6 +1382,10 @@ video {
 .text-\[\#424242\] {
 	--tw-text-opacity: 1;
 	color: rgba(66, 66, 66, var(--tw-text-opacity));
+}
+.text-purple-500 {
+	--tw-text-opacity: 1;
+	color: rgba(139, 92, 246, var(--tw-text-opacity));
 }
 .underline {
 	text-decoration: underline;
@@ -1630,6 +1651,10 @@ button:focus, input:focus{
 
 	.sm\:h-\[80\%\] {
 		height: 80%;
+	}
+
+	.sm\:min-h-\[300px\] {
+		min-height: 300px;
 	}
 
 	.sm\:w-\[400px\] {

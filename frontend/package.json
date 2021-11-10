@@ -30,16 +30,20 @@
     "workbox-streams": "^5.1.4"
   },
   "devDependencies": {
-    "@tailwindcss/jit": "^0.1.18",
-    "autoprefixer": "^10.2.5",
-    "postcss": "^8.2.10",
-    "tailwindcss": "^2.1.1"
+    "autoprefixer": "^10.4.0",
+    "chokidar-cli": "^3.0.0",
+    "concurrently": "^6.3.0",
+    "postcss-cli": "^8.3.1",
+    "tailwindcss": "^2.2.19"
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "build": "npm run watch:css && react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "watch:css": "postcss src/styles/tailwind.css -o src/styles/index.css",
+    "watch": "chokidar \"./src/**/*.js\" -c \"npm run watch:css\"",
+    "dev": "concurrently \"npm run watch\" \"npm run start\""
   },
   "eslintConfig": {
     "extends": [

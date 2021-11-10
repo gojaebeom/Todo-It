@@ -23,6 +23,15 @@ const PatchNoteModal = () => {
           <p className="mt-3 mb-5 text-2xl">투두잇 패치노트</p>
 
           <div className="w-full p-3 mb-3 text-sm rounded-sm bg-gray-50">
+            <p className="text-xl">2021-11-03</p>
+            <p className="text-lg">[PWA 적용]</p>
+            <p>
+              기존의 웹 환경을 데스크톱, 모바일로 간단하게 볼 수 있는 환경을 만들었습니다. 아직 추가적인 업데이트가 지속적으로 필요할 것 같아요.
+              문제가 보이면 알려주시면 감사합니다..^^
+            </p>
+          </div>
+
+          <div className="w-full p-3 mb-3 text-sm rounded-sm bg-gray-50">
             <p className="text-xl">2021-11-01</p>
             <p className="text-lg">[반응형 레이아웃 적용]</p>
             <p>

@@ -8,18 +8,18 @@ const Alert = () => {
   const setPatchNoteOpen = useSetRecoilState(patchNoteState)
 
   const confirm = () => {
-    window.localStorage.setItem('todoit-alert-2', 'ok')
+    window.localStorage.setItem('todoit-alert-3', 'ok')
     setOpen(false)
   }
 
   const PatchNoteOpen = () => {
-    window.localStorage.setItem('todoit-alert-2', 'ok')
+    window.localStorage.setItem('todoit-alert-3', 'ok')
     setOpen(false)
     setPatchNoteOpen(true)
   }
 
   return (
-    window.localStorage.getItem('todoit-alert-2') !== 'ok' &&
+    window.localStorage.getItem('todoit-alert-3') !== 'ok' &&
     open && (
       <div
         className={
@@ -36,11 +36,8 @@ const Alert = () => {
             />
           </div>
           <span className="block w-full mt-2 mb-3 leading-normal text-gray-800 text-md">
-            오래 기다렸습니다~ 모바일 기기에서도 일정을 확인할 수 있게 반응형
-            레이아웃을 적용했어요!
-            <br />
-            또한 무엇이 업데이트 되었는지 패치노트를 통해 기록을 확인할 수
-            있어요~
+            투두잇에 PWA(Progressive Web Apps) 이 추가되었습니다. PWA는 웹사이트를 오프라인 환경( 또는 네이티브 환경) 에서 
+            이용할 수 있게 하는 혁신적인 기술입니다. (라고 구글이 그러네요)
           </span>
           <br />
           <div className="flex items-center justify-between">

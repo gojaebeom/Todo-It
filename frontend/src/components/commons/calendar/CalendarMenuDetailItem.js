@@ -1,11 +1,26 @@
-import { useRecoilValue } from 'recoil'
+import { useRecoilState, useRecoilValue } from 'recoil'
 import { calendarDetailState } from '../../../states/calendarDetailState'
+import { userDetailState } from '../../../states/userDetailState'
 
 const CalendarMenuDetailItem = ({ item }) => {
   const calendarDetail = useRecoilValue(calendarDetailState)
+  const [userDetail, setUserDetail] = useRecoilState(userDetailState)
 
   return (
-    <div className="flex items-center justify-between w-full p-1 pl-2 rounded-md cursor-pointer text-md hover:bg-gray-100">
+    <button
+      className="flex items-center justify-between w-full p-1 pl-2 rounded-md cursor-pointer text-md hover:bg-gray-100"
+      onClick={() => {
+        console.debug(item)
+        setUserDetail({
+          ...userDetail,
+          nickname: item.nickname,
+          profilePreviewImg: item.profilePreviewImg,
+          profileImg: item.profileImg,
+          userCode: item.userCode,
+          isOpen: true,
+        })
+      }}
+    >
       <div className="flex items-center justify-start">
         {item.profilePreviewImg ? (
           <img
@@ -25,7 +40,7 @@ const CalendarMenuDetailItem = ({ item }) => {
           <i className="text-yellow-400 fas fa-crown"></i>
         </div>
       )}
-    </div>
+    </button>
   )
 }
 export default CalendarMenuDetailItem

@@ -4,9 +4,9 @@ import Alert from '../commons/alert/Alert'
 
 const Home = () => {
   return (
-    <DefaultLayout>
+    <DefaultLayout>  
       <Calendar />
-      <div className="flex items-center w-full px-5 py-4 mb-2 text-blue-500 border border-blue-500 rounded-md jusitfy-between">
+      {/* <div className="flex items-center w-full px-5 py-4 mb-2 text-blue-500 border border-blue-500 rounded-md jusitfy-between">
         <div className="flex items-center w-full">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -21,8 +21,7 @@ const Home = () => {
           아직 베타버전으로 잔버그가 나올 수 있는 점 양해바랍니다. 😰 앞으로
           추가적인 기능, UI 개선 등 꾸준한 업데이트가 있을 예정입니다.
         </div>
-      </div>
-
+      </div> */}
       <Alert />
     </DefaultLayout>
   )

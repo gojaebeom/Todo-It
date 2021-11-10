@@ -8,6 +8,7 @@ import CalendarMenu from '../../commons/calendar/CalendarMenu'
 import CalendarMenuDetail from '../../commons/calendar/CalendarMenuDetail'
 import waitingImg from '../../../assets/images/wait.svg'
 import PatchNoteModal from '../../commons/patchNote/PatchNoteModal'
+import UserDetailModal from '../../commons/user/UserDetailModal'
 
 const DefaultLayout = ({ children }) => {
   const [leftAside, setLeftAside] = useState(true)
@@ -49,7 +50,9 @@ const DefaultLayout = ({ children }) => {
             <i className="cursor-pointer fas fa-ellipsis-h hover:text-indigo-400 "></i>
           </button>
         </div>
-        <div className="w-full h-full p-3 pb-20 overflow-y-auto custom-scroll">{children}</div>
+        <div className="w-full h-full p-3 pb-20 overflow-y-auto custom-scroll">
+          {children}
+        </div>
       </section>
 
       {rightAside && (
@@ -62,9 +65,24 @@ const DefaultLayout = ({ children }) => {
               </button>
             )}
           </div>
-          <div className="flex flex-col items-center justify-center h-full">
+          <div className="flex flex-col items-center justify-start h-full ">
             <img src={waitingImg} alt="img" className="w-10/12" />
-            <p>준비중이에요..!</p>
+            <br />
+            <p className="text-2xl ">오늘의 업무</p>
+            <p className="text-xm font-noto-light">-앱 업데이트 하기</p>
+            <p className="text-xm font-noto-light">-앱 테스트 하기</p>
+            <div>
+              <span className="text-3xl text-purple-500 font-noto-black">
+                1
+              </span>
+              <span className="text-xl font-noto-bold">/2</span>
+            </div>
+            <br />
+            <p className="text-2xl">이번 달 달성률</p>
+            <div>
+              <span className="text-3xl text-red-400 font-noto-black">15</span>
+              <span className="text-xl font-noto-bold">/20</span>
+            </div>
           </div>
         </aside>
       )}
@@ -73,6 +91,7 @@ const DefaultLayout = ({ children }) => {
       <UserUpdateModal />
       <PatchNoteModal />
       <LoadingPage />
+      <UserDetailModal />
     </div>
   )
 }
