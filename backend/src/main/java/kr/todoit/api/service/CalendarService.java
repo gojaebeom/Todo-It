@@ -60,6 +60,8 @@ public class CalendarService {
                 User _user = User.builder()
                         .id(Long.parseLong(user.get("id").toString()))
                         .nickname(user.get("nickname").toString())
+                        .userCode(user.get("user_code").toString())
+                        .profileImg(user.get("profile_preview_img").toString())
                         .profilePreviewImg(user.get("profile_preview_img").toString())
                         .build();
                 _users.add(_user);

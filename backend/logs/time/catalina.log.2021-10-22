@@ -1,0 +1,182 @@
+2021-10-22 11:15:12,100 INFO  [background-preinit:org.hibernate.validator.internal.util.Version] - HV000001: Hibernate Validator 6.2.0.Final
+2021-10-22 11:15:12,105 INFO  [main:kr.todoit.api.TodoitApplication] - Starting TodoitApplication using Java 11.0.11 on DESKTOP-0EIVUL0 with PID 16876 (C:\Users\User\workspace\todoit\backend\target\classes started by User in C:\Users\User\workspace\todoit\backend)
+2021-10-22 11:15:12,106 INFO  [main:kr.todoit.api.TodoitApplication] - The following profiles are active: dev
+2021-10-22 11:15:12,636 INFO  [main:org.springframework.data.repository.config.RepositoryConfigurationDelegate] - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2021-10-22 11:15:12,699 INFO  [main:org.springframework.data.repository.config.RepositoryConfigurationDelegate] - Finished Spring Data repository scanning in 55 ms. Found 6 JPA repository interfaces.
+2021-10-22 11:15:13,061 INFO  [main:org.springframework.boot.web.embedded.tomcat.TomcatWebServer] - Tomcat initialized with port(s): 8080 (http)
+2021-10-22 11:15:13,067 INFO  [main:org.apache.coyote.http11.Http11NioProtocol] - Initializing ProtocolHandler ["http-nio-8080"]
+2021-10-22 11:15:13,067 INFO  [main:org.apache.catalina.core.StandardService] - Starting service [Tomcat]
+2021-10-22 11:15:13,067 INFO  [main:org.apache.catalina.core.StandardEngine] - Starting Servlet engine: [Apache Tomcat/9.0.53]
+2021-10-22 11:15:13,130 INFO  [main:org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/]] - Initializing Spring embedded WebApplicationContext
+2021-10-22 11:15:13,130 INFO  [main:org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext] - Root WebApplicationContext: initialization completed in 996 ms
+2021-10-22 11:15:13,220 INFO  [main:org.hibernate.jpa.internal.util.LogHelper] - HHH000204: Processing PersistenceUnitInfo [name: default]
+2021-10-22 11:15:13,258 INFO  [main:org.hibernate.Version] - HHH000412: Hibernate ORM core version 5.4.32.Final
+2021-10-22 11:15:13,357 INFO  [main:org.hibernate.annotations.common.Version] - HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2021-10-22 11:15:13,430 INFO  [main:com.zaxxer.hikari.HikariDataSource] - HikariPool-1 - Starting...
+2021-10-22 11:15:13,744 INFO  [main:com.zaxxer.hikari.HikariDataSource] - HikariPool-1 - Start completed.
+2021-10-22 11:15:13,758 INFO  [main:org.hibernate.dialect.Dialect] - HHH000400: Using dialect: org.hibernate.dialect.MySQL8Dialect
+2021-10-22 11:15:14,212 INFO  [main:org.hibernate.engine.transaction.jta.platform.internal.JtaPlatformInitiator] - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2021-10-22 11:15:14,219 INFO  [main:org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean] - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2021-10-22 11:15:14,735 WARN  [main:org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration$JpaWebConfiguration] - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2021-10-22 11:15:14,938 INFO  [main:org.apache.coyote.http11.Http11NioProtocol] - Starting ProtocolHandler ["http-nio-8080"]
+2021-10-22 11:15:14,950 INFO  [main:org.springframework.boot.web.embedded.tomcat.TomcatWebServer] - Tomcat started on port(s): 8080 (http) with context path ''
+2021-10-22 11:15:14,957 INFO  [main:kr.todoit.api.TodoitApplication] - Started TodoitApplication in 3.139 seconds (JVM running for 3.795)
+2021-10-22 13:51:54,825 INFO  [http-nio-8080-exec-1:org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/]] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2021-10-22 13:51:54,825 INFO  [http-nio-8080-exec-1:org.springframework.web.servlet.DispatcherServlet] - Initializing Servlet 'dispatcherServlet'
+2021-10-22 13:51:54,826 INFO  [http-nio-8080-exec-1:org.springframework.web.servlet.DispatcherServlet] - Completed initialization in 1 ms
+2021-10-22 13:51:54,925 INFO  [http-nio-8080-exec-2:kr.todoit.api.service.OAuth2Service] - 정상적인 토큰 받음.
+2021-10-22 13:51:54,925 INFO  [http-nio-8080-exec-2:kr.todoit.api.service.OAuth2Service] - [ 카카오톡 인증 토큰 ]
+2021-10-22 13:51:54,925 INFO  [http-nio-8080-exec-2:kr.todoit.api.service.OAuth2Service] - PyDTSNWHbgzPrGB2l161eFo5jSuPt2b2xFrb6wopb1QAAAF8pldYjA
+2021-10-22 13:51:55,113 INFO  [http-nio-8080-exec-2:kr.todoit.api.service.OAuth2Service] - 카카오 이메일 받기 완료.
+2021-10-22 13:51:55,229 INFO  [http-nio-8080-exec-2:kr.todoit.api.service.UserService] - 자동로그인 진행 -> 토큰 발급
+2021-10-22 13:54:56,982 INFO  [http-nio-8080-exec-5:kr.todoit.api.service.OAuth2Service] - 정상적인 토큰 받음.
+2021-10-22 13:54:56,982 INFO  [http-nio-8080-exec-5:kr.todoit.api.service.OAuth2Service] - [ 카카오톡 인증 토큰 ]
+2021-10-22 13:54:56,982 INFO  [http-nio-8080-exec-5:kr.todoit.api.service.OAuth2Service] - wgY8crVIqq25vW1mgs91GadCCOEXrkbQudJ9vQo9c5oAAAF8plof9w
+2021-10-22 13:54:57,070 INFO  [http-nio-8080-exec-5:kr.todoit.api.service.OAuth2Service] - 카카오 이메일 받기 완료.
+2021-10-22 13:54:57,074 INFO  [http-nio-8080-exec-5:kr.todoit.api.service.UserService] - 자동로그인 진행 -> 토큰 발급
+2021-10-22 13:56:21,365 INFO  [http-nio-8080-exec-7:kr.todoit.api.service.OAuth2Service] - 정상적인 토큰 받음.
+2021-10-22 13:56:21,366 INFO  [http-nio-8080-exec-7:kr.todoit.api.service.OAuth2Service] - [ 카카오톡 인증 토큰 ]
+2021-10-22 13:56:21,366 INFO  [http-nio-8080-exec-7:kr.todoit.api.service.OAuth2Service] - eODumnkCe5xnePbIM0nI0liDfcrRAYowwLaL0Ao9dNoAAAF8pltp5g
+2021-10-22 13:56:21,442 INFO  [http-nio-8080-exec-7:kr.todoit.api.service.OAuth2Service] - 카카오 이메일 받기 완료.
+2021-10-22 13:56:21,444 INFO  [http-nio-8080-exec-7:kr.todoit.api.service.UserService] - 자동로그인 진행 -> 토큰 발급
+2021-10-22 14:45:29,267 INFO  [http-nio-8080-exec-10:kr.todoit.api.service.OAuth2Service] - 정상적인 토큰 받음.
+2021-10-22 14:45:29,267 INFO  [http-nio-8080-exec-10:kr.todoit.api.service.OAuth2Service] - [ 카카오톡 인증 토큰 ]
+2021-10-22 14:45:29,267 INFO  [http-nio-8080-exec-10:kr.todoit.api.service.OAuth2Service] - CtJLlv1p5BNoj1ndVjRyjIbWB7olp2ODR7il4wo9dNoAAAF8pohk0w
+2021-10-22 14:45:29,354 INFO  [http-nio-8080-exec-10:kr.todoit.api.service.OAuth2Service] - 카카오 이메일 받기 완료.
+2021-10-22 14:45:29,357 INFO  [http-nio-8080-exec-10:kr.todoit.api.service.UserService] - 자동로그인 진행 -> 토큰 발급
+2021-10-22 14:53:46,140 INFO  [http-nio-8080-exec-3:kr.todoit.api.controller.AuthController] - [ 토큰 자동 갱신 컨트롤러 ]
+2021-10-22 14:53:53,947 INFO  [http-nio-8080-exec-4:kr.todoit.api.controller.AuthController] - [ 토큰 자동 갱신 컨트롤러 ]
+2021-10-22 14:54:08,104 INFO  [http-nio-8080-exec-5:kr.todoit.api.controller.AuthController] - [ 토큰 자동 갱신 컨트롤러 ]
+2021-10-22 14:54:10,562 INFO  [http-nio-8080-exec-6:kr.todoit.api.controller.AuthController] - [ 토큰 자동 갱신 컨트롤러 ]
+2021-10-22 14:56:21,138 INFO  [http-nio-8080-exec-9:kr.todoit.api.controller.AuthController] - [ 토큰 자동 갱신 컨트롤러 ]
+2021-10-22 14:56:44,504 INFO  [http-nio-8080-exec-10:kr.todoit.api.controller.AuthController] - [ 토큰 자동 갱신 컨트롤러 ]
+2021-10-22 14:58:52,130 INFO  [http-nio-8080-exec-3:kr.todoit.api.controller.AuthController] - [ 토큰 자동 갱신 컨트롤러 ]
+2021-10-22 15:00:32,132 INFO  [http-nio-8080-exec-5:kr.todoit.api.controller.AuthController] - [ 토큰 자동 갱신 컨트롤러 ]
+2021-10-22 15:00:38,125 INFO  [http-nio-8080-exec-6:kr.todoit.api.controller.AuthController] - [ 토큰 자동 갱신 컨트롤러 ]
+2021-10-22 15:02:21,127 INFO  [http-nio-8080-exec-8:kr.todoit.api.controller.AuthController] - [ 토큰 자동 갱신 컨트롤러 ]
+2021-10-22 15:02:28,610 INFO  [http-nio-8080-exec-9:kr.todoit.api.controller.AuthController] - [ 토큰 자동 갱신 컨트롤러 ]
+2021-10-22 15:04:13,138 INFO  [http-nio-8080-exec-1:kr.todoit.api.controller.AuthController] - [ 토큰 자동 갱신 컨트롤러 ]
+2021-10-22 15:05:23,775 INFO  [http-nio-8080-exec-3:kr.todoit.api.controller.AuthController] - [ 토큰 자동 갱신 컨트롤러 ]
+2021-10-22 15:09:23,138 INFO  [http-nio-8080-exec-5:kr.todoit.api.controller.AuthController] - [ 토큰 자동 갱신 컨트롤러 ]
+2021-10-22 15:09:31,135 INFO  [http-nio-8080-exec-6:kr.todoit.api.controller.AuthController] - [ 토큰 자동 갱신 컨트롤러 ]
+2021-10-22 15:15:20,127 INFO  [http-nio-8080-exec-8:kr.todoit.api.controller.AuthController] - [ 토큰 자동 갱신 컨트롤러 ]
+2021-10-22 15:15:20,137 INFO  [http-nio-8080-exec-9:kr.todoit.api.interceptor.TokenVerifyInterceptor] - [ 토큰 유효성 검사 인터셉터 ]
+2021-10-22 15:15:20,137 INFO  [http-nio-8080-exec-9:kr.todoit.api.interceptor.TokenVerifyInterceptor] - Request Method : 
+2021-10-22 15:15:20,137 INFO  [http-nio-8080-exec-9:kr.todoit.api.interceptor.TokenVerifyInterceptor] - OPTIONS
+2021-10-22 15:15:20,137 INFO  [http-nio-8080-exec-9:kr.todoit.api.interceptor.TokenVerifyInterceptor] - if request options method is options, return true
+2021-10-22 15:15:20,140 INFO  [http-nio-8080-exec-10:kr.todoit.api.interceptor.TokenVerifyInterceptor] - [ 토큰 유효성 검사 인터셉터 ]
+2021-10-22 15:15:20,140 INFO  [http-nio-8080-exec-10:kr.todoit.api.interceptor.TokenVerifyInterceptor] - Request Method : 
+2021-10-22 15:15:20,140 INFO  [http-nio-8080-exec-10:kr.todoit.api.interceptor.TokenVerifyInterceptor] - GET
+2021-10-22 15:15:40,138 INFO  [http-nio-8080-exec-1:kr.todoit.api.controller.AuthController] - [ 토큰 자동 갱신 컨트롤러 ]
+2021-10-22 15:15:40,146 INFO  [http-nio-8080-exec-2:kr.todoit.api.interceptor.TokenVerifyInterceptor] - [ 토큰 유효성 검사 인터셉터 ]
+2021-10-22 15:15:40,146 INFO  [http-nio-8080-exec-2:kr.todoit.api.interceptor.TokenVerifyInterceptor] - Request Method : 
+2021-10-22 15:15:40,146 INFO  [http-nio-8080-exec-2:kr.todoit.api.interceptor.TokenVerifyInterceptor] - GET
+2021-10-22 15:18:09,134 INFO  [http-nio-8080-exec-5:kr.todoit.api.controller.AuthController] - [ 토큰 자동 갱신 컨트롤러 ]
+2021-10-22 15:18:09,143 INFO  [http-nio-8080-exec-6:kr.todoit.api.interceptor.TokenVerifyInterceptor] - [ 토큰 유효성 검사 인터셉터 ]
+2021-10-22 15:18:09,143 INFO  [http-nio-8080-exec-6:kr.todoit.api.interceptor.TokenVerifyInterceptor] - Request Method : 
+2021-10-22 15:18:09,143 INFO  [http-nio-8080-exec-6:kr.todoit.api.interceptor.TokenVerifyInterceptor] - GET
+2021-10-22 15:18:13,935 INFO  [http-nio-8080-exec-7:kr.todoit.api.controller.AuthController] - [ 토큰 자동 갱신 컨트롤러 ]
+2021-10-22 15:18:13,986 INFO  [http-nio-8080-exec-8:kr.todoit.api.interceptor.TokenVerifyInterceptor] - [ 토큰 유효성 검사 인터셉터 ]
+2021-10-22 15:18:13,986 INFO  [http-nio-8080-exec-8:kr.todoit.api.interceptor.TokenVerifyInterceptor] - Request Method : 
+2021-10-22 15:18:13,986 INFO  [http-nio-8080-exec-8:kr.todoit.api.interceptor.TokenVerifyInterceptor] - GET
+2021-10-22 15:18:18,112 INFO  [http-nio-8080-exec-9:kr.todoit.api.controller.AuthController] - [ 토큰 자동 갱신 컨트롤러 ]
+2021-10-22 15:18:18,123 INFO  [http-nio-8080-exec-10:kr.todoit.api.interceptor.TokenVerifyInterceptor] - [ 토큰 유효성 검사 인터셉터 ]
+2021-10-22 15:18:18,123 INFO  [http-nio-8080-exec-10:kr.todoit.api.interceptor.TokenVerifyInterceptor] - Request Method : 
+2021-10-22 15:18:18,123 INFO  [http-nio-8080-exec-10:kr.todoit.api.interceptor.TokenVerifyInterceptor] - GET
+2021-10-22 15:22:10,019 INFO  [http-nio-8080-exec-2:kr.todoit.api.controller.AuthController] - [ 토큰 자동 갱신 컨트롤러 ]
+2021-10-22 15:22:10,028 INFO  [http-nio-8080-exec-3:kr.todoit.api.interceptor.TokenVerifyInterceptor] - [ 토큰 유효성 검사 인터셉터 ]
+2021-10-22 15:22:10,028 INFO  [http-nio-8080-exec-3:kr.todoit.api.interceptor.TokenVerifyInterceptor] - Request Method : 
+2021-10-22 15:22:10,028 INFO  [http-nio-8080-exec-3:kr.todoit.api.interceptor.TokenVerifyInterceptor] - GET
+2021-10-22 15:28:05,116 INFO  [http-nio-8080-exec-6:kr.todoit.api.controller.AuthController] - [ 토큰 자동 갱신 컨트롤러 ]
+2021-10-22 15:28:05,125 INFO  [http-nio-8080-exec-7:kr.todoit.api.interceptor.TokenVerifyInterceptor] - [ 토큰 유효성 검사 인터셉터 ]
+2021-10-22 15:28:05,125 INFO  [http-nio-8080-exec-7:kr.todoit.api.interceptor.TokenVerifyInterceptor] - Request Method : 
+2021-10-22 15:28:05,125 INFO  [http-nio-8080-exec-7:kr.todoit.api.interceptor.TokenVerifyInterceptor] - GET
+2021-10-22 15:28:16,114 INFO  [http-nio-8080-exec-8:kr.todoit.api.controller.AuthController] - [ 토큰 자동 갱신 컨트롤러 ]
+2021-10-22 15:28:16,121 INFO  [http-nio-8080-exec-9:kr.todoit.api.interceptor.TokenVerifyInterceptor] - [ 토큰 유효성 검사 인터셉터 ]
+2021-10-22 15:28:16,121 INFO  [http-nio-8080-exec-9:kr.todoit.api.interceptor.TokenVerifyInterceptor] - Request Method : 
+2021-10-22 15:28:16,121 INFO  [http-nio-8080-exec-9:kr.todoit.api.interceptor.TokenVerifyInterceptor] - GET
+2021-10-22 15:28:45,055 INFO  [http-nio-8080-exec-10:kr.todoit.api.controller.AuthController] - [ 토큰 자동 갱신 컨트롤러 ]
+2021-10-22 15:28:45,077 INFO  [http-nio-8080-exec-1:kr.todoit.api.interceptor.TokenVerifyInterceptor] - [ 토큰 유효성 검사 인터셉터 ]
+2021-10-22 15:28:45,077 INFO  [http-nio-8080-exec-1:kr.todoit.api.interceptor.TokenVerifyInterceptor] - Request Method : 
+2021-10-22 15:28:45,077 INFO  [http-nio-8080-exec-1:kr.todoit.api.interceptor.TokenVerifyInterceptor] - GET
+2021-10-22 15:28:48,528 INFO  [http-nio-8080-exec-2:kr.todoit.api.interceptor.TokenVerifyInterceptor] - [ 토큰 유효성 검사 인터셉터 ]
+2021-10-22 15:28:48,528 INFO  [http-nio-8080-exec-2:kr.todoit.api.interceptor.TokenVerifyInterceptor] - Request Method : 
+2021-10-22 15:28:48,528 INFO  [http-nio-8080-exec-2:kr.todoit.api.interceptor.TokenVerifyInterceptor] - OPTIONS
+2021-10-22 15:28:48,528 INFO  [http-nio-8080-exec-2:kr.todoit.api.interceptor.TokenVerifyInterceptor] - if request options method is options, return true
+2021-10-22 15:28:48,530 INFO  [http-nio-8080-exec-3:kr.todoit.api.interceptor.TokenVerifyInterceptor] - [ 토큰 유효성 검사 인터셉터 ]
+2021-10-22 15:28:48,530 INFO  [http-nio-8080-exec-3:kr.todoit.api.interceptor.TokenVerifyInterceptor] - Request Method : 
+2021-10-22 15:28:48,530 INFO  [http-nio-8080-exec-3:kr.todoit.api.interceptor.TokenVerifyInterceptor] - GET
+2021-10-22 15:28:48,531 INFO  [http-nio-8080-exec-3:kr.todoit.api.controller.UserController] - 로그아웃 요청 -> RFT 쿠키 제거
+2021-10-22 15:28:48,969 INFO  [http-nio-8080-exec-4:kr.todoit.api.controller.AuthController] - [ 토큰 자동 갱신 컨트롤러 ]
+2021-10-22 15:28:48,969 INFO  [http-nio-8080-exec-4:kr.todoit.api.controller.AuthController] - 쿠키 확인 -> 저장된 토큰 없음( 로그인 하지 않은 유저 )
+2021-10-22 15:31:42,763 INFO  [http-nio-8080-exec-8:kr.todoit.api.service.OAuth2Service] - 정상적인 토큰 받음.
+2021-10-22 15:31:42,763 INFO  [http-nio-8080-exec-8:kr.todoit.api.service.OAuth2Service] - [ 카카오톡 인증 토큰 ]
+2021-10-22 15:31:42,763 INFO  [http-nio-8080-exec-8:kr.todoit.api.service.OAuth2Service] - nHC8eGxW7x0v6RzzZtDJq2OwR22-e0e4ONPwCwopyNgAAAF8prK2sA
+2021-10-22 15:31:42,834 INFO  [http-nio-8080-exec-8:kr.todoit.api.service.OAuth2Service] - 카카오 이메일 받기 완료.
+2021-10-22 15:31:42,836 INFO  [http-nio-8080-exec-8:kr.todoit.api.service.UserService] - 자동로그인 진행 -> 토큰 발급
+2021-10-22 15:31:45,196 INFO  [http-nio-8080-exec-9:kr.todoit.api.controller.AuthController] - [ 토큰 자동 갱신 컨트롤러 ]
+2021-10-22 15:31:45,238 INFO  [http-nio-8080-exec-10:kr.todoit.api.interceptor.TokenVerifyInterceptor] - [ 토큰 유효성 검사 인터셉터 ]
+2021-10-22 15:31:45,238 INFO  [http-nio-8080-exec-10:kr.todoit.api.interceptor.TokenVerifyInterceptor] - Request Method : 
+2021-10-22 15:31:45,238 INFO  [http-nio-8080-exec-10:kr.todoit.api.interceptor.TokenVerifyInterceptor] - GET
+2021-10-22 15:31:48,314 INFO  [http-nio-8080-exec-1:kr.todoit.api.interceptor.TokenVerifyInterceptor] - [ 토큰 유효성 검사 인터셉터 ]
+2021-10-22 15:31:48,314 INFO  [http-nio-8080-exec-1:kr.todoit.api.interceptor.TokenVerifyInterceptor] - Request Method : 
+2021-10-22 15:31:48,314 INFO  [http-nio-8080-exec-1:kr.todoit.api.interceptor.TokenVerifyInterceptor] - GET
+2021-10-22 15:31:48,315 INFO  [http-nio-8080-exec-1:kr.todoit.api.controller.UserController] - 로그아웃 요청 -> RFT 쿠키 제거
+2021-10-22 15:31:53,146 INFO  [http-nio-8080-exec-2:kr.todoit.api.controller.AuthController] - [ 토큰 자동 갱신 컨트롤러 ]
+2021-10-22 15:31:53,146 INFO  [http-nio-8080-exec-2:kr.todoit.api.controller.AuthController] - 쿠키 확인 -> 저장된 토큰 없음( 로그인 하지 않은 유저 )
+2021-10-22 15:34:18,145 INFO  [http-nio-8080-exec-5:kr.todoit.api.controller.AuthController] - [ 토큰 자동 갱신 컨트롤러 ]
+2021-10-22 15:34:18,145 INFO  [http-nio-8080-exec-5:kr.todoit.api.controller.AuthController] - 쿠키 확인 -> 저장된 토큰 없음( 로그인 하지 않은 유저 )
+2021-10-22 15:34:39,426 INFO  [http-nio-8080-exec-6:kr.todoit.api.service.OAuth2Service] - 정상적인 토큰 받음.
+2021-10-22 15:34:39,426 INFO  [http-nio-8080-exec-6:kr.todoit.api.service.OAuth2Service] - [ 카카오톡 인증 토큰 ]
+2021-10-22 15:34:39,426 INFO  [http-nio-8080-exec-6:kr.todoit.api.service.OAuth2Service] - qAqeWDhjkdgf68gFg3EGmxUsT-A5jFfzk8B0vAopcNEAAAF8prVo4A
+2021-10-22 15:34:39,508 INFO  [http-nio-8080-exec-6:kr.todoit.api.service.OAuth2Service] - 카카오 이메일 받기 완료.
+2021-10-22 15:34:39,509 INFO  [http-nio-8080-exec-6:kr.todoit.api.service.UserService] - 자동로그인 진행 -> 토큰 발급
+2021-10-22 15:34:41,680 INFO  [http-nio-8080-exec-7:kr.todoit.api.interceptor.TokenVerifyInterceptor] - [ 토큰 유효성 검사 인터셉터 ]
+2021-10-22 15:34:41,680 INFO  [http-nio-8080-exec-7:kr.todoit.api.interceptor.TokenVerifyInterceptor] - Request Method : 
+2021-10-22 15:34:41,680 INFO  [http-nio-8080-exec-7:kr.todoit.api.interceptor.TokenVerifyInterceptor] - GET
+2021-10-22 15:34:41,681 INFO  [http-nio-8080-exec-7:kr.todoit.api.controller.UserController] - 로그아웃 요청 -> RFT 쿠키 제거
+2021-10-22 15:34:44,769 INFO  [http-nio-8080-exec-8:kr.todoit.api.controller.AuthController] - [ 토큰 자동 갱신 컨트롤러 ]
+2021-10-22 15:34:44,769 INFO  [http-nio-8080-exec-8:kr.todoit.api.controller.AuthController] - 쿠키 확인 -> 저장된 토큰 없음( 로그인 하지 않은 유저 )
+2021-10-22 15:35:05,235 INFO  [http-nio-8080-exec-9:kr.todoit.api.controller.AuthController] - [ 토큰 자동 갱신 컨트롤러 ]
+2021-10-22 15:35:05,236 INFO  [http-nio-8080-exec-9:kr.todoit.api.controller.AuthController] - 쿠키 확인 -> 저장된 토큰 없음( 로그인 하지 않은 유저 )
+2021-10-22 15:35:45,065 INFO  [http-nio-8080-exec-10:kr.todoit.api.controller.AuthController] - [ 토큰 자동 갱신 컨트롤러 ]
+2021-10-22 15:35:45,065 INFO  [http-nio-8080-exec-10:kr.todoit.api.controller.AuthController] - 쿠키 확인 -> 저장된 토큰 없음( 로그인 하지 않은 유저 )
+2021-10-22 15:36:12,405 INFO  [http-nio-8080-exec-1:kr.todoit.api.controller.AuthController] - [ 토큰 자동 갱신 컨트롤러 ]
+2021-10-22 15:36:12,405 INFO  [http-nio-8080-exec-1:kr.todoit.api.controller.AuthController] - 쿠키 확인 -> 저장된 토큰 없음( 로그인 하지 않은 유저 )
+2021-10-22 15:36:22,145 INFO  [http-nio-8080-exec-2:kr.todoit.api.service.OAuth2Service] - 정상적인 토큰 받음.
+2021-10-22 15:36:22,145 INFO  [http-nio-8080-exec-2:kr.todoit.api.service.OAuth2Service] - [ 카카오톡 인증 토큰 ]
+2021-10-22 15:36:22,145 INFO  [http-nio-8080-exec-2:kr.todoit.api.service.OAuth2Service] - lEhIXsfQz_xA5MLcxMDJaEkaW2JmFCP_d_xbwAopb1UAAAF8prb6Jw
+2021-10-22 15:36:22,217 INFO  [http-nio-8080-exec-2:kr.todoit.api.service.OAuth2Service] - 카카오 이메일 받기 완료.
+2021-10-22 15:36:22,219 INFO  [http-nio-8080-exec-2:kr.todoit.api.service.UserService] - 자동로그인 진행 -> 토큰 발급
+2021-10-22 15:37:56,958 INFO  [http-nio-8080-exec-4:kr.todoit.api.controller.AuthController] - [ 토큰 자동 갱신 컨트롤러 ]
+2021-10-22 15:37:56,978 INFO  [http-nio-8080-exec-5:kr.todoit.api.interceptor.TokenVerifyInterceptor] - [ 토큰 유효성 검사 인터셉터 ]
+2021-10-22 15:37:56,978 INFO  [http-nio-8080-exec-5:kr.todoit.api.interceptor.TokenVerifyInterceptor] - Request Method : 
+2021-10-22 15:37:56,978 INFO  [http-nio-8080-exec-5:kr.todoit.api.interceptor.TokenVerifyInterceptor] - GET
+2021-10-22 15:38:37,403 INFO  [http-nio-8080-exec-6:kr.todoit.api.controller.AuthController] - [ 토큰 자동 갱신 컨트롤러 ]
+2021-10-22 15:38:37,446 INFO  [http-nio-8080-exec-7:kr.todoit.api.interceptor.TokenVerifyInterceptor] - [ 토큰 유효성 검사 인터셉터 ]
+2021-10-22 15:38:37,446 INFO  [http-nio-8080-exec-7:kr.todoit.api.interceptor.TokenVerifyInterceptor] - Request Method : 
+2021-10-22 15:38:37,446 INFO  [http-nio-8080-exec-7:kr.todoit.api.interceptor.TokenVerifyInterceptor] - GET
+2021-10-22 15:48:04,975 INFO  [http-nio-8080-exec-9:kr.todoit.api.controller.AuthController] - [ 토큰 자동 갱신 컨트롤러 ]
+2021-10-22 15:48:05,015 INFO  [http-nio-8080-exec-10:kr.todoit.api.interceptor.TokenVerifyInterceptor] - [ 토큰 유효성 검사 인터셉터 ]
+2021-10-22 15:48:05,015 INFO  [http-nio-8080-exec-10:kr.todoit.api.interceptor.TokenVerifyInterceptor] - Request Method : 
+2021-10-22 15:48:05,015 INFO  [http-nio-8080-exec-10:kr.todoit.api.interceptor.TokenVerifyInterceptor] - OPTIONS
+2021-10-22 15:48:05,015 INFO  [http-nio-8080-exec-10:kr.todoit.api.interceptor.TokenVerifyInterceptor] - if request options method is options, return true
+2021-10-22 15:48:05,019 INFO  [http-nio-8080-exec-1:kr.todoit.api.interceptor.TokenVerifyInterceptor] - [ 토큰 유효성 검사 인터셉터 ]
+2021-10-22 15:48:05,019 INFO  [http-nio-8080-exec-1:kr.todoit.api.interceptor.TokenVerifyInterceptor] - Request Method : 
+2021-10-22 15:48:05,019 INFO  [http-nio-8080-exec-1:kr.todoit.api.interceptor.TokenVerifyInterceptor] - GET
+2021-10-22 16:05:24,681 INFO  [http-nio-8080-exec-4:kr.todoit.api.controller.AuthController] - [ 토큰 자동 갱신 컨트롤러 ]
+2021-10-22 16:05:24,720 INFO  [http-nio-8080-exec-5:kr.todoit.api.interceptor.TokenVerifyInterceptor] - [ 토큰 유효성 검사 인터셉터 ]
+2021-10-22 16:05:24,720 INFO  [http-nio-8080-exec-5:kr.todoit.api.interceptor.TokenVerifyInterceptor] - Request Method : 
+2021-10-22 16:05:24,720 INFO  [http-nio-8080-exec-5:kr.todoit.api.interceptor.TokenVerifyInterceptor] - GET
+2021-10-22 16:08:27,450 INFO  [http-nio-8080-exec-7:kr.todoit.api.controller.AuthController] - [ 토큰 자동 갱신 컨트롤러 ]
+2021-10-22 16:08:27,462 INFO  [http-nio-8080-exec-8:kr.todoit.api.interceptor.TokenVerifyInterceptor] - [ 토큰 유효성 검사 인터셉터 ]
+2021-10-22 16:08:27,462 INFO  [http-nio-8080-exec-8:kr.todoit.api.interceptor.TokenVerifyInterceptor] - Request Method : 
+2021-10-22 16:08:27,462 INFO  [http-nio-8080-exec-8:kr.todoit.api.interceptor.TokenVerifyInterceptor] - GET
+2021-10-22 16:24:36,746 INFO  [http-nio-8080-exec-10:kr.todoit.api.controller.AuthController] - [ 토큰 자동 갱신 컨트롤러 ]
+2021-10-22 16:24:36,759 INFO  [http-nio-8080-exec-1:kr.todoit.api.interceptor.TokenVerifyInterceptor] - [ 토큰 유효성 검사 인터셉터 ]
+2021-10-22 16:24:36,759 INFO  [http-nio-8080-exec-1:kr.todoit.api.interceptor.TokenVerifyInterceptor] - Request Method : 
+2021-10-22 16:24:36,759 INFO  [http-nio-8080-exec-1:kr.todoit.api.interceptor.TokenVerifyInterceptor] - OPTIONS
+2021-10-22 16:24:36,759 INFO  [http-nio-8080-exec-1:kr.todoit.api.interceptor.TokenVerifyInterceptor] - if request options method is options, return true
+2021-10-22 16:24:36,763 INFO  [http-nio-8080-exec-2:kr.todoit.api.interceptor.TokenVerifyInterceptor] - [ 토큰 유효성 검사 인터셉터 ]
+2021-10-22 16:24:36,764 INFO  [http-nio-8080-exec-2:kr.todoit.api.interceptor.TokenVerifyInterceptor] - Request Method : 
+2021-10-22 16:24:36,764 INFO  [http-nio-8080-exec-2:kr.todoit.api.interceptor.TokenVerifyInterceptor] - GET

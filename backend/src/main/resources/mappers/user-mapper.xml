@@ -20,7 +20,11 @@
 
     <select id="findAllByCalendarId" parameterType="java.lang.Long" resultType="java.util.HashMap">
         select
-            u.id, u.nickname, ifnull(u.profile_preview_img, '') as profile_preview_img
+            u.id,
+               u.nickname,
+               u.user_code,
+               ifnull(u.profile_img, '') as profile_img,
+               ifnull(u.profile_preview_img, '') as profile_preview_img
         from users u
                  left join calendar_groups cg on u.id = cg.user_id
         where cg.calendar_id = #{id};
