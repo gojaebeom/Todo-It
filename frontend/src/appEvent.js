@@ -7,7 +7,7 @@ import { calendarsState, useCalendars } from './states/calendarsState'
 import { loadingPageState } from './states/ui/loadingPage'
 import { toastState } from './states/ui/toastState'
 import { userState } from './states/userState'
-import ApiScaffold from './shared/api'
+import ApiScaffold from './customs/api'
 
 const appEvent = (App) => {
   return () => {
@@ -17,7 +17,6 @@ const appEvent = (App) => {
     const setCalendars = useSetRecoilState(calendarsState)
     const setCalendarDetail = useSetRecoilState(calendarDetailState)
     const setLoadingPage = useSetRecoilState(loadingPageState)
-    // const resetNotificationModal = useResetRecoilState(notificationModalState);
 
     const { resetContextMenu } = useCalendars()
 
@@ -87,9 +86,6 @@ const appEvent = (App) => {
         if (calendarCellCustomizeBar && elem !== calendarCellCustomizeBar) {
           resetContextMenu()
         }
-        // if(notification && elem !== notification){
-        //     resetNotificationModal();
-        // }
       })
       // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])

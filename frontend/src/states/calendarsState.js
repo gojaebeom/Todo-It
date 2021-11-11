@@ -10,7 +10,7 @@ import { calendarDetailState } from './calendarDetailState'
 import { todosByMonthState } from './todosByMonthState'
 import { toastState } from './ui/toastState'
 import { userState } from './userState'
-import ApiScaffold from '../shared/api'
+import ApiScaffold from '../customs/api'
 
 export const calendarsState = atom({
   key: 'calendarsState', // unique ID (with respect to other atoms/selectors)
