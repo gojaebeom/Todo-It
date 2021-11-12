@@ -100,9 +100,9 @@ const Calendar = () => {
         </div>
       </div>
 
-      <table className="w-full mb-10 table-fixed">
+      <table className="w-full mb-10 table-fixed ">
         <thead>
-          <tr className="text-right">
+          <tr className="text-right font-noto-light sm:font-noto-bold">
             <th>일</th>
             <th>월</th>
             <th>화</th>

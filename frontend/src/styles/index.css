@@ -1662,6 +1662,14 @@ button:focus, input:focus{
 		margin-bottom: 0.5rem;
 	}
 
+	.sm\:flex {
+		display: flex;
+	}
+
+	.sm\:hidden {
+		display: none;
+	}
+
 	.sm\:h-\[80px\] {
 		height: 80px;
 	}
@@ -1702,6 +1710,10 @@ button:focus, input:focus{
 		max-width: 300px;
 	}
 
+	.sm\:border {
+		border-width: 1px;
+	}
+
 	.sm\:border-r {
 		border-right-width: 1px;
 	}
@@ -1714,6 +1726,10 @@ button:focus, input:focus{
 	.sm\:px-1 {
 		padding-left: 0.25rem;
 		padding-right: 0.25rem;
+	}
+
+	.sm\:font-noto-bold {
+		font-family: noto-bold;
 	}
 
 	.sm\:text-base {

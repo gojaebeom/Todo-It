@@ -65,7 +65,7 @@ const DefaultLayout = ({ children }) => {
       <PatchNoteModal />
       <LoadingPage />
       <UserDetailModal />
-      <ChatContainer />
+      {/* <ChatContainer /> */}
     </div>
   )
 }

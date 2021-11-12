@@ -8,18 +8,21 @@ const Alert = () => {
   const setPatchNoteOpen = useSetRecoilState(patchNoteState)
 
   const confirm = () => {
-    window.localStorage.setItem('todoit-alert-3', 'ok')
+    window.localStorage.removeItem('todoit-alert-1')
+    window.localStorage.removeItem('todoit-alert-2')
+    window.localStorage.removeItem('todoit-alert-3')
+    window.localStorage.setItem('todoit-alert-4', 'ok')
     setOpen(false)
   }
 
   const PatchNoteOpen = () => {
-    window.localStorage.setItem('todoit-alert-3', 'ok')
+    window.localStorage.setItem('todoit-alert-4', 'ok')
     setOpen(false)
     setPatchNoteOpen(true)
   }
 
   return (
-    window.localStorage.getItem('todoit-alert-3') !== 'ok' &&
+    window.localStorage.getItem('todoit-alert-4') !== 'ok' &&
     open && (
       <div
         className={
@@ -36,8 +39,8 @@ const Alert = () => {
             />
           </div>
           <span className="block w-full mt-2 mb-3 leading-normal text-gray-800 text-md">
-            투두잇에 PWA(Progressive Web Apps) 이 추가되었습니다. PWA는 웹사이트를 오프라인 환경( 또는 네이티브 환경) 에서 
-            이용할 수 있게 하는 혁신적인 기술입니다. (라고 구글이 그러네요)
+            이제 캘린더 참여인원의 프로필을 클릭하면 회원 상세정보를 볼 수 있습니다! 
+            그 밖에 반응형 디자인 개선이 완료되었습니다~
           </span>
           <br />
           <div className="flex items-center justify-between">

@@ -11,9 +11,9 @@ function Productivity({ setRightAside }) {
           </button>
         )}
       </div>
-      <div className="flex flex-col items-center justify-start h-full ">
+      <div className="flex flex-col items-center justify-center h-full ">
         <img src={waitingImg} alt="img" className="w-10/12" />
-        <br />
+        {/* <br />
         <p className="text-2xl ">오늘의 업무</p>
         <p className="text-xm font-noto-light">-앱 업데이트 하기</p>
         <p className="text-xm font-noto-light">-앱 테스트 하기</p>
@@ -26,7 +26,7 @@ function Productivity({ setRightAside }) {
         <div>
           <span className="text-3xl text-red-400 font-noto-black">15</span>
           <span className="text-xl font-noto-bold">/20</span>
-        </div>
+        </div> */}
       </div>
     </aside>
   )

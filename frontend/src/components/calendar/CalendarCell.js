@@ -67,10 +67,10 @@ const CalendarCell = ({ index, week }) => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [customizes, today])
-
+  
   return (
     <td
-      className={`border h-[50px] sm:h-[80px] md:h-[120px] hover:shadow-inner text-xs md:text-base   ${
+      className={`sm:border h-[50px] sm:h-[80px] md:h-[120px] hover:shadow-inner text-xs md:text-base   ${
         index % 7 === 0 || index % 6 === 0 ? 'bg-gray-100' : ''
       } `}
       onContextMenu={(event) => {
@@ -97,7 +97,8 @@ const CalendarCell = ({ index, week }) => {
         >
           {days.format('D')}
         </span>
-        <ul className="flex flex-col items-start justify-center w-full">
+        {/* 데스크톱 */}
+        <ul className="flex-col items-start justify-center hidden w-full sm:flex">
           {
             // eslint-disable-next-line array-callback-return
             todosByMonth.map((item, index) => {
@@ -116,6 +117,17 @@ const CalendarCell = ({ index, week }) => {
             })
           }
         </ul>
+        {/* 모바일 */}
+        <div className="flex items-center justify-center w-full mobile-cell sm:hidden">
+          {
+            // eslint-disable-next-line array-callback-return
+            todosByMonth.map((item, index) => {
+              if (days.format('YYYY-MM-DD') === item.matchedDate) {
+                return '💡'
+              }
+            })
+          }
+        </div>
         {days.format('MM') === today.format('MM') &&
           contextMenu.isOpen &&
           contextMenu.matchedCalendarId === calendarDetail.id &&

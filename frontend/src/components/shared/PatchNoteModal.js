@@ -23,6 +23,15 @@ const PatchNoteModal = () => {
           <p className="mt-3 mb-5 text-2xl">투두잇 패치노트</p>
 
           <div className="w-full p-3 mb-3 text-sm rounded-sm bg-gray-50">
+            <p className="text-xl">2021-11-12</p>
+            <p className="text-lg">[유저 상세정보 카드 생성]</p>
+            <p>
+              컨텐츠는 구상중입니다.
+            </p>
+            <p className="text-lg">[캘린더 모바일 화면 레이아웃 수정]</p>
+          </div>
+
+          <div className="w-full p-3 mb-3 text-sm rounded-sm bg-gray-50">
             <p className="text-xl">2021-11-03</p>
             <p className="text-lg">[PWA 적용]</p>
             <p>
