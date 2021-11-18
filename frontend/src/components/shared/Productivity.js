@@ -2,7 +2,7 @@ import waitingImg from '../../assets/images/wait.svg'
 
 function Productivity({ setRightAside }) {
   return (
-    <aside className="absolute sm:static block w-full sm:w-[300px] sm:min-w-[300px] h-full bg-white border-l">
+    <aside className="absolute sm:static block w-full sm:w-[400px] sm:min-w-[400px] h-full bg-white border-l">
       <div className="flex items-center justify-between w-full h-[50px] border-b pl-2 pr-4">
         생산성
         {window.innerWidth <= 1000 && (

@@ -1702,8 +1702,8 @@ button:focus, input:focus{
 		width: 380px;
 	}
 
-	.sm\:min-w-\[300px\] {
-		min-width: 300px;
+	.sm\:min-w-\[400px\] {
+		min-width: 400px;
 	}
 
 	.sm\:max-w-\[300px\] {
@@ -1754,8 +1754,8 @@ button:focus, input:focus{
 		height: 120px;
 	}
 
-	.md\:w-\[80px\] {
-		width: 80px;
+	.md\:w-\[70px\] {
+		width: 70px;
 	}
 
 	.md\:p-0 {

@@ -10,7 +10,7 @@ const CalendarMenu = () => {
   const calendars = useRecoilValue(calendarsState)
   const setPatchNoteOpen = useSetRecoilState(patchNoteState)
   return (
-    <div className="flex flex-col items-center w-[60px] md:w-[80px] h-full p-2 bg-red-300">
+    <div className="flex flex-col items-center w-[60px] md:w-[70px] h-full p-2 bg-red-300">
       <NotificationToggleButton />
       <div className="w-2/5 my-3 border-t border-white border-dashed"></div>
       {calendars &&

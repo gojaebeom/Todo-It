@@ -10,7 +10,6 @@ import CalendarMenuDetail from '../calendar/CalendarMenuDetail'
 import PatchNoteModal from '../shared/PatchNoteModal'
 import UserDetailModal from '../user/UserDetailModal'
 import Productivity from '../shared/Productivity'
-import ChatContainer from '../chat/ChatContainer'
 
 const DefaultLayout = ({ children }) => {
   const [leftAside, setLeftAside] = useState(true)
