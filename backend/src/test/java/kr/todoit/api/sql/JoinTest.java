@@ -1,16 +1,6 @@
 package kr.todoit.api.sql;
 
-import kr.todoit.api.domain.User;
-import kr.todoit.api.dto.CalendarListResponse;
-import kr.todoit.api.mapper.CalendarMapper;
-import kr.todoit.api.mapper.UserMapper;
-import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 
 @SpringBootTest
 public class JoinTest {

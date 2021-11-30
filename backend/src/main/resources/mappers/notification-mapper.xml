@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="kr.todoit.api.mapper.NotificationMapper">
-    <resultMap id="defaultNotification" type="kr.todoit.api.dto.NotificationFindResponse">
+<mapper namespace="kr.todoit.api.v1.mapper.NotificationMapper">
+    <resultMap id="defaultNotification" type="kr.todoit.api.v1.dto.NotificationFindResponse">
         <id column="id" property="id"/>
         <result column="type" property="type"/>
         <result column="action_url" property="actionUrl"/>

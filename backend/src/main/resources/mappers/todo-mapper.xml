@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="kr.todoit.api.mapper.TodoMapper">
+<mapper namespace="kr.todoit.api.v1.mapper.TodoMapper">
     <resultMap id="todo" type="java.util.HashMap">
         <id column="todo_id" property="id"/>
         <result column="title" property="title" />
         <result column="description" property="description" />
         <result column="is_finished" property="isFinished" />
     </resultMap>
-    <resultMap id="dayTodos" type="kr.todoit.api.dto.TodosByDayResponse">
+    <resultMap id="dayTodos" type="kr.todoit.api.v1.dto.TodosByDayResponse">
         <id column="user_id" property="id"/>
         <result column="profile_img" property="profileImg"/>
         <result column="profile_preview_img" property="profilePreviewImg"/>
         <result column="nickname" property="nickname"/>
         <collection property="todos" resultMap="todo"/>
     </resultMap>
-    <select id="findDayTodosByCalendarIdWithMatchedDate" parameterType="kr.todoit.api.dto.TodoIndexRequest" resultMap="dayTodos">
+    <select id="findDayTodosByCalendarIdWithMatchedDate" parameterType="kr.todoit.api.v1.dto.TodoIndexRequest" resultMap="dayTodos">
         select
             -- 회원 정보
             u.id as user_id, u.profile_img, u.profile_preview_img, u.nickname,
@@ -27,13 +27,13 @@
         order by u.id = #{userId} desc, u.nickname asc;
     </select>
 
-    <resultMap id="monthTodo" type="kr.todoit.api.dto.TodosByMonthResponse">
+    <resultMap id="monthTodo" type="kr.todoit.api.v1.dto.TodosByMonthResponse">
         <id column="id" property="id"/>
         <result column="title" property="title"/>
         <result column="is_finished" property="isFinished"/>
         <result column="matched_date" property="matchedDate"/>
     </resultMap>
-    <select id="findMonthByCalendarId" parameterType="kr.todoit.api.dto.TodoIndexRequest" resultMap="monthTodo">
+    <select id="findMonthByCalendarId" parameterType="kr.todoit.api.v1.dto.TodoIndexRequest" resultMap="monthTodo">
         select
             t.id, t.title, t.is_finished, t.matched_date
         from todos t
